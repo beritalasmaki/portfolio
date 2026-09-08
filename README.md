@@ -33,6 +33,6 @@ As a designer, most of my work lives in Figma, workshops, and stakeholder conver
 ## 🔗 More about me
 
 - **Portfolio:** [www.beritalasmaki.com](https://beritalasmaki.com/)
-- **LinkedIn:** [[www.linkedin.com/in/berit-alasm%C3%A4ki-31749490/](https://www.linkedin.com/in/berit-alasm%C3%A4ki-31749490/)
+- **LinkedIn:** [www.linkedin.com/in/berit-alasm%C3%A4ki-31749490/](https://www.linkedin.com/in/berit-alasm%C3%A4ki-31749490/)
 
 Feel free to explore, and reach out if something here sparks a conversation.
