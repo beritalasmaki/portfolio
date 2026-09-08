@@ -1,0 +1,52 @@
+.ds-button {
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border-radius: var(--radii-button);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Primary: Tumma pääväri (#222222) */
+.variant-primary {
+  background-color: var(--color-primary-base);
+  color: var(--color-text-inverse);
+}
+.variant-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Accent: Oranssi huomioväri (#FF890C) */
+.variant-accent {
+  background-color: var(--color-accent-base);
+  color: var(--color-text-inverse);
+}
+.variant-accent:hover {
+  background-color: var(--color-accent-hover);
+}
+
+/* Secondary: Vaalea tausta neutraalille toiminnalle */
+.variant-secondary {
+  background-color: var(--color-secondary-base);
+  color: var(--color-text-main);
+  border-color: var(--color-border-default);
+}
+.variant-secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+/* Saavutettavuus: Fokus-rengas näppäimistöllä liikuttaessa (Tab) */
+.ds-button:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Disabled-tila */
+.ds-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,47 @@
+:root {
+  /* Primary (Tumma perusväri nappeihin ja tekstiin) */
+  --color-primary-base: #222222;
+  --color-primary-hover: #333333;
+  --color-primary-active: #111111;
+
+  /* Accent (Oranssi huomioväri ja fokus-tila) */
+  --color-accent-base: #FF890C;
+  --color-accent-hover: #E07600;
+  --color-accent-active: #C46500;
+
+  /* Secondary (Kevyt taustaväri / neutraali nappeihin) */
+  --color-secondary-base: #F4F5F7;
+  --color-secondary-hover: #EBECF0;
+  --color-secondary-active: #DFE1E6;
+
+  /* Tekstit */
+  --color-text-main: #222222;
+  --color-text-muted: #6B778C;
+  --color-text-inverse: #FFFFFF;
+
+  /* Reunat ja saavutettavuusfokus */
+  --color-border-default: #DFE1E6;
+  --color-border-focus: #FF890C;
+
+  /* Taustat */
+  --color-bg-default: #FFFFFF;
+  --color-bg-subtle: #F4F5F7;
+
+  /* Spacing-asteikko (8pt grid) */
+  --spacing-3xs: 4px;
+  --spacing-2xs: 8px;
+  --spacing-xs: 12px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 60px;
+
+  /* Pyöristykset */
+  --radii-none: 0px;
+  --radii-sm: 2px;
+  --radii-button: 4px;
+  --radii-md: 8px;
+  --radii-lg: 16px;
+  --radii-full: 9999px;
+}
