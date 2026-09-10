@@ -131,7 +131,7 @@ Mono label (emphasis) row above — preceded by a 24×2px accent rule.
 
 | Token | Value | Use |
 |---|---|---|
-| Pill | `999px` | Buttons, tags, LinkedIn pill |
+| Pill | `999px` | Buttons, tags, LinkedIn/GitHub pills |
 | Card | `20px` | Cards, step cards, quote blocks |
 | Frame | `14px` | Screenshot frames |
 | Small | `10–12px` | Lightbox chrome, small blocks |
@@ -165,16 +165,21 @@ border-radius: 999px; padding: 16px 32px;
 white-space: nowrap;
 ```
 
-### Pill — tertiary (LinkedIn)
+### Pill — tertiary (LinkedIn, GitHub)
 ```
 font-family: 'IBM Plex Mono', monospace;
 font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
 color: #4a4a4a; border: 1px solid #e2ded6;
 border-radius: 999px; padding: 12px 20px;
 white-space: nowrap;
+gap: 6px; /* between the brand mark and the label */
 ```
-Matches the primary button's height. Sits 8px from the Contact button, separated from
-the page links by a `1px × 20px` `#e2ded6` divider.
+Matches the primary button's height. LinkedIn then GitHub sit 8px apart, then 8px
+from the Contact button, separated from the page links by a `1px × 20px` `#e2ded6`
+divider. Each pill carries its brand's icon (14×14px, `fill: currentColor` so it
+tracks the pill's text color through hover/focus) before the label — purely
+reinforcing, since the label text already says where the link goes, so the icon
+itself is `aria-hidden`.
 
 ### Text link — accent underline
 ```
@@ -269,7 +274,7 @@ Real interactive component (not the design files' CSS-only `:target` version):
 ### Header (all pages)
 Single row, one hairline below:
 ```
-[logo 80px]  ————————  [page links]  |  [LinkedIn pill]  [Contact button]
+[logo 80px]  ————————  [page links]  |  [LinkedIn pill]  [GitHub pill]  [Contact button]
 ```
 - Logo: `assets/berit-logo.png`, `height: 80px` (same in header and footer) —
   large enough that the "UX & Product Designer" role line under the

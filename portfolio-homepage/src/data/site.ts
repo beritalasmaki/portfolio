@@ -5,7 +5,8 @@ export const site = {
   name: "Berit Alasmäki",
   role: "UX & Product Designer",
   email: "berit.alasmaki@gmail.com",
-  linkedinUrl: "https://www.linkedin.com/",
+  linkedinUrl: "https://www.linkedin.com/in/berit-alasmaki/",
+  githubUrl: "https://github.com/beritalasmaki/portfolio",
 } as const;
 
 export const primaryNav = [

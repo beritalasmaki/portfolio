@@ -14,6 +14,26 @@ type HeaderProps = {
   backLabel?: string;
 };
 
+// Small brand marks next to the LinkedIn/GitHub pill labels, purely
+// reinforcing (the text already says where the link goes) so they're
+// aria-hidden. currentColor fill means they pick up the pill's text
+// color automatically, including on hover/focus.
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true" className="w-3.5 h-3.5 shrink-0" fill="currentColor">
+      <path d="M13.5 0h-11C1.12 0 0 1.12 0 2.5v11C0 14.88 1.12 16 2.5 16h11c1.38 0 2.5-1.12 2.5-2.5v-11C16 1.12 14.88 0 13.5 0zM4.94 13.44H2.4V5.98h2.54v7.46zM3.67 4.94c-.81 0-1.47-.66-1.47-1.47 0-.81.66-1.47 1.47-1.47.81 0 1.47.66 1.47 1.47 0 .81-.65 1.47-1.47 1.47zM13.6 13.44h-2.54V9.83c0-.86-.02-1.97-1.2-1.97-1.2 0-1.39.94-1.39 1.91v3.67H6.14V5.98h2.44v1.02h.03c.34-.64 1.17-1.32 2.4-1.32 2.57 0 3.05 1.69 3.05 3.89v3.87z" />
+    </svg>
+  );
+}
+
+function GithubIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true" className="w-3.5 h-3.5 shrink-0" fill="currentColor">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+    </svg>
+  );
+}
+
 export default function Header({ backHref, backLabel = "← Back to work" }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
@@ -81,16 +101,27 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
             ))
           )}
           <span aria-hidden="true" className="block w-px h-5 bg-rule-strong ml-2" />
-          {/* LinkedIn + Contact grouped with their own tight 8px gap,
-              separate from the wider gap-nav-gap the rest of the nav uses. */}
+          {/* LinkedIn + GitHub + Contact grouped with their own tight 8px
+              gap, separate from the wider gap-nav-gap the rest of the nav
+              uses. */}
           <span className="flex items-center gap-2">
             <a
               href={site.linkedinUrl}
               target="_blank"
               rel="noreferrer"
-              className="font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
+              className="inline-flex items-center gap-1.5 font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
             >
+              <LinkedInIcon />
               LinkedIn
+            </a>
+            <a
+              href={site.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
+            >
+              <GithubIcon />
+              GitHub
             </a>
             <a
               href="#contact"
@@ -159,9 +190,19 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
             href={site.linkedinUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
+            className="inline-flex items-center gap-1.5 font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
           >
+            <LinkedInIcon />
             LinkedIn
+          </a>
+          <a
+            href={site.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
+          >
+            <GithubIcon />
+            GitHub
           </a>
           <a
             href="#contact"
