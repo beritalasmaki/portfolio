@@ -216,6 +216,15 @@ Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
 - Tabs stretch to fill the block height equally
 - Pane background matches the tab column tone so the two read as one surface
 - Pure CSS (`:target` / radio), no JS
+- **Below `md`, this becomes an accordion instead** — two separate markup
+  blocks (desktop tablist+pane hidden, mobile accordion shown), not one
+  responsive layout. Each question is its own disclosure button (`4px` left
+  border, same active-state ink/white treatment as the desktop tab column);
+  its answer — same eyebrow/headline/body/highlight/link content as the
+  desktop pane — renders directly below that question when expanded, not in
+  a shared panel after the full list. One open at a time; all collapsed by
+  default. `aria-expanded` + `aria-controls` on the button, `role="region"`
+  on the panel, panel conditionally rendered (not the `hidden` attribute).
 
 ### Screenshot frame — filmstrip gallery (case study pages)
 ```
@@ -250,9 +259,17 @@ Real interactive component (not the design files' CSS-only `:target` version):
   scrolls inside that region while the header (caption, Previous/Next,
   Close) stays fixed in place.
 - Keyboard: `Escape` closes, `←`/`→` navigate between images, `Tab` is trapped
-  inside the dialog (now including the zoom toggle). Focus moves to Close on
-  open and returns to the thumbnail that opened it on close.
+  inside the dialog (now including the zoom toggle, on viewports where it
+  exists). Focus moves to Close on open and returns to the thumbnail that
+  opened it on close.
 - Expanded image: `border-radius: 12px`, `box-shadow` = Lightbox shadow (see Radii & elevation above)
+- **Click-to-zoom is desktop-only** (`≥768px`, checked via `matchMedia`, same
+  breakpoint the header's mobile nav uses). Below that, there's no toggle at
+  all: the expanded image just renders at one fit-to-width size
+  (`width: 100%; height: auto`, no `zoom-in`/`zoom-out` cursor, no button
+  wrapper) — a tap-to-zoom toggle only fights with pinch-zoom/scroll on a
+  touch viewport, and there's no pixel-detail gain from jumping to 100% on a
+  small screen the way there is on desktop.
 
 ### Sticky TOC (case study pages)
 - Two-column layout under the top header: TOC left (`280px`), content right
@@ -270,6 +287,14 @@ Real interactive component (not the design files' CSS-only `:target` version):
 - Real scroll-spy (IntersectionObserver) drives `activeId` — not the static
   single-example the design files show
 - No logo, contact info or back-link inside the TOC — those live only in the top header
+- **Below `lg`, this collapses into a dropdown** instead of the always-expanded
+  sidebar (which would otherwise push the whole article down): a native
+  `<details>` disclosure, summary label "Navigate to...", chevron rotates
+  180° open. Same link list, same scroll-spy `activeId` highlighting, as the
+  desktop sidebar — both are driven by one shared IntersectionObserver.
+  Selecting a link closes the dropdown. `<details>` chosen over a custom
+  JS-toggled panel for its built-in keyboard/screen-reader disclosure
+  semantics with no extra wiring.
 
 ### Header (all pages)
 Single row, one hairline below:
@@ -365,8 +390,13 @@ case/kem-*.png             Industrial data case screenshots
 ```
 
 Client logo row: Kemira, University of Helsinki, Syke, Digione, Espoo, Vantaa,
-Fintraffic, Cardiff University, CSC, Vero, Volkswagen — one row, uniform height,
-`#222222`.
+Fintraffic, Cardiff University, CSC, Vero, Volkswagen — `#222222`.
+Grid of uniform, evenly padded cells (3 cols mobile / 4 cols `sm` / 11 cols `lg`,
+fixed height per breakpoint, `border-radius` = card radius, `1px` rule border,
+panel background) rather than one bare row of differently-sized logos — each
+logo scales to fit its cell via `object-fit: contain` (Next Image `fill` +
+`object-contain`, `16px` padding baked into the image's content-box), so every
+cell reads as the same size regardless of that logo's own aspect ratio.
 
 ---
 

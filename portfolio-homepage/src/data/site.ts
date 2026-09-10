@@ -17,20 +17,22 @@ export const primaryNav = [
 export type ClientLogo = {
   name: string;
   src: string;
-  /** Rendered height in px at the row's natural (desktop) size — logos share one row and are visually balanced by eye, not by raw pixel dimensions. */
-  height: number;
 };
 
+// Every logo renders inside a uniform, evenly padded grid cell (see
+// ClientLogos.tsx) — object-contain scales each logo to fit that shared
+// box regardless of its own natural aspect ratio, so no per-logo sizing
+// is needed here.
 export const clientLogos: ClientLogo[] = [
-  { name: "Kemira", src: "/logos/kemira.svg", height: 30 },
-  { name: "University of Helsinki", src: "/logos/ink-helsinki.png", height: 20 },
-  { name: "Suomen ympäristökeskus — Finnish Environment Institute", src: "/logos/ink-syke.png", height: 22 },
-  { name: "Digione", src: "/logos/ink-digione.png", height: 19 },
-  { name: "Espoo Esbo", src: "/logos/ink-espoo.png", height: 28 },
-  { name: "Vantaa", src: "/logos/ink-vantaa.png", height: 19 },
-  { name: "Fintraffic", src: "/logos/ink-fintraffic.png", height: 36 },
-  { name: "Cardiff University", src: "/logos/ink-cardiff.png", height: 34 },
-  { name: "CSC", src: "/logos/ink-csc.png", height: 30 },
-  { name: "Vero Skatt", src: "/logos/ink-vero.png", height: 21 },
-  { name: "Volkswagen", src: "/logos/ink-volkswagen.png", height: 30 },
+  { name: "Kemira", src: "/logos/kemira.svg" },
+  { name: "University of Helsinki", src: "/logos/ink-helsinki.png" },
+  { name: "Suomen ympäristökeskus — Finnish Environment Institute", src: "/logos/ink-syke.png" },
+  { name: "Digione", src: "/logos/ink-digione.png" },
+  { name: "Espoo Esbo", src: "/logos/ink-espoo.png" },
+  { name: "Vantaa", src: "/logos/ink-vantaa.png" },
+  { name: "Fintraffic", src: "/logos/ink-fintraffic.png" },
+  { name: "Cardiff University", src: "/logos/ink-cardiff.png" },
+  { name: "CSC", src: "/logos/ink-csc.png" },
+  { name: "Vero Skatt", src: "/logos/ink-vero.png" },
+  { name: "Volkswagen", src: "/logos/ink-volkswagen.png" },
 ];

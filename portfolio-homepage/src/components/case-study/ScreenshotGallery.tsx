@@ -15,6 +15,11 @@ const ZOOM_LEVELS = [0.6, 1] as const;
 export default function ScreenshotGallery({ images }: { images: GalleryImage[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [zoomed, setZoomed] = useState(false);
+  // Click-to-zoom is a desktop-only affordance — on a touch-sized viewport
+  // there's no room to gain by jumping to 100% pixel size, and the tap just
+  // fights with pinch-zoom/scroll, so the mobile image renders at one
+  // sensible fit-to-width size with no zoom toggle at all.
+  const [isDesktop, setIsDesktop] = useState(true);
   const triggerRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -23,6 +28,16 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
   const isOpen = openIndex !== null;
   const current = isOpen ? images[openIndex] : null;
   const zoom = ZOOM_LEVELS[zoomed ? 1 : 0];
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 768px)");
+    function onChange() {
+      setIsDesktop(query.matches);
+    }
+    onChange();
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
 
   function openAt(index: number) {
     lastTriggerRef.current = triggerRefs.current[index];
@@ -181,28 +196,42 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
             {/* Click-to-zoom: 60% (fit-ish, whole image visible) <-> 100%
                 (true pixel size, scrolls if it doesn't fit). A real <button>,
                 not a div, so it's reachable in the Tab order the focus trap
-                above already walks. */}
+                above already walks. Desktop only — on mobile the image just
+                renders at one fit-to-width size with no toggle. */}
             <div className="min-h-0 flex-1 overflow-auto">
-              <button
-                type="button"
-                onClick={() => setZoomed((z) => !z)}
-                aria-label={zoomed ? "Zoom out" : "Zoom in"}
-                className={`block ${zoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
-              >
+              {isDesktop ? (
+                <button
+                  type="button"
+                  onClick={() => setZoomed((z) => !z)}
+                  aria-label={zoomed ? "Zoom out" : "Zoom in"}
+                  className={`block ${zoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
+                >
+                  <Image
+                    src={current.src}
+                    alt={current.alt}
+                    width={current.width}
+                    height={current.height}
+                    // Higher than the default 75: these are UI screenshots
+                    // with small text, more sensitive to compression softness
+                    // than a photo, and this is the one place on the site
+                    // people are meant to look closely at fine detail.
+                    quality={95}
+                    style={{ width: current.width * zoom, height: current.height * zoom }}
+                    className="block rounded-chrome bg-white shadow-lightbox"
+                  />
+                </button>
+              ) : (
                 <Image
                   src={current.src}
                   alt={current.alt}
                   width={current.width}
                   height={current.height}
-                  // Higher than the default 75: these are UI screenshots
-                  // with small text, more sensitive to compression softness
-                  // than a photo, and this is the one place on the site
-                  // people are meant to look closely at fine detail.
                   quality={95}
-                  style={{ width: current.width * zoom, height: current.height * zoom }}
+                  sizes="92vw"
+                  style={{ width: "100%", height: "auto" }}
                   className="block rounded-chrome bg-white shadow-lightbox"
                 />
-              </button>
+              )}
             </div>
           </div>
         </div>

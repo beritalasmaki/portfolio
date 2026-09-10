@@ -5,15 +5,22 @@ import { useEffect, useState } from "react";
 export type TocItem = { id: string; label: string };
 
 /**
- * Sticky in-page table of contents with real scroll-spy: a single
+ * In-page table of contents with real scroll-spy: a single
  * IntersectionObserver watches every section, and whichever one crosses a
  * thin band near the top of the viewport becomes "active". A section stays
  * active until the next one crosses that same line, which is the standard
  * scroll-spy recipe and avoids the "nothing is active between sections"
  * flicker a naive top-edge check gives you.
+ *
+ * Two markup blocks, one shared list: below `lg` the always-expanded
+ * sidebar would push the whole article down, so it collapses into a native
+ * `<details>` dropdown labelled "Navigate to..." instead. At `lg` and above
+ * it's the original sticky sidebar, fully expanded. Both share the same
+ * link list and the same scroll-spy state.
  */
 export default function TableOfContents({ items }: { items: TocItem[] }) {
   const [activeId, setActiveId] = useState(items[0]?.id);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const elements = items
@@ -39,30 +46,59 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
     return () => observer.disconnect();
   }, [items]);
 
+  function links(onNavigate?: () => void) {
+    return items.map((item) => {
+      const isActive = item.id === activeId;
+      return (
+        <a
+          key={item.id}
+          href={`#${item.id}`}
+          aria-current={isActive ? "location" : undefined}
+          onClick={onNavigate}
+          className={`flex items-center gap-2 py-2 pl-4 -ml-px text-nav border-l-4 transition-[border-color,color] duration-150 ease-out ${
+            isActive
+              ? "border-accent text-accent-dark font-bold rounded-r-[16px]"
+              : "border-rule text-body font-semibold hover:border-rule-strong hover:text-ink focus-visible:border-rule-strong focus-visible:text-ink"
+          }`}
+        >
+          {isActive && <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent shrink-0" />}
+          {item.label}
+        </a>
+      );
+    });
+  }
+
   return (
-    <nav
-      aria-label="On this page"
-      className="mb-10 flex flex-col gap-4 rounded-card border border-rule bg-white p-6 lg:sticky lg:top-8 lg:mb-0 lg:self-start"
-    >
-      <p className="font-mono-label text-mono-label uppercase text-muted m-0 pb-2">On this page</p>
-      {items.map((item) => {
-        const isActive = item.id === activeId;
-        return (
-          <a
-            key={item.id}
-            href={`#${item.id}`}
-            aria-current={isActive ? "location" : undefined}
-            className={`flex items-center gap-2 py-2 pl-4 -ml-px text-nav border-l-4 transition-[border-color,color] duration-150 ease-out ${
-              isActive
-                ? "border-accent text-accent-dark font-bold rounded-r-[16px]"
-                : "border-rule text-body font-semibold hover:border-rule-strong hover:text-ink focus-visible:border-rule-strong focus-visible:text-ink"
-            }`}
+    <div className="mb-10 lg:mb-0 lg:self-start">
+      {/* Desktop / tablet: fully expanded, sticky sidebar. */}
+      <nav
+        aria-label="On this page"
+        className="hidden lg:sticky lg:top-8 lg:flex flex-col gap-4 rounded-card border border-rule bg-white p-6"
+      >
+        <p className="font-mono-label text-mono-label uppercase text-muted m-0 pb-2">On this page</p>
+        {links()}
+      </nav>
+
+      {/* Mobile: collapsed dropdown, native <details> for built-in keyboard
+          + screen-reader disclosure semantics with no extra JS wiring. */}
+      <details
+        className="group rounded-card border border-rule bg-white lg:hidden"
+        open={mobileOpen}
+        onToggle={(event) => setMobileOpen(event.currentTarget.open)}
+      >
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 p-6 font-mono-label text-mono-label uppercase text-muted marker:content-none [&::-webkit-details-marker]:hidden">
+          Navigate to...
+          <span
+            aria-hidden="true"
+            className="text-[15px] text-ink transition-transform duration-150 ease-out group-open:rotate-180"
           >
-            {isActive && <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent shrink-0" />}
-            {item.label}
-          </a>
-        );
-      })}
-    </nav>
+            ↓
+          </span>
+        </summary>
+        <nav aria-label="On this page" className="flex flex-col gap-4 px-6 pb-6 pt-1">
+          {links(() => setMobileOpen(false))}
+        </nav>
+      </details>
+    </div>
   );
 }

@@ -57,6 +57,7 @@ const tabs: Tab[] = [
 
 export default function MindTabs() {
   const [active, setActive] = useState(0);
+  const [openMobile, setOpenMobile] = useState<number | null>(null);
   const baseId = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -101,7 +102,11 @@ export default function MindTabs() {
         </p>
       </div>
 
-      <div className="relative mt-8 bg-panel rounded-card overflow-hidden grid grid-cols-1 md:grid-cols-2 items-stretch">
+      {/* Desktop / tablet: vertical tablist + shared panel to the right.
+          Hidden below md, where the accordion block just below takes over —
+          two separate markup blocks rather than one responsive layout,
+          matching Header.tsx's mobile-nav split. */}
+      <div className="relative mt-8 hidden bg-panel rounded-card overflow-hidden md:grid md:grid-cols-2 items-stretch">
         <div role="tablist" aria-orientation="vertical" aria-label="Questions" className="flex flex-col bg-panel-alt">
           {tabs.map((tab, index) => {
             const selected = index === active;
@@ -169,6 +174,71 @@ export default function MindTabs() {
             {current.linkLabel}
           </a>
         </div>
+      </div>
+
+      {/* Mobile: accordion — each answer expands directly below its own
+          question, instead of a shared panel after the full list of
+          questions. Panels are conditionally rendered (not the `hidden`
+          attribute), same precedent as Header.tsx's mobile nav. */}
+      <div className="mt-8 flex flex-col bg-panel rounded-card overflow-hidden divide-y divide-rule md:hidden">
+        {tabs.map((tab, index) => {
+          const expanded = index === openMobile;
+          const buttonId = `${baseId}-accordion-button-${index}`;
+          const panelId = `${baseId}-accordion-panel-${index}`;
+          return (
+            <div key={tab.question}>
+              <h3 className="m-0">
+                <button
+                  id={buttonId}
+                  type="button"
+                  aria-expanded={expanded}
+                  aria-controls={panelId}
+                  onClick={() => setOpenMobile(expanded ? null : index)}
+                  className={`flex w-full items-center justify-between gap-4 py-4 px-[clamp(16px,4vw,24px)] text-left border-l-4 transition-[background-color,border-color] duration-150 ease-out ${
+                    expanded
+                      ? "bg-ink text-white border-l-ink focus-visible:outline-white"
+                      : "bg-panel-alt text-ink border-l-transparent focus-visible:bg-rule-strong focus-visible:border-l-accent"
+                  }`}
+                >
+                  <span className="text-[15px] font-semibold leading-snug text-pretty">{tab.question}</span>
+                  <span
+                    aria-hidden="true"
+                    className={`shrink-0 text-[15px] transition-transform duration-150 ease-out ${
+                      expanded ? "text-white rotate-180" : "text-muted"
+                    }`}
+                  >
+                    ↓
+                  </span>
+                </button>
+              </h3>
+              {expanded && (
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  className="flex flex-col gap-4 bg-panel p-pane-pad"
+                >
+                  <div className="flex items-center gap-2 font-mono-label text-mono-label-em font-medium uppercase text-ink">
+                    <span aria-hidden="true" className="block w-6 h-0.5 bg-accent" />
+                    {tab.eyebrow}
+                  </div>
+                  <h4 className="m-0 text-card-h3 text-ink whitespace-pre-line">{tab.headline}</h4>
+                  <p className="m-0 text-body-lg text-body max-w-prose">{tab.body}</p>
+                  <div className="flex gap-4 items-start border-t border-rule-strong pt-4">
+                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent mt-2 shrink-0" />
+                    <p className="m-0 text-body-sm text-ink-alt max-w-[34em]">{tab.highlight}</p>
+                  </div>
+                  <a
+                    href={tab.linkHref}
+                    className="ml-4 text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-accent-dark hover:-translate-y-px focus-visible:border-accent-dark focus-visible:-translate-y-px"
+                  >
+                    {tab.linkLabel}
+                  </a>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
