@@ -222,9 +222,11 @@ Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
   border, same active-state ink/white treatment as the desktop tab column);
   its answer — same eyebrow/headline/body/highlight/link content as the
   desktop pane — renders directly below that question when expanded, not in
-  a shared panel after the full list. One open at a time; all collapsed by
-  default. `aria-expanded` + `aria-controls` on the button, `role="region"`
-  on the panel, panel conditionally rendered (not the `hidden` attribute).
+  a shared panel after the full list. One open at a time; the first
+  question's answer is open by default (matching the desktop panel, which
+  always shows an active answer), the rest start collapsed. `aria-expanded`
+  + `aria-controls` on the button, `role="region"` on the panel, panel
+  conditionally rendered (not the `hidden` attribute).
 
 ### Screenshot frame — filmstrip gallery (case study pages)
 ```

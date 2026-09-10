@@ -57,7 +57,9 @@ const tabs: Tab[] = [
 
 export default function MindTabs() {
   const [active, setActive] = useState(0);
-  const [openMobile, setOpenMobile] = useState<number | null>(null);
+  // First question's answer is open by default (matches the desktop panel,
+  // which always shows an active answer) — the rest start collapsed.
+  const [openMobile, setOpenMobile] = useState<number | null>(0);
   const baseId = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
