@@ -152,7 +152,7 @@ export default function MindTabs() {
           tabIndex={0}
           className="flex flex-col gap-4 bg-panel p-pane-pad"
         >
-          <div className="flex items-center gap-2 font-mono-label text-mono-label-em font-medium uppercase text-accent-dark">
+          <div className="flex items-center gap-2 font-mono-label text-mono-label-em font-medium uppercase text-ink">
             <span aria-hidden="true" className="block w-6 h-0.5 bg-accent" />
             {current.eyebrow}
           </div>

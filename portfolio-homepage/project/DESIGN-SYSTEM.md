@@ -20,7 +20,7 @@ introduce new colors, sizes or radii without adding them here first.
 | Body | `#4a4a4a` | Body copy, secondary paragraphs |
 | Muted | `#6b6660` | Mono labels, captions, eyebrows, meta text, copyright line. **Supersedes `#8a8580`** — that value is only 3.65:1 on white, which fails WCAG AA (4.5:1) at the small sizes this token is used for everywhere. `#6b6660` passes at 5.69:1. (Absorbs the old separate "Footer meta" token — same value, one name now.) |
 | Accent | `#FC890C` | Orange from the logo flourish. Underlines, markers, dots, borders, the contact block background — **decorative use only.** Never used as text color on a light background: raw accent is ~2.4:1 contrast, which fails WCAG AA even at large-text sizes. |
-| Accent dark | `#A45B0B` | Accent-colored **text** at normal (non-large) sizes on light backgrounds — the tab-pane "what you get" eyebrow (12px), the sticky TOC's active-item text (15px). Passes AA at 5.15:1 (needs 4.5:1 at these sizes). |
+| Accent dark | `#A45B0B` | Accent-colored **text** at normal (non-large) sizes on light backgrounds — the sticky TOC's active-item text (15px). Passes AA at 5.15:1 (needs 4.5:1 at these sizes). |
 | Accent hero | `#D9770C` | Accent-colored **text** at large-bold sizes only — currently just the hero's "forward." (part of an 800-weight, 40–84px heading). WCAG AA only requires 3:1 for large/bold text, so this stays closer to the true brand orange than Accent dark while still passing at ~3.2:1. Not for use at normal text sizes — use Accent dark there instead. |
 | Background | `#ffffff` | Page background |
 | Panel | `#f5f3ee` | Cards, step cards, quote blocks, tab panes |
@@ -86,9 +86,8 @@ Fallbacks:      Helvetica, Arial, sans-serif / monospace
 ### Section numbering
 Sections carry a mono eyebrow in the pattern `NN / lowercase label`, e.g.
 `01 / your next move`, `02 / selected case studies`, `03 / about`.
-Emphasized variants (inside tab panes) are **Accent dark** (`#A45B0B` — not raw
-accent, which fails text contrast) at 12px/500 — matching the Mono label
-(emphasis) row above — preceded by a 24×2px accent rule.
+Emphasized variants (inside tab panes) are **Ink** at 12px/500 — matching the
+Mono label (emphasis) row above — preceded by a 24×2px accent rule.
 
 ---
 
