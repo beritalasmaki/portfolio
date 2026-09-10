@@ -1,8 +1,12 @@
 # Berit Alasmäki — Portfolio Design System
 
-Single source of truth for the portfolio site. Values are taken from the built pages
-(`Portfolio Hero.dc.html`, `Case Study - Industrial Data.dc.html`). Use these exact
-values — do not introduce new colors, sizes or radii without adding them here first.
+Single source of truth for the portfolio site. Values originate from the built design
+files (`Portfolio Hero.dc.html`, `Case Study - Industrial Data.dc.html`), with two
+categories of deliberate departure from them, both called out inline below: WCAG AA
+contrast corrections (the Muted and Accent dark tokens), and real interactivity that
+those static files explicitly deferred to code (the filmstrip gallery's lightbox,
+the sticky TOC's scroll-spy, focus/selection states). Use these exact values — do not
+introduce new colors, sizes or radii without adding them here first.
 
 ---
 
@@ -14,23 +18,23 @@ values — do not introduce new colors, sizes or radii without adding them here 
 |---|---|---|
 | Ink | `#222222` | All primary text, headlines, dark panels, filled buttons. **Never pure black.** |
 | Body | `#4a4a4a` | Body copy, secondary paragraphs |
-| Muted | `#8a8580` | Mono labels, captions, eyebrows, meta text |
-| Footer meta | `#6b6660` | Copyright line only |
-| Accent | `#FC890C` | Orange from the logo flourish. Underlines, markers, dots, the contact block background |
-| Accent dark | `#A45B0B` | Accent text on light panels where `#FC890C` is too low-contrast |
+| Muted | `#6b6660` | Mono labels, captions, eyebrows, meta text, copyright line. **Supersedes `#8a8580`** — that value is only 3.65:1 on white, which fails WCAG AA (4.5:1) at the small sizes this token is used for everywhere. `#6b6660` passes at 5.69:1. (Absorbs the old separate "Footer meta" token — same value, one name now.) |
+| Accent | `#FC890C` | Orange from the logo flourish. Underlines, markers, dots, borders, the contact block background — **decorative use only.** Never used as text color on a light background: raw accent is ~2.4:1 contrast, which fails WCAG AA even at large-text sizes. |
+| Accent dark | `#A45B0B` | Accent-colored **text** on light backgrounds — the hero's "forward.", the tab-pane "what you get" eyebrow, the sticky TOC's active-item text. Passes AA at 5.15:1. This is the token to reach for anywhere accent would otherwise be applied to text. |
 | Background | `#ffffff` | Page background |
 | Panel | `#f5f3ee` | Cards, step cards, quote blocks, tab panes |
-| Panel alt | `#f0eee9` | Inactive tabs (slightly darker than white so tabs read against the page) |
+| Panel alt | `#f0eee9` | Inactive tabs (slightly darker than white so tabs read against the page); also used as the loading-placeholder background behind case-study thumbnails |
 | Soft | `#fbfaf7` | Very light fills (image frames, nested blocks) |
 | Rule | `#eeece7` | Hairline dividers, light card borders |
 | Rule strong | `#e2ded6` | Medium borders, inner card dividers, pill outlines |
-| Ink alt | `#3a3a3a` | Dark-on-dark separators inside the dark tab column |
+| Ink alt | `#3a3a3a` | Dark-on-dark separators inside the dark tab column; also the body-text color for the highlight-quote callout inside each tab pane |
 | Overlay | `rgba(34, 34, 34, 0.8)` | Lightbox backdrop (Ink at 80%) |
 
 ### Rules
 - Two neutral background tones maximum per page (`#ffffff` + `#f5f3ee`).
-- Accent orange is used sparingly: markers, underlines, active states, and exactly one
-  large closing block (the contact section).
+- Accent orange is used sparingly: markers, underlines, active states, borders, and
+  exactly one large closing block (the contact section) — **never as text color on a
+  light background** (see Accent dark above).
 - Text on the orange contact block is `#222222`, never white.
 - Client / customer logos are normalized to `#222222`.
 
@@ -62,9 +66,10 @@ Fallbacks:      Helvetica, Arial, sans-serif / monospace
 | Step numeral | `clamp(30px, 3vw, 42px)` | 800 | 1 | -0.03em |
 | Lead paragraph | `clamp(16px, 1.35vw, 19px)` | 400 | 1.55–1.6 | — |
 | Body | `clamp(15px, 1.15vw, 17px)` | 400 | 1.6 | — |
-| Body emphasis | `clamp(15px, 1.2vw, 17px)` | 600–700 | 1.4–1.6 | — |
+| Body emphasis | `clamp(15px, 1.2vw, 17px)` | 600–700 | 1.4 | — |
 | Small body | `clamp(14px, 1.1vw, 16px)` | 400 | 1.6 | — |
-| Nav link | `15px` | 600 | — | 0.01em |
+| Closing banner | `clamp(16px, 1.4vw, 20px)` | 700 | 1.45 | — |
+| Nav link | `15px` | 600 (700 in the contact block's closing links) | — | 0.01em |
 | Mono label (section) | `11px` | 400 | — | 0.14em, uppercase |
 | Mono label (emphasis) | `12px` | 500 | — | 0.14em, uppercase |
 | Pill / button label | `13–15px` | 600 | — | 0.01–0.06em |
@@ -80,8 +85,9 @@ Fallbacks:      Helvetica, Arial, sans-serif / monospace
 ### Section numbering
 Sections carry a mono eyebrow in the pattern `NN / lowercase label`, e.g.
 `01 / your next move`, `02 / selected case studies`, `03 / about`.
-Emphasized variants (inside tab panes) are `#FC890C` at 12px/700 preceded by a
-24×2px accent rule.
+Emphasized variants (inside tab panes) are **Accent dark** (`#A45B0B` — not raw
+accent, which fails text contrast) at 12px/500 — matching the Mono label
+(emphasis) row above — preceded by a 24×2px accent rule.
 
 ---
 
@@ -108,6 +114,11 @@ Emphasized variants (inside tab panes) are `#FC890C` at 12px/700 preceded by a
 | Stack gap (label → value) | `8px` |
 | Header / nav gap | `clamp(16px, 2.2vw, 32px)` |
 | Contact block padding | `clamp(48px, 7vw, 96px) clamp(24px, 5vw, 72px)` |
+
+### Exception
+- **Minimum touch target: 44px.** Icon-only interactive controls (e.g. the mobile
+  nav toggle) size to 44×44px regardless of the 8px scale — this is the WCAG 2.5.5
+  / platform-standard minimum tap target, not a spacing value.
 
 ---
 
@@ -196,33 +207,47 @@ Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
 - Pane background matches the tab column tone so the two read as one surface
 - Pure CSS (`:target` / radio), no JS
 
-### Screenshot frame
+### Screenshot frame — filmstrip gallery (case study pages)
 ```
 background: #ffffff; border: 1px solid #eeece7; border-radius: 14px; padding: 8px;
 box-shadow: 0 8px 22px rgba(34, 34, 34, 0.06);
-img { width: 100%; height: auto; display: block; border-radius: 6px; }
+img { border-radius: 6px; display: block; }
 ```
-- Image drives the box — no fixed frame height (a fixed height leaves the screenshot
-  floating in empty space)
-- Desktop shots: `repeat(auto-fit, minmax(420px, 1fr))`
-- Mobile shots: `repeat(auto-fit, minmax(180px, 220px))`
-- Never horizontal-scroll — items wrap onto the next row
-- Caption: mono 11px `#8a8580`, uppercase, nowrap
+Single-row "filmstrip": every thumbnail is a uniform **210px tall**, width follows
+each image's own aspect ratio (desktop shots read wider, mobile shots narrower) —
+not the two-tier desktop/mobile CSS Grid an earlier draft of this doc described.
+- `flex-wrap: wrap` — never horizontal-scroll; thumbnails wrap onto the next row on
+  narrow viewports
+- Hover/focus: shadow steps up to Frame accent (see Radii & elevation)
+- Caption: mono 11px `#6b6660`, uppercase, nowrap, sits below the frame
+- Clicking a thumbnail opens the Lightbox (below) — real click-to-expand
+  functionality, not a static mockup affordance
 
 ### Lightbox (case study images)
+Real interactive component (not the design files' CSS-only `:target` version):
 - Backdrop `rgba(34, 34, 34, 0.8)`, `position: fixed; inset: 0`
-- Header bar `#222222`, `border-radius: 10px`, `padding: 12px 16px`
+- Header bar `#222222`, `border-radius: 12px` (within the general Small radius
+  range, 10–12px), `padding: 12px 16px`; shows the caption, an image counter
+  (`· N/M`) when there's more than one image, Previous/Next pill buttons, and a
+  Close pill button
 - Cursor `zoom-in` on the thumbnail, `zoom-out` on the backdrop
-- Pure CSS `:target`, closed by a full-bleed anchor back to the section id
+- Keyboard: `Escape` closes, `←`/`→` navigate between images, `Tab` is trapped
+  inside the dialog. Focus moves to Close on open and returns to the thumbnail
+  that opened it on close.
+- Expanded image: `border-radius: 12px`, `box-shadow` = Lightbox shadow (see Radii & elevation above)
 
 ### Sticky TOC (case study pages)
 - Two-column layout under the top header: TOC left, content right
 - `position: sticky; top: 32px`
 - `background: #ffffff`, `border: 1px solid #eeece7`, `border-radius: 20px`, `padding: 24px`
 - Items: 15px/600, `white-space: nowrap`, 16px gap
-- **Active item:** `#FC890C` text + `font-weight: 700` + `4px` left border in `#FC890C`
-  (or a 6px accent dot), `border-radius: 0 16px 16px 0`
-- Inactive items: `#4a4a4a`
+- **Active item:** Accent dark (`#A45B0B`) text + `font-weight: 700` + `4px` left
+  border in `#FC890C` + a 6px accent dot before the label (both together, not
+  either/or) + `border-radius: 0 16px 16px 0`
+- Inactive items: `#4a4a4a`, `font-weight: 600`, flat `4px` `#eeece7` left border
+  (an always-present track the active state highlights against)
+- Real scroll-spy (IntersectionObserver) drives `activeId` — not the static
+  single-example the design files show
 - No logo, contact info or back-link inside the TOC — those live only in the top header
 
 ### Header (all pages)
@@ -236,8 +261,17 @@ Single row, one hairline below:
 - Case-study pages: `← Back to work` in place of the page links
 - Contact button scrolls to `#contact` on the same page (`html { scroll-behavior: smooth }`)
 
+### Focus & selection state
+Not covered by the original design files (no interactive states there) — added in
+code and applies site-wide:
+```
+:focus-visible { outline: 2px solid #FC890C; outline-offset: 2px; border-radius: 4px; }
+::selection { background: #FC890C; color: #222222; }
+```
+
 ### Back to top
-Fixed bottom-right, appears on scroll, links to `#page-top`. Ink pill, mono label.
+Fixed bottom-right, appears on scroll, links to `#page-top`. Ink pill, mono label,
+`shadow-lightbox`.
 
 ### Contact block (page closer)
 ```

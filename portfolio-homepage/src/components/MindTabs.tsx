@@ -102,7 +102,7 @@ export default function MindTabs() {
       </div>
 
       <div className="relative mt-8 bg-panel rounded-card overflow-hidden grid grid-cols-1 md:grid-cols-2 items-stretch">
-        <div role="tablist" aria-orientation="vertical" aria-label="Questions" className="flex flex-col bg-soft">
+        <div role="tablist" aria-orientation="vertical" aria-label="Questions" className="flex flex-col bg-panel-alt">
           {tabs.map((tab, index) => {
             const selected = index === active;
             const tabId = `${baseId}-tab-${index}`;
@@ -121,8 +121,8 @@ export default function MindTabs() {
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(index)}
                 onKeyDown={(event) => onKeyDown(event, index)}
-                className={`flex flex-1 items-center justify-between gap-4 py-6 px-[clamp(16px,2.2vw,32px)] text-left border-b border-rule last:border-b-0 transition-colors ${
-                  selected ? "bg-ink text-white" : "bg-soft text-ink"
+                className={`flex flex-1 items-center justify-between gap-4 py-[clamp(16px,2.2vw,24px)] px-[clamp(16px,2.2vw,32px)] text-left border-b border-rule last:border-b-0 transition-colors ${
+                  selected ? "bg-ink text-white" : "bg-panel-alt text-ink"
                 }`}
               >
                 <span className="text-[clamp(15px,1.2vw,17px)] font-semibold leading-snug text-pretty">
@@ -148,7 +148,7 @@ export default function MindTabs() {
             {current.eyebrow}
           </div>
           <h3 className="m-0 text-card-h3 text-ink whitespace-pre-line">{current.headline}</h3>
-          <p className="m-0 text-body-lg text-body max-w-prose-lg">{current.body}</p>
+          <p className="m-0 text-body-lg text-body max-w-prose">{current.body}</p>
           <div className="flex gap-4 items-start border-t border-rule-strong pt-4">
             <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent mt-2 shrink-0" />
             <p className="m-0 text-body-sm text-ink-alt max-w-[34em]">{current.highlight}</p>

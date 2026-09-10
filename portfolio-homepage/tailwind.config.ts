@@ -56,6 +56,11 @@ const config: Config = {
           { lineHeight: "1", letterSpacing: "-0.03em", fontWeight: "800" },
         ],
         lead: ["clamp(16px, 1.35vw, 19px)", { lineHeight: "1.6" }],
+        // "Body emphasis" row (doc §2): same size band as body-lg but a
+        // faster-scaling vw (1.2 vs 1.15) — previously reimplemented ad hoc
+        // as text-[clamp(15px,1.2vw,17px)] + leading-snug (1.375, just
+        // under the doc's 1.4–1.6 range) in 4 places.
+        "body-em": ["clamp(15px, 1.2vw, 17px)", { lineHeight: "1.4" }],
         "body-lg": ["clamp(15px, 1.15vw, 17px)", { lineHeight: "1.6" }],
         "body-sm": ["clamp(14px, 1.1vw, 16px)", { lineHeight: "1.6" }],
         nav: ["15px", { letterSpacing: "0.01em" }],

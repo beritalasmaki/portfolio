@@ -33,7 +33,7 @@ export default function ProcessSteps() {
           </div>
           <div className="mt-auto border-t border-rule-strong flex flex-col gap-2 p-[clamp(16px,2vw,24px)_clamp(24px,2.6vw,32px)]">
             <p className="font-mono-label text-mono-label uppercase text-muted m-0">Outcome</p>
-            <p className="m-0 text-[clamp(15px,1.2vw,17px)] leading-snug font-bold text-ink">{step.outcome}</p>
+            <p className="m-0 text-body-em font-bold text-ink">{step.outcome}</p>
           </div>
         </li>
       ))}

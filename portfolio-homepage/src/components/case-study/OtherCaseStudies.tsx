@@ -27,9 +27,7 @@ export default function OtherCaseStudies({ currentSlug }: { currentSlug: CaseStu
                 />
               </div>
               <div className="flex flex-1 flex-col gap-4 p-card-pad">
-                <h3 className="m-0 text-[clamp(22px,2.3vw,32px)] leading-[1.25] font-bold tracking-[-0.01em] text-ink">
-                  {study.title}
-                </h3>
+                <h3 className="m-0 text-card-h3 text-ink">{study.title}</h3>
                 <p className="m-0 text-body-sm text-body">{study.otherCaseStudyDescription}</p>
                 <span className="mt-auto text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap">
                   View case study →

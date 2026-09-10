@@ -91,7 +91,7 @@ export default function Hero() {
           height={92}
           className="w-[92px] h-[92px] object-contain block"
         />
-        <p className="m-0 text-[clamp(15px,1.2vw,17px)] leading-snug font-semibold text-ink max-w-[22em]">
+        <p className="m-0 text-body-em font-semibold text-ink max-w-[22em]">
           Berit, your partner in untangling complexity.
         </p>
       </div>

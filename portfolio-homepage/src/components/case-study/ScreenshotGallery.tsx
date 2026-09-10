@@ -76,7 +76,7 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
   }, [isOpen, close, step]);
 
   return (
-    <section id="screens" aria-labelledby="screens-heading" className="mt-14">
+    <section id="screens" aria-labelledby="screens-heading">
       <div className="flex items-baseline justify-between gap-6 flex-wrap">
         <p className="font-mono-label text-mono-label uppercase text-muted m-0">Selected screens</p>
         <p className="font-mono-label text-mono-label uppercase text-muted m-0">Desktop and mobile, one platform</p>

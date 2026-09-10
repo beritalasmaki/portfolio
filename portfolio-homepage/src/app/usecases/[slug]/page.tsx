@@ -61,7 +61,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         <div className="grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] gap-x-14">
           <TableOfContents items={tocItems} />
 
-          <div className="min-w-0 flex flex-col gap-14 lg:gap-[clamp(40px,5vw,72px)]">
+          <div className="min-w-0 flex flex-col gap-[clamp(40px,5vw,72px)]">
             <CaseStudyHero study={study} />
 
             {full && <ScreenshotGallery images={study.gallery} />}

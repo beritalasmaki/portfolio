@@ -133,12 +133,17 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
       {open && (
         <nav id={panelId} aria-label="Primary" className="md:hidden flex flex-col items-start gap-4 pt-6">
           {backHref ? (
-            <Link href={backHref} className="text-nav font-semibold text-body">
+            <Link href={backHref} className="text-nav font-semibold text-body whitespace-nowrap">
               {backLabel}
             </Link>
           ) : (
             primaryNav.map((item) => (
-              <a key={item.href} href={item.href} className="text-nav font-semibold" onClick={() => setOpen(false)}>
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-nav font-semibold whitespace-nowrap"
+                onClick={() => setOpen(false)}
+              >
                 {item.label}
               </a>
             ))

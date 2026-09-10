@@ -6,7 +6,7 @@ export default function AboutSection() {
     <section id="about" aria-labelledby="about-heading" className="mt-rhythm">
       <p className="font-mono-label text-mono-label uppercase text-muted m-0">03 / about</p>
 
-      <div className="mt-4 max-w-prose-lg flex flex-col gap-4">
+      <div className="mt-4 max-w-prose flex flex-col gap-4">
         <h2 id="about-heading" className="m-0 text-section-h2 text-ink uppercase">
           A mind worth asking.
           <br />A designer worth hiring.

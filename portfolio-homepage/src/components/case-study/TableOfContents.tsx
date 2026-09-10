@@ -42,7 +42,7 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
   return (
     <nav
       aria-label="On this page"
-      className="mb-10 flex flex-col gap-2 rounded-card border border-rule bg-white p-6 lg:sticky lg:top-8 lg:mb-0 lg:self-start"
+      className="mb-10 flex flex-col gap-4 rounded-card border border-rule bg-white p-6 lg:sticky lg:top-8 lg:mb-0 lg:self-start"
     >
       <p className="font-mono-label text-mono-label uppercase text-muted m-0 pb-2">On this page</p>
       {items.map((item) => {
@@ -52,10 +52,10 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
             key={item.id}
             href={`#${item.id}`}
             aria-current={isActive ? "location" : undefined}
-            className={`flex items-center gap-2 py-2 pl-3 -ml-px text-nav whitespace-nowrap border-l-2 transition-colors ${
+            className={`flex items-center gap-2 py-2 pl-4 -ml-px text-nav whitespace-nowrap border-l-4 transition-colors ${
               isActive
-                ? "border-accent text-accent-dark font-bold"
-                : "border-rule text-body font-medium hover:border-rule-strong hover:text-ink"
+                ? "border-accent text-accent-dark font-bold rounded-r-[16px]"
+                : "border-rule text-body font-semibold hover:border-rule-strong hover:text-ink"
             }`}
           >
             {isActive && <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent shrink-0" />}

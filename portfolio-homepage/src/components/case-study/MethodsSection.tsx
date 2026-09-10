@@ -10,7 +10,7 @@ export default function MethodsSection({ methods }: { methods: string[] }) {
           <li key={method} className="flex items-center gap-grid-gap">
             <span className="text-body-sm font-semibold text-ink whitespace-nowrap">{method}</span>
             {i < methods.length - 1 && (
-              <span aria-hidden="true" className="block w-px h-[18px] bg-rule-strong" />
+              <span aria-hidden="true" className="block w-px h-4 bg-rule-strong" />
             )}
           </li>
         ))}
