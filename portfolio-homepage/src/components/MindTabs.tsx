@@ -152,12 +152,12 @@ export default function MindTabs() {
           tabIndex={0}
           className="flex flex-col gap-4 bg-panel p-pane-pad"
         >
-          <p className="m-0 text-body-lg text-body max-w-prose">{current.body}</p>
           <div className="flex items-center gap-2 font-mono-label text-mono-label-em font-medium uppercase text-accent-dark">
             <span aria-hidden="true" className="block w-6 h-0.5 bg-accent" />
             {current.eyebrow}
           </div>
           <h3 className="m-0 text-card-h3 text-ink whitespace-pre-line">{current.headline}</h3>
+          <p className="m-0 text-body-lg text-body max-w-prose">{current.body}</p>
           <div className="flex gap-4 items-start border-t border-rule-strong pt-4">
             <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent mt-2 shrink-0" />
             <p className="m-0 text-body-sm text-ink-alt max-w-[34em]">{current.highlight}</p>
