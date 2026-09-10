@@ -19,6 +19,12 @@ const config: Config = {
         "footer-meta": "#6b6660",
         accent: "#FC890C",
         "accent-dark": "#A45B0B",
+        // For accent-as-text at large-bold sizes only (WCAG AA large-text
+        // minimum is 3:1, vs. 4.5:1 for normal text). ~3.2:1 on white —
+        // closer to true brand orange than accent-dark, but still fails
+        // AA at normal text sizes, so accent-dark remains the token for
+        // small text (mono eyebrows, TOC items).
+        "accent-hero": "#D9770C",
         panel: "#f5f3ee",
         "panel-alt": "#f0eee9",
         soft: "#fbfaf7",

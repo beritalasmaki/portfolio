@@ -10,9 +10,11 @@ export default function Hero() {
             <br />
             moves you
             <br />
-            {/* accent-dark, not accent: raw #FC890C on white is ~2.4:1,
-                below WCAG AA even at this large size (needs 3:1). */}
-            <span className="text-accent-dark">forward.</span>
+            {/* accent-hero, not raw accent: #FC890C on white is ~2.4:1,
+                below WCAG AA even at this large bold size (needs 3:1).
+                accent-hero (~3.2:1) is the closest-to-brand orange that
+                still clears the large-text AA minimum. */}
+            <span className="text-accent-hero">forward.</span>
           </h1>
           <p className="mt-8 max-w-prose text-lead text-body">
             Make your product easier to use. Give your team a clearer way forward. Turn
