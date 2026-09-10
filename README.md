@@ -1,6 +1,6 @@
 # Hi, I'm Berit 👋
 
-Senior UX & Product Designer with 10 years of experience designing complex digital services, from public sector platforms and industrial expert tools to AI-powered search experiences. I lead Design System and DesignOps work across multi-team, multi-vendor projects, and I'm increasingly using AI as part of my own design and build process.
+Senior UX & Product Designer with 10 years of experience designing complex digital services, from public sector platforms and industrial expert tools to AI-powered search experiences. I work with Design System and DesignOps teams across multi-vendor projects, and I'm increasingly using AI as part of my own design and build process.
 
 This repository is where I experiment outside of Figma: exploring information architecture, prototyping with AI-assisted tools, and picking up hands-on coding skills as design and development keep moving closer together.
 
