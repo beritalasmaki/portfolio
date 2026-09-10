@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #ffffff; -webkit-font-smoothing: antialiased; }
+  a { color: #222222; text-decoration: none; }
+  a:hover { color: #222222; }
+  .om-tab { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+  .om-tablabel { cursor: pointer; }
+  .om-pane { display: none; }
+  .om-lb { display: none; }
+  .om-lb:target { display: flex !important; }
+  #tab1:checked ~ .om-body .om-lab1 { background: #222222 !important; color: #ffffff !important; border-bottom-color: #222222 !important; }
+  #tab1:checked ~ .om-body .om-lab1 .om-arrow { color: #ffffff !important; }
+  #tab1:checked ~ .om-body .om-pane1 { display: flex !important; }
+  #tab2:checked ~ .om-body .om-lab2 { background: #222222 !important; color: #ffffff !important; border-bottom-color: #222222 !important; }
+  #tab2:checked ~ .om-body .om-lab2 .om-arrow { color: #ffffff !important; }
+  #tab2:checked ~ .om-body .om-pane2 { display: flex !important; }
+  #tab3:checked ~ .om-body .om-lab3 { background: #222222 !important; color: #ffffff !important; border-bottom-color: #222222 !important; }
+  #tab3:checked ~ .om-body .om-lab3 .om-arrow { color: #ffffff !important; }
+  #tab3:checked ~ .om-body .om-pane3 { display: flex !important; }
+  #tab4:checked ~ .om-body .om-lab4 { background: #222222 !important; color: #ffffff !important; border-bottom-color: #222222 !important; }
+  #tab4:checked ~ .om-body .om-lab4 .om-arrow { color: #ffffff !important; }
+  #tab4:checked ~ .om-body .om-pane4 { display: flex !important; }
+</style>
+</helmet>
+<div style="font-family: Manrope, Helvetica, Arial, sans-serif; color: #222222; background: #ffffff; padding: 32px clamp(24px, 5vw, 72px) 96px;">
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; border-bottom: 1px solid #eeece7; padding-bottom: 16px;">
+    <img src="assets/berit-logo.png" alt="Berit Alasmäki — UX &amp; Product Designer" style="height: 68px; width: auto; display: block;">
+    <nav style="display: flex; align-items: center; justify-content: flex-end; gap: clamp(16px, 2.2vw, 32px); flex-wrap: wrap; min-width: 0;">
+      <a href="#case-studies" style="font-size: 15px; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;">Selected case studies</a>
+      <a href="#about" style="font-size: 15px; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;">About</a>
+      <span style="display: block; width: 1px; height: 20px; background: #e2ded6; margin-left: clamp(8px, 1.6vw, 24px);"></span>
+      <span style="display: flex; align-items: center; gap: 8px;">
+        <a href="https://www.linkedin.com/" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #4a4a4a; border: 1px solid #e2ded6; border-radius: 999px; padding: 12px 20px; white-space: nowrap;">LinkedIn</a>
+        <a href="#contact" style="font-size: 15px; font-weight: 600; letter-spacing: 0.01em; color: #ffffff; background: #222222; border-radius: 999px; padding: 12px 24px; white-space: nowrap;">Contact</a>
+      </span>
+    </nav>
+  </header>
+  <div style="display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(32px, 6vw, 88px); align-items: center; padding: clamp(32px, 5vw, 56px) 0 clamp(40px, 6vw, 72px);">
+    <div style="min-width: 0;">
+      <h1 style="margin: 0; font-size: clamp(40px, 6.2vw, 84px); line-height: 1.02; font-weight: 800; letter-spacing: -0.03em; text-wrap: pretty;">Good design<br>moves you<br><span style="color: #FC890C;">forward.</span></h1>
+      <p style="margin: 32px 0 0; max-width: 30em; font-size: clamp(16px, 1.35vw, 19px); line-height: 1.6; color: #4a4a4a; text-wrap: pretty;">Make your product easier to use. Give your team a clearer way forward. Turn complexity into value that people can feel.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px;">
+        <a href="#start" style="display: inline-block; background: #222222; color: #ffffff; font-size: 15px; font-weight: 600; padding: 16px 32px; border-radius: 999px; white-space: nowrap;">Find your starting point</a>
+        <a href="#case-studies" style="display: inline-block; border: 1px solid #e2ded6; color: #222222; font-size: 15px; font-weight: 600; padding: 16px 32px; border-radius: 999px; white-space: nowrap;">See the work</a>
+      </div>
+    </div>
+    <div style="min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+      <svg viewBox="0 0 420 260" role="presentation" style="width: 100%; height: auto; display: block; overflow: visible;">
+        <g fill="none" stroke="#FC890C" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 8 24 C 23 20 33 33 41 49 C 49 65 61 74 82 74 C 111 74 143 71 158 78" stroke-width="13"></path>
+          <path d="M 10 27 C 26 25 35 37 43 52 C 52 69 63 77 84 77 C 113 77 142 74 156 80" stroke-width="7" opacity="0.85"></path>
+          <path d="M 158 78 C 170 83 172 96 162 108 C 152 120 152 132 164 138" stroke-width="11"></path>
+          <path d="M 156 81 C 168 87 169 98 159 110 C 150 121 151 130 162 136" stroke-width="6.5" opacity="0.8"></path>
+          <path d="M 164 138 C 182 147 217 148 251 156 C 287 165 311 181 335 203" stroke-width="12.5"></path>
+          <path d="M 166 141 C 185 150 219 151 252 159 C 287 168 310 184 333 205" stroke-width="6" opacity="0.8"></path>
+          <path d="M 335 203 C 348 215 358 226 366 236" stroke-width="10"></path>
+          <path d="M 366 236 C 371 242 375 246 379 249" stroke-width="6"></path>
+          <path d="M 379 249 C 383 252 386 254 389 255" stroke-width="3.2" opacity="0.85"></path>
+          <path d="M 152 102 C 147 111 148 121 155 128" stroke-width="5" opacity="0.75"></path>
+          <path d="M 88 72 C 104 68 122 67 138 69" stroke-width="4.5" opacity="0.6"></path>
+          <path d="M 244 154 C 268 158 290 166 308 178" stroke-width="4.5" opacity="0.55"></path>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div style="display: flex; align-items: center; gap: 24px; padding: 8px 0 clamp(48px, 7vw, 88px);">
+    <img src="assets/berit-photo-new.png" alt="Berit Alasmäki" style="width: 92px; height: 92px; object-fit: contain; display: block;">
+    <p style="margin: 0; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.5; font-weight: 600; color: #222222; max-width: 22em; text-wrap: pretty;">Berit, your partner in untangling complexity.</p>
+  </div>
+  <section style="border-top: 1px solid #eeece7; padding-top: 32px;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">Experience with well-known organisations</div>
+    <div style="display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); align-items: center; justify-items: center; gap: clamp(8px, 1.8vw, 24px); margin-top: 32px;">
+      <img src="logos/kemira.svg" alt="Kemira" style="max-height: 30px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-helsinki.png" alt="University of Helsinki" style="max-height: 20px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-syke.png" alt="Suomen ympäristökeskus — Finnish Environment Institute" style="max-height: 22px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-digione.png" alt="Digione" style="max-height: 19px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-espoo.png" alt="Espoo Esbo" style="max-height: 28px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-vantaa.png" alt="Vantaa" style="max-height: 19px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-fintraffic.png" alt="Fintraffic" style="max-height: 36px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-cardiff.png" alt="Cardiff University" style="max-height: 34px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-csc.png" alt="CSC" style="max-height: 30px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-vero.png" alt="Vero Skatt" style="max-height: 21px; max-width: 100%; height: auto; width: auto; display: block;">
+      <img src="logos/ink-volkswagen.png" alt="Volkswagen" style="max-height: 30px; max-width: 100%; height: auto; width: auto; display: block;">
+    </div>
+  </section>
+  <section id="key-skills" style="margin-top: clamp(64px, 9vw, 120px);">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">01 / your next move</div>
+    </div>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: clamp(24px, 4vw, 64px); flex-wrap: wrap; margin-top: 16px;">
+      <h2 style="margin: 0; font-size: clamp(30px, 3.6vw, 52px); line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; color: #222222; text-wrap: pretty;">What's on your mind?</h2>
+      <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #6b6660; max-width: 20em; text-wrap: pretty;">A good collaboration starts with a better question.</p>
+    </div>
+    <div style="position: relative; margin-top: 32px;">
+      <input type="radio" name="mind" id="tab1" class="om-tab" defaultChecked="{{ true }}">
+      <input type="radio" name="mind" id="tab2" class="om-tab">
+      <input type="radio" name="mind" id="tab3" class="om-tab">
+      <input type="radio" name="mind" id="tab4" class="om-tab">
+      <div class="om-body" style="background: #f5f3ee; border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: stretch;">
+        <div style="display: flex; flex-direction: column; background: #fbfaf7;">
+          <label for="tab1" class="om-tablabel om-lab1" style="display: flex; flex: 1 1 0; min-height: 0; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(16px, 2.2vw, 24px) clamp(16px, 2.2vw, 32px); background: #fbfaf7; color: #222222; border-bottom: 1px solid #eeece7;">
+            <span style="font-size: clamp(15px, 1.2vw, 17px); font-weight: 600; line-height: 1.35; text-wrap: pretty;">Can design grow our business?</span>
+            <span class="om-arrow" style="font-size: 15px; color: #8a8580; white-space: nowrap;">↗</span>
+          </label>
+          <label for="tab2" class="om-tablabel om-lab2" style="display: flex; flex: 1 1 0; min-height: 0; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(16px, 2.2vw, 24px) clamp(16px, 2.2vw, 32px); background: #fbfaf7; color: #222222; border-bottom: 1px solid #eeece7;">
+            <span style="font-size: clamp(15px, 1.2vw, 17px); font-weight: 600; line-height: 1.35; text-wrap: pretty;">Can you solve a tricky problem?</span>
+            <span class="om-arrow" style="font-size: 15px; color: #8a8580; white-space: nowrap;">↗</span>
+          </label>
+          <label for="tab3" class="om-tablabel om-lab3" style="display: flex; flex: 1 1 0; min-height: 0; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(16px, 2.2vw, 24px) clamp(16px, 2.2vw, 32px); background: #fbfaf7; color: #222222; border-bottom: 1px solid #eeece7;">
+            <span style="font-size: clamp(15px, 1.2vw, 17px); font-weight: 600; line-height: 1.35; text-wrap: pretty;">Will this make a real difference?</span>
+            <span class="om-arrow" style="font-size: 15px; color: #8a8580; white-space: nowrap;">↗</span>
+          </label>
+          <label for="tab4" class="om-tablabel om-lab4" style="display: flex; flex: 1 1 0; min-height: 0; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(16px, 2.2vw, 24px) clamp(16px, 2.2vw, 32px); background: #fbfaf7; color: #222222; border-bottom: 1px solid #eeece7;">
+            <span style="font-size: clamp(15px, 1.2vw, 17px); font-weight: 600; line-height: 1.35; text-wrap: pretty;">How can you help my product?</span>
+            <span class="om-arrow" style="font-size: 15px; color: #8a8580; white-space: nowrap;">↗</span>
+          </label>
+        </div>
+        <div style="display: flex; flex-direction: column; background: #f5f3ee;">
+          <div class="om-pane om-pane1" style="flex-direction: column; gap: 16px; padding: clamp(24px, 3vw, 40px);">
+            <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #A45B0B"><span style="display: block; width: 24px; height: 2px; background: rgb(252, 137, 12);"></span>what you get</div>
+            <h3 style="margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; color: #222222; text-wrap: pretty;">Less friction.<br>More room to grow.</h3>
+            <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 36em; text-wrap: pretty;">Better adoption can support revenue. Less avoidable work can protect margins. I help find the friction in your product, fix the journeys around it, and agree with you on how we measure the business impact.</p>
+            <div style="display: flex; gap: 16px; align-items: flex-start; border-top: 1px solid #e2ded6; padding-top: 16px;">
+              <span style="width: 6px; height: 6px; border-radius: 999px; background: #FC890C; margin-top: 8px; flex: none;"></span>
+              <p style="margin: 0; font-size: clamp(14px, 1.1vw, 16px); line-height: 1.55; color: #3a3a3a; max-width: 34em; text-wrap: pretty;">In university services, clearer self-service helped people find answers faster and eased pressure on staff.</p>
+            </div><a href="#case-studies" style="margin-left: 16px; font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">See the project behind the answer</a>
+          </div>
+          <div class="om-pane om-pane2" style="flex-direction: column; gap: 16px; padding: clamp(24px, 3vw, 40px);">
+            <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #A45B0B"><span style="display: block; width: 24px; height: 2px; background: rgb(252, 137, 12);"></span>what you get</div>
+            <h3 style="margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; color: #222222; text-wrap: pretty;">Complexity, untangled.<br>Decisions, made.</h3>
+            <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 36em; text-wrap: pretty;">Long-running problems usually hide in the gaps between teams, tools and rules. I map how the work really flows, name the constraints out loud, and design something the organisation can actually run.</p>
+            <div style="display: flex; gap: 16px; align-items: flex-start; border-top: 1px solid #e2ded6; padding-top: 16px;">
+              <span style="width: 6px; height: 6px; border-radius: 999px; background: #FC890C; margin-top: 8px; flex: none;"></span>
+              <p style="margin: 0; font-size: clamp(14px, 1.1vw, 16px); line-height: 1.55; color: #3a3a3a; max-width: 34em; text-wrap: pretty;">In industrial data tooling, a guided calculation flow replaced error-prone manual steps and cut the guesswork out of daily decisions.</p>
+            </div>
+            <a href="#case-studies" style="margin-left: 16px; font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">See the project behind the answer</a>
+          </div>
+          <div class="om-pane om-pane3" style="flex-direction: column; gap: 16px; padding: clamp(24px, 3vw, 40px);">
+            <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #A45B0B"><span style="display: block; width: 24px; height: 2px; background: rgb(252, 137, 12);"></span>what you get</div>
+            <h3 style="margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; color: #222222; text-wrap: pretty;">Evidence first.<br>Opinions later.</h3>
+            <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 36em; text-wrap: pretty;">We agree on what better looks like before anything is drawn. Then we test with the people who use the product, watch what changes, and let the results steer the next round of work.</p>
+            <div style="display: flex; gap: 16px; align-items: flex-start; border-top: 1px solid #e2ded6; padding-top: 16px;">
+              <span style="width: 6px; height: 6px; border-radius: 999px; background: #FC890C; margin-top: 8px; flex: none;"></span>
+              <p style="margin: 0; font-size: clamp(14px, 1.1vw, 16px); line-height: 1.55; color: #3a3a3a; max-width: 34em; text-wrap: pretty;">In public sector service design, testing with real users settled a long-standing internal debate that no amount of discussion had resolved.</p>
+            </div>
+            <a href="#case-studies" style="margin-left: 16px; font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">See the project behind the answer</a>
+          </div>
+          <div class="om-pane om-pane4" style="flex-direction: column; gap: 16px; padding: clamp(24px, 3vw, 40px);">
+            <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #A45B0B"><span style="display: block; width: 24px; height: 2px; background: rgb(252, 137, 12);"></span>what you get</div>
+            <h3 style="margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; color: #222222; text-wrap: pretty;">A fresh perspective.<br>A practical way forward.</h3>
+            <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 36em; text-wrap: pretty;">Start with a short review of where your product loses people. From there we shape a plan you can act on: the right problem framed, the design work done, and handover that developers can build from.</p>
+            <div style="display: flex; gap: 16px; align-items: flex-start; border-top: 1px solid #e2ded6; padding-top: 16px;">
+              <span style="width: 6px; height: 6px; border-radius: 999px; background: #FC890C; margin-top: 8px; flex: none;"></span>
+              <p style="margin: 0; font-size: clamp(14px, 1.1vw, 16px); line-height: 1.55; color: #3a3a3a; max-width: 34em; text-wrap: pretty;">I work closely with your product and engineering teams, connecting the details through reusable components and clear decisions. On a large public sector platform, closer collaboration with engineering meant fewer decisions got lost between design and build.</p>
+            </div>
+            <a href="#case-studies" style="margin-left: 16px; font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">See the project behind the answer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="case-studies" style="margin-top: clamp(64px, 9vw, 120px);">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">02 / selected case studies</div>
+    </div>
+    <h2 style="margin: 16px 0 0; font-size: clamp(30px, 3.6vw, 52px); line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; color: #222222; text-wrap: pretty;">What better looks like.</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(16px, 2vw, 32px); margin-top: 32px; align-items: stretch;">
+      <article style="display: flex; flex-direction: column; background: #f5f3ee; border-radius: 20px; overflow: hidden;">
+        <div style="background: #f5f3ee;">
+          <a href="#lb-kemira" title="Open full size" style="display: block; cursor: zoom-in;"><img src="case/kemira.png" alt="Kemira data tools" style="width: 100%; aspect-ratio: 16 / 13; object-fit: cover; object-position: top center; display: block; background: #f0eee9;"></a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 2.6vw, 32px);">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">INDUSTRIAL DATA TOOLS · 2020–2023</div>
+          <h3 style="margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.12; font-weight: 800; letter-spacing: -0.02em; color: #222222; text-wrap: pretty;">Less guesswork.<br>More confident decisions.</h3>
+          <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 34em; text-wrap: pretty;">Complex, data-heavy calculation and monitoring tools, cleaned up. Expert users get reliable tools that cut manual errors out of daily work.</p>
+          <a href="#case-studies" style="margin-left: 0; font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">Explore the case</a>
+        </div>
+      </article>
+      <article style="display: flex; flex-direction: column; background: #f5f3ee; border-radius: 20px; overflow: hidden;">
+        <div style="background: #f5f3ee;">
+          <a href="#lb-university" title="Open full size" style="display: block; cursor: zoom-in;"><img src="case/university.png" alt="University CX and AI tools" style="width: 100%; aspect-ratio: 16 / 13; object-fit: cover; object-position: top center; display: block; background: #f0eee9;"></a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 2.6vw, 32px);">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">UNIVERSITY CX &amp; AI TOOLS · 2025–2026</div>
+          <h3 style="margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.12; font-weight: 800; letter-spacing: -0.02em; color: #222222; text-wrap: pretty;">Help people find answers. Give staff room to focus.</h3>
+          <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 34em; text-wrap: pretty;">An AI-powered search and service hub that lowers support pressure and helps students find what they need on their own.</p>
+          <a href="#case-studies" style="margin-left: 0; font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">Explore the case</a>
+        </div>
+      </article>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(16px, 2vw, 32px); margin-top: clamp(16px, 2vw, 32px); align-items: stretch;">
+      <article style="display: flex; flex-direction: column; background: #f5f3ee; border-radius: 20px; overflow: hidden;">
+        <div style="background: #f5f3ee;">
+          <a href="#lb-education" title="Open full size" style="display: block; cursor: zoom-in;"><img src="case/education-crisp.png" alt="Education platform" style="width: 100%; aspect-ratio: 16 / 13; object-fit: cover; object-position: top center; display: block; background: #f0eee9;"></a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 2.6vw, 32px);">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">NATIONAL EDUCATION ADMINISTRATION PLATFORM / PUBLIC SECTOR · 2021–2024</div>
+          <h3 style="margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.12; font-weight: 800; letter-spacing: -0.02em; color: #222222; text-wrap: pretty;">Many teams.<br>One coherent experience.</h3>
+          <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 34em; text-wrap: pretty;">A shared, standardised design foundation for complex municipal education systems, unifying usability and logic across several platforms.</p>
+          <a href="#case-studies" style="margin-left: 0; font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">Explore the full case study</a>
+        </div>
+      </article>
+      <article style="display: flex; flex-direction: column; background: #f5f3ee; border-radius: 20px; overflow: hidden;">
+        <div style="background: #f5f3ee;">
+          <a href="#lb-syke" title="Open full size" style="display: block; cursor: zoom-in;"><img src="case/syke-crisp.png" alt="Environmental data systems" style="width: 100%; aspect-ratio: 16 / 13; object-fit: cover; object-position: top center; display: block; background: #f0eee9;"></a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 2.6vw, 32px);">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">ENVIRONMENTAL DATA SYSTEMS · 2020–2024</div>
+          <h3 style="margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.12; font-weight: 800; letter-spacing: -0.02em; color: #222222; text-wrap: pretty;">Legacy systems.<br>Modern research tools.</h3>
+          <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 34em; text-wrap: pretty;">Monitoring and reporting tools for environmental data, built so specialists can find, compare and publish results without fighting the interface.</p>
+          <a href="#case-studies" style="margin-left: 0; font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">Explore the case</a>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section id="about" style="margin-top: clamp(64px, 9vw, 120px);">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">03 / about</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(24px, 4vw, 64px); margin-top: 16px; align-items: start;">
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <h2 style="margin: 0; font-size: clamp(30px, 3.6vw, 52px); line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; color: #222222; text-wrap: pretty;">How I work<br>with a team.</h2>
+        <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.6; color: #8a8580; text-wrap: pretty;">UX &amp; Product Design · Service Design · Design Systems</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <p style="margin: 0; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; color: #4a4a4a; max-width: 34em; text-wrap: pretty;">I'm a senior UX and product designer based in Finland, with more than ten years of experience turning complicated, high-stakes products into something people can actually use. I work closely with product owners, specialists and engineers to make sure we're solving the right problem before we commit to a solution.</p>
+        <a href="https://www.linkedin.com/" style="font-size: 15px; font-weight: 600; color: #222222; border-bottom: 1px solid #FC890C; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">Get to know me on LinkedIn</a>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(16px, 2vw, 32px); margin-top: 32px; align-items: stretch;">
+      <article style="display: flex; flex-direction: column; background: #f5f3ee; border-radius: 20px; overflow: hidden;">
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 2.6vw, 32px);">
+          <div style="font-size: clamp(30px, 3vw, 42px); line-height: 1; font-weight: 800; letter-spacing: -0.03em; color: #222222;">01</div>
+          <h3 style="margin: 0; font-size: clamp(19px, 1.7vw, 24px); line-height: 1.2; font-weight: 700; letter-spacing: -0.015em; color: #222222; text-wrap: pretty;">Find the right problem.</h3>
+          <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; text-wrap: pretty;">I dig into user goals, business goals and constraints with the people who know the domain, and question assumptions before they turn into expensive decisions.</p>
+        </div>
+        <div style="margin-top: auto; border-top: 1px solid #e2ded6; display: flex; flex-direction: column; gap: 8px; padding: clamp(16px, 2vw, 24px) clamp(24px, 2.6vw, 32px);">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">Outcome</div>
+          <p style="margin: 0; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.4; font-weight: 700; color: #222222; text-wrap: pretty;">A direction the team agrees on.</p>
+        </div>
+      </article>
+      <article style="display: flex; flex-direction: column; background: #f5f3ee; border-radius: 20px; overflow: hidden;">
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 2.6vw, 32px);">
+          <div style="font-size: clamp(30px, 3vw, 42px); line-height: 1; font-weight: 800; letter-spacing: -0.03em; color: #222222;">02</div>
+          <h3 style="margin: 0; font-size: clamp(19px, 1.7vw, 24px); line-height: 1.2; font-weight: 700; letter-spacing: -0.015em; color: #222222; text-wrap: pretty;">Make possibilities tangible.</h3>
+          <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; text-wrap: pretty;">I explore several approaches and turn the strongest into prototypes the team and real users can react to, then we work from what they tell us.</p>
+        </div>
+        <div style="margin-top: auto; border-top: 1px solid #e2ded6; display: flex; flex-direction: column; gap: 8px; padding: clamp(16px, 2vw, 24px) clamp(24px, 2.6vw, 32px);">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">Outcome</div>
+          <p style="margin: 0; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.4; font-weight: 700; color: #222222; text-wrap: pretty;">Evidence for what to build next.</p>
+        </div>
+      </article>
+      <article style="display: flex; flex-direction: column; background: #f5f3ee; border-radius: 20px; overflow: hidden;">
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 2.6vw, 32px);">
+          <div style="font-size: clamp(30px, 3vw, 42px); line-height: 1; font-weight: 800; letter-spacing: -0.03em; color: #222222;">03</div>
+          <h3 style="margin: 0; font-size: clamp(19px, 1.7vw, 24px); line-height: 1.2; font-weight: 700; letter-spacing: -0.015em; color: #222222; text-wrap: pretty;">Help the work ship.</h3>
+          <p style="margin: 0; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; color: #4a4a4a; text-wrap: pretty;">I stay with the work through build, sitting close to engineering and leaving behind reusable components and decisions the team can point back to.</p>
+        </div>
+        <div style="margin-top: auto; border-top: 1px solid #e2ded6; display: flex; flex-direction: column; gap: 8px; padding: clamp(16px, 2vw, 24px) clamp(24px, 2.6vw, 32px);">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8580;">Outcome</div>
+          <p style="margin: 0; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.4; font-weight: 700; color: #222222; text-wrap: pretty;">A product that works as a whole.</p>
+        </div>
+      </article>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; background: #f5f3ee; border-radius: 20px; padding: clamp(24px, 2.4vw, 32px) clamp(24px, 2.6vw, 32px); margin-top: clamp(16px, 2vw, 32px);">
+      <span style="font-size: 20px; color: #FC890C; white-space: nowrap;">↗</span>
+      <p style="margin: 0; font-size: clamp(16px, 1.4vw, 20px); line-height: 1.45; font-weight: 700; color: #222222; text-wrap: pretty;">Whatever the project, we agree on what success looks like before the work starts.</p>
+    </div>
+  </section>
+  <section id="contact" style="background: #FC890C; margin: clamp(64px, 9vw, 120px) calc(-1 * clamp(24px, 5vw, 72px)) 0; padding: clamp(48px, 7vw, 96px) clamp(24px, 5vw, 72px);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(24px, 4vw, 64px); align-items: end;">
+      <h2 style="margin: 0; font-size: clamp(34px, 5vw, 76px); line-height: 1.02; font-weight: 800; letter-spacing: -0.03em; color: #222222; text-wrap: pretty;">What could we<br>make better?</h2>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <p style="margin: 0; font-size: clamp(16px, 1.35vw, 19px); line-height: 1.55; color: #222222; max-width: 30em; text-wrap: pretty;">Tell me what you're building, what's getting in the way, and where you want to go.</p>
+        <a href="mailto:berit.alasmaki@gmail.com" style="font-size: clamp(16px, 1.5vw, 22px); font-weight: 700; color: #222222; border-bottom: 2px solid #222222; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">berit.alasmaki@gmail.com</a>
+        <a href="https://www.linkedin.com/" style="font-size: 15px; font-weight: 700; color: #222222; border-bottom: 1px solid #222222; padding-bottom: 8px; align-self: flex-start; white-space: nowrap;">Connect on LinkedIn</a>
+      </div>
+    </div>
+  </section>
+  <footer style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-top: clamp(32px, 3vw, 40px);">
+    <img src="assets/berit-logo.png" alt="Berit Alasmäki — UX &amp; Product Designer" style="height: 68px; width: auto; display: block;">
+    <p style="margin: 0; font-size: 13px; color: #6b6660; white-space: nowrap;">© 2026 Berit Alasmäki. All rights reserved.</p>
+  </footer>
+  <div id="lb-kemira" class="om-lb" style="position: fixed; inset: 0; z-index: 60; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 56px); background: rgba(34, 34, 34, 0.8);">
+    <a href="#case-studies" aria-label="Close" style="position: absolute; inset: 0; display: block;"></a>
+    <div style="position: relative; max-width: 100%; max-height: 100%; display: flex; flex-direction: column; gap: 16px; overflow: auto; align-items: flex-start;">
+      <div style="position: sticky; top: 0; left: 0; z-index: 2; align-self: stretch; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: #222222; padding: 16px 16px; border-radius: 10px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #ffffff; white-space: nowrap;">Kemira data tools</div>
+        <a href="#case-studies" style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #ffffff; border: 1px solid #ffffff; border-radius: 999px; padding: 8px 16px; white-space: nowrap;">Close ✕</a>
+      </div>
+      <img src="case/kemira.png" alt="Kemira data tools" style="display: block; max-width: none; width: auto; height: auto; border-radius: 12px; background: #ffffff;">
+    </div>
+  </div>
+  <div id="lb-university" class="om-lb" style="position: fixed; inset: 0; z-index: 60; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 56px); background: rgba(34, 34, 34, 0.8);">
+    <a href="#case-studies" aria-label="Close" style="position: absolute; inset: 0; display: block;"></a>
+    <div style="position: relative; max-width: 100%; max-height: 100%; display: flex; flex-direction: column; gap: 16px; overflow: auto; align-items: flex-start;">
+      <div style="position: sticky; top: 0; left: 0; z-index: 2; align-self: stretch; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: #222222; padding: 16px 16px; border-radius: 10px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #ffffff; white-space: nowrap;">University CX and AI tools</div>
+        <a href="#case-studies" style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #ffffff; border: 1px solid #ffffff; border-radius: 999px; padding: 8px 16px; white-space: nowrap;">Close ✕</a>
+      </div>
+      <img src="case/university.png" alt="University CX and AI tools" style="display: block; max-width: none; width: auto; height: auto; border-radius: 12px; background: #ffffff;">
+    </div>
+  </div>
+  <div id="lb-education" class="om-lb" style="position: fixed; inset: 0; z-index: 60; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 56px); background: rgba(34, 34, 34, 0.8);">
+    <a href="#case-studies" aria-label="Close" style="position: absolute; inset: 0; display: block;"></a>
+    <div style="position: relative; max-width: 100%; max-height: 100%; display: flex; flex-direction: column; gap: 16px; overflow: auto; align-items: flex-start;">
+      <div style="position: sticky; top: 0; left: 0; z-index: 2; align-self: stretch; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: #222222; padding: 16px 16px; border-radius: 10px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #ffffff; white-space: nowrap;">Education platform</div>
+        <a href="#case-studies" style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #ffffff; border: 1px solid #ffffff; border-radius: 999px; padding: 8px 16px; white-space: nowrap;">Close ✕</a>
+      </div>
+      <img src="case/education-v2.png" alt="Education platform" style="display: block; max-width: none; width: auto; height: auto; border-radius: 12px; background: #ffffff;">
+    </div>
+  </div>
+  <div id="lb-syke" class="om-lb" style="position: fixed; inset: 0; z-index: 60; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 56px); background: rgba(34, 34, 34, 0.8);">
+    <a href="#case-studies" aria-label="Close" style="position: absolute; inset: 0; display: block;"></a>
+    <div style="position: relative; max-width: 100%; max-height: 100%; display: flex; flex-direction: column; gap: 16px; overflow: auto; align-items: flex-start;">
+      <div style="position: sticky; top: 0; left: 0; z-index: 2; align-self: stretch; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: #222222; padding: 16px 16px; border-radius: 10px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #ffffff; white-space: nowrap;">Environmental data systems</div>
+        <a href="#case-studies" style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #ffffff; border: 1px solid #ffffff; border-radius: 999px; padding: 8px 16px; white-space: nowrap;">Close ✕</a>
+      </div>
+      <img src="case/syke.png" alt="Environmental data systems" style="display: block; max-width: none; width: auto; height: auto; border-radius: 12px; background: #ffffff;">
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

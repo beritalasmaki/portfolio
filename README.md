@@ -12,7 +12,7 @@ As a designer, most of my work lives in Figma, workshops, and stakeholder conver
 
 | Project | Description | Stack |
 |---|---|---|
-| `project-name` | Short description of what it does and what it demonstrates | Tech used |
+| [`portfolio-homepage`](./portfolio-homepage) | My personal UX/product design portfolio site, rebuilt from Webflow as a real coded app | Next.js, TypeScript, Tailwind CSS |
 | `Design System Case study` | Simple Design System structure built with ArkUI Headless components | Typescript, ArkUI, CSS |
 
 *(This list is a work in progress, updated as new experiments get added.)*
