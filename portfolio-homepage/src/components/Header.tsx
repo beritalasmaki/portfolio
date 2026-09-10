@@ -94,7 +94,7 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
             </a>
             <a
               href="#contact"
-              className="text-nav font-semibold whitespace-nowrap text-white bg-ink rounded-pill py-3 px-6 transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:-translate-y-px focus-visible:outline-white"
+              className="text-nav font-semibold whitespace-nowrap text-white bg-ink rounded-pill py-3 px-6 transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:text-white hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:text-white focus-visible:-translate-y-px focus-visible:outline-white"
             >
               Contact
             </a>
@@ -166,7 +166,7 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
           <a
             href="#contact"
             onClick={() => setOpen(false)}
-            className="text-nav font-semibold text-white bg-ink rounded-pill py-3 px-6 transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:-translate-y-px focus-visible:outline-white"
+            className="text-nav font-semibold text-white bg-ink rounded-pill py-3 px-6 transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:text-white hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:text-white focus-visible:-translate-y-px focus-visible:outline-white"
           >
             Contact
           </a>

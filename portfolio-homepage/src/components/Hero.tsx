@@ -23,7 +23,7 @@ export default function Hero() {
           <div className="flex flex-wrap gap-4 mt-10">
             <a
               href="#key-skills"
-              className="inline-block bg-ink text-white text-nav font-semibold py-4 px-8 rounded-pill whitespace-nowrap transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:-translate-y-px focus-visible:outline-white"
+              className="inline-block bg-ink text-white text-nav font-semibold py-4 px-8 rounded-pill whitespace-nowrap transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:text-white hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:text-white focus-visible:-translate-y-px focus-visible:outline-white"
             >
               Find your starting point
             </a>
