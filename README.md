@@ -10,10 +10,10 @@ As a designer, most of my work lives in Figma, workshops, and stakeholder conver
 
 ## 📂 What you'll find here
 
-| Project | Description | Stack |
-|---|---|---|
-| [`portfolio-homepage`](./portfolio-homepage) | My personal UX/product design portfolio site, rebuilt from Webflow as a real coded app | Next.js, TypeScript, Tailwind CSS |
-| `Design System Case study` | Simple Design System structure built with ArkUI Headless components | Typescript, ArkUI, CSS |
+| Project | Description | Stack | Link |
+|---|---|---|---|
+| [`portfolio-homepage`](./portfolio-homepage) | My personal UX/product design portfolio site, rebuilt from Webflow as a real coded app | Next.js, TypeScript, Tailwind CSS | https://portfolio-homepage-navy.vercel.app/ |
+| `Design System Case study` | Simple Design System structure built with ArkUI Headless components | Typescript, ArkUI, CSS | https://design-system-use-case.vercel.app/ |
 
 *(This list is a work in progress, updated as new experiments get added.)*
 
