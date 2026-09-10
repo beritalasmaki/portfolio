@@ -15,7 +15,7 @@ export default function ChallengesSection({ subsections }: { subsections: Challe
               {item.number}
             </p>
             <h3 className="m-0 text-card-h3 text-ink">{item.title}</h3>
-            <p className="m-0 max-w-prose text-body-lg text-body">{item.body}</p>
+            <p className="m-0 max-w-prose-cs text-body-lg text-body">{item.body}</p>
           </div>
         ))}
       </div>

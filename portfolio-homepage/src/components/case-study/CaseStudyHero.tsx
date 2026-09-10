@@ -10,7 +10,7 @@ export default function CaseStudyHero({ study }: { study: CaseStudy }) {
       <h1 id="case-study-title" className="mt-4 m-0 text-hero max-w-[22em]">
         {study.title}
       </h1>
-      <p className="mt-6 max-w-prose text-lead text-body">{full ? study.intro : study.description}</p>
+      <p className="mt-6 max-w-prose-cs text-lead text-body">{full ? study.intro : study.description}</p>
 
       {full && (
         <div className="mt-[clamp(32px,3.5vw,48px)] grid grid-cols-1 sm:grid-cols-2 gap-grid-gap">

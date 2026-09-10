@@ -100,6 +100,10 @@ const config: Config = {
       maxWidth: {
         prose: "36em",
         "prose-lg": "44em",
+        // Case-study pages have more room to spare next to the sticky TOC
+        // than the homepage's simpler stacked layout, so their body copy
+        // reads at a fixed 800px instead of the general 36em rule.
+        "prose-cs": "800px",
       },
     },
   },

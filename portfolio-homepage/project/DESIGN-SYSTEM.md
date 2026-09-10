@@ -81,7 +81,11 @@ Fallbacks:      Helvetica, Arial, sans-serif / monospace
 - `white-space: nowrap` on all nav items, buttons, pills and captions — except
   the sticky TOC's items, which wrap (see Sticky TOC below).
 - Never break words mid-character; no hyphenation.
-- Body copy `max-width: 30–36em`.
+- Body copy `max-width: 30–36em` — except case-study page body text
+  (hero intro, impact intro, text sections, challenges), which reads at a
+  fixed `800px`: that layout has a sticky TOC eating into the gutter, so
+  the content column has more width to spare than the homepage's simpler
+  stacked sections do.
 - Mono is used only for labels, eyebrows, captions and numbering — never for body copy.
 
 ### Section numbering
@@ -265,9 +269,11 @@ Real interactive component (not the design files' CSS-only `:target` version):
 ### Header (all pages)
 Single row, one hairline below:
 ```
-[logo 68px]  ————————  [page links]  |  [LinkedIn pill]  [Contact button]
+[logo 80px]  ————————  [page links]  |  [LinkedIn pill]  [Contact button]
 ```
-- Logo: `assets/berit-logo.png`, `height: 68px` (same in header and footer)
+- Logo: `assets/berit-logo.png`, `height: 80px` (same in header and footer) —
+  large enough that the "UX & Product Designer" role line under the
+  wordmark stays legible
 - `border-bottom: 1px solid #eeece7; padding-bottom: 16px`
 - Homepage links: Selected case studies · About
 - Case-study pages: `← Back to work` in place of the page links

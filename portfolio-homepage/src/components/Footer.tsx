@@ -8,9 +8,9 @@ export default function Footer() {
       <Image
         src="/logo.png"
         alt={`${site.name} — ${site.role}`}
-        width={220}
-        height={68}
-        className="h-[68px] w-auto"
+        width={256}
+        height={80}
+        className="h-[80px] w-auto"
       />
       <p className="m-0 text-[13px] text-footer-meta whitespace-nowrap">
         © {year} {site.name}. All rights reserved.

@@ -99,11 +99,6 @@ export const industrialTool: CaseStudy = {
     },
     {
       number: "03",
-      title: "Working through COVID",
-      body: "Much of this project happened during COVID, so most collaboration, including with the factories and factory workers who used the tool, happened remotely instead of on site, which would have been our normal way of working. To make remote research work well, we relied more heavily on video calls, screen sharing, and asking factory workers to walk us through their daily tasks on camera instead of observing in person. It required more structure and clearer questions going into each session, since we couldn't rely on picking up context just by being physically present.",
-    },
-    {
-      number: "04",
       title: "Modernizing the Design System",
       body: "The existing Design System lived in Sketch, an older tool that made collaboration with the rest of the team harder. Alongside the day-to-day design work, I took on migrating the library over to Figma, cleaning up and rebuilding components along the way rather than just copying them over as-is, so the team ended up with a more usable and maintainable design foundation to build on going forward.",
     },

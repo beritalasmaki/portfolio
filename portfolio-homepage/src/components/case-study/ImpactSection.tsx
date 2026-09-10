@@ -7,7 +7,7 @@ export default function ImpactSection({ intro, cards }: { intro: string; cards: 
       <h2 id="impact-heading" className="mt-4 m-0 text-section-h2 text-ink">
         The Impact
       </h2>
-      <p className="mt-6 max-w-prose text-body-lg text-body">{intro}</p>
+      <p className="mt-6 max-w-prose-cs text-body-lg text-body">{intro}</p>
 
       <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-grid-gap list-none p-0">
         {cards.map((card) => (

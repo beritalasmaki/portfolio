@@ -50,10 +50,10 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
           <Image
             src="/logo.png"
             alt={`${site.name} — ${site.role}`}
-            width={220}
-            height={68}
+            width={256}
+            height={80}
             priority
-            className="h-[68px] w-auto"
+            className="h-[80px] w-auto"
           />
         </Link>
 
