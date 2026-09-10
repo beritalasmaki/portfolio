@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&family=Montserrat:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+:root {
+	--color-content-primary: #1f2321;
+	--color-content-secondary: #4d5550;
+	--color-content-muted: #69736c;
+	--color-surface-canvas: #ffffff;
+	--color-surface-subtle: #f3f6f0;
+	--color-surface-raised: #e8eee5;
+	--color-surface-inverse: #1f2321;
+	--color-action-primary: #1f2321;
+	--color-action-accent: #f28b30;
+	--color-action-accent-dark: #b85b16;
+	--color-border-default: #dce3dc;
+	--color-border-strong: #7d8b80;
+	--color-focus-ring: #b85b16;
+	--shadow-panel: 0 18px 45px rgba(31, 35, 33, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+	margin: 0;
+	background: var(--color-surface-canvas);
+	color: var(--color-content-primary);
+	font-family: "Montserrat", Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	line-height: 1.6;
+}
+
+a { text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+.material-symbols-outlined {
+	font-family: "Material Symbols Outlined";
+	font-style: normal;
+	font-weight: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	font-feature-settings: "liga";
+	font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20;
+	vertical-align: middle;
+}
+
+:focus-visible {
+	outline: 3px solid var(--color-focus-ring);
+	outline-offset: 3px;
+}
+
+::selection { background: var(--color-action-accent); color: var(--color-content-primary); }
+
+.skip-link {
+	position: fixed;
+	z-index: 50;
+	top: 16px;
+	left: 16px;
+	transform: translateY(-150%);
+	padding: 8px 12px;
+	border-radius: 8px;
+	background: var(--color-action-primary);
+	color: #fff;
+	font-weight: 700;
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+.eyebrow {
+	color: var(--color-action-accent-dark);
+	font-family: "IBM Plex Mono", monospace;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.token-name {
+	color: var(--color-content-primary);
+	font-family: "IBM Plex Mono", monospace;
+	font-size: 12px;
+}
+
+.display-title {
+	max-width: 10ch;
+	margin: 0;
+	font-size: clamp(40px, 6vw, 82px);
+	font-weight: 800;
+	letter-spacing: -0.045em;
+	line-height: 0.98;
+	text-wrap: balance;
+}
+
+.body-copy { max-width: 48ch; color: var(--color-content-secondary); }
+
+.surface-grid {
+	background-image: linear-gradient(var(--color-border-default) 1px, transparent 1px), linear-gradient(90deg, var(--color-border-default) 1px, transparent 1px);
+	background-size: 32px 32px;
+	background-position: -1px -1px;
+}
+
+.preview-surface[data-preview-theme="light"] {
+	--preview-surface: #ffffff;
+	--preview-surface-raised: #f3f6f0;
+	--preview-content: #1f2321;
+	--preview-content-muted: #69736c;
+	--preview-border: #c7d1c8;
+	--preview-action: #1f2321;
+	--preview-action-text: #ffffff;
+	background: var(--preview-surface);
+	color: var(--preview-content);
+}
+
+.preview-surface[data-preview-theme="dark"] {
+	--preview-surface: #1f2321;
+	--preview-surface-raised: #303733;
+	--preview-content: #ffffff;
+	--preview-content-muted: #c5cec7;
+	--preview-border: #69736c;
+	--preview-action: #ffffff;
+	--preview-action-text: #1f2321;
+	background: var(--preview-surface);
+	color: var(--preview-content);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+	*, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

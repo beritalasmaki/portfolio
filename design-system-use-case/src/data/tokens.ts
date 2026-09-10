@@ -1,0 +1,60 @@
+export const primitiveTokens = {
+  colors: [
+    { name: "color.orange.500", value: "#f28b30", type: "color", description: "Warm action accent." },
+    { name: "color.orange.700", value: "#b85b16", type: "color", description: "Accessible accent text." },
+    { name: "color.charcoal.950", value: "#1f2321", type: "color", description: "Primary ink and dark surfaces." },
+    { name: "color.charcoal.700", value: "#4d5550", type: "color", description: "Body copy and secondary content." },
+    { name: "color.charcoal.500", value: "#69736c", type: "color", description: "Muted labels and metadata." },
+    { name: "color.sage.50", value: "#f3f6f0", type: "color", description: "Soft surface tint." },
+    { name: "color.sage.100", value: "#e8eee5", type: "color", description: "Subtle highlighted surface." },
+    { name: "color.paper.0", value: "#ffffff", type: "color", description: "Default canvas." },
+    { name: "color.border.200", value: "#dce3dc", type: "color", description: "Default border." },
+    { name: "color.border.300", value: "#7d8b80", type: "color", description: "Strong borders and interactive control boundaries." },
+  ],
+  spacing: [
+    { name: "space.1", value: "4px", type: "dimension", description: "Micro gap." },
+    { name: "space.2", value: "8px", type: "dimension", description: "Inline and label gap." },
+    { name: "space.3", value: "12px", type: "dimension", description: "Compact control gap." },
+    { name: "space.4", value: "16px", type: "dimension", description: "Default component gap." },
+    { name: "space.6", value: "24px", type: "dimension", description: "Card and section inset." },
+    { name: "space.8", value: "32px", type: "dimension", description: "Large component gap." },
+    { name: "space.12", value: "48px", type: "dimension", description: "Section spacing." },
+    { name: "space.16", value: "64px", type: "dimension", description: "Page rhythm." },
+  ],
+  typography: [
+    { name: "font.family.display", value: "Montserrat", type: "font", description: "Headings and interface labels." },
+    { name: "font.family.mono", value: "IBM Plex Mono", type: "font", description: "Token names and metadata." },
+    { name: "font.heading.h1", value: "clamp(40px, 6vw, 82px) / 0.98 / 800", type: "type", description: "Page titles and primary entry points." },
+    { name: "font.heading.h2", value: "clamp(30px, 4vw, 52px) / 1.05 / 800", type: "type", description: "Major section headings." },
+    { name: "font.heading.h3", value: "clamp(22px, 2.4vw, 32px) / 1.1 / 800", type: "type", description: "Component and content-group headings." },
+    { name: "font.heading.h4", value: "19px / 1.2 / 700", type: "type", description: "Subsections and compact panel headings." },
+    { name: "font.size.body", value: "15px / 1.6", type: "type", description: "Default reading size." },
+    { name: "font.size.body-large", value: "18px / 1.6", type: "type", description: "Introductory and lead copy." },
+    { name: "font.size.label", value: "11px / 1.2 / 600 / uppercase", type: "type", description: "Eyebrows, labels, and section markers." },
+    { name: "font.size.metadata", value: "12px / 1.4 / 500", type: "type", description: "Token values, timestamps, and supporting metadata." },
+    { name: "font.size.title", value: "clamp(40px, 6vw, 82px) / 0.98", type: "type", description: "Display title scale." },
+  ],
+  shape: [
+    { name: "radius.sm", value: "8px", type: "dimension", description: "Small controls and code samples." },
+    { name: "radius.md", value: "16px", type: "dimension", description: "Cards and panels." },
+    { name: "radius.pill", value: "999px", type: "dimension", description: "Buttons and tags." },
+    { name: "shadow.panel", value: "0 18px 45px rgba(31, 35, 33, .08)", type: "shadow", description: "Elevated documentation panels." },
+  ],
+} as const;
+
+export const semanticTokens = [
+  { name: "color.content.primary", value: "{color.charcoal.950}", description: "Headings, primary labels, and important values." },
+  { name: "color.content.secondary", value: "{color.charcoal.700}", description: "Body copy and supporting labels." },
+  { name: "color.content.muted", value: "{color.charcoal.500}", description: "Metadata that remains readable at small sizes." },
+  { name: "color.surface.canvas", value: "{color.paper.0}", description: "The documentation page background." },
+  { name: "color.surface.subtle", value: "{color.sage.50}", description: "Quiet grouping surface." },
+  { name: "color.surface.inverse", value: "{color.charcoal.950}", description: "Navigation and emphasis surface." },
+  { name: "color.action.primary", value: "{color.charcoal.950}", description: "Primary action background." },
+  { name: "color.action.accent", value: "{color.orange.500}", description: "Accent action and active marker." },
+  { name: "color.border.default", value: "{color.border.200}", description: "Default component boundary." },
+  { name: "color.focus.ring", value: "{color.orange.700}", description: "Visible keyboard focus indicator." },
+  { name: "space.component.gap", value: "{space.4}", description: "Default gap between related component parts." },
+  { name: "radius.component.control", value: "{radius.pill}", description: "Shared control shape." },
+] as const;
+
+export type PrimitiveGroup = keyof typeof primitiveTokens;

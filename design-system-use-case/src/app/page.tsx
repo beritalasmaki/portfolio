@@ -1,0 +1,54 @@
+import Link from "next/link";
+
+const principles = [
+  ["A shared language", "Tokens and component contracts make decisions visible across design and code."],
+  ["Built for real work", "The system focuses on the product moments where clarity and confidence matter."],
+  ["Accessible by default", "Semantic HTML, keyboard behavior, focus states, and contrast are part of the foundation."],
+];
+
+export default function Home() {
+  return (
+    <main id="main-content" className="min-h-screen">
+      <header className="border-b border-[var(--color-border-default)] px-6 py-5 lg:px-12">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-6">
+          <Link href="/" className="flex items-center gap-3" aria-label="Fieldwork Design System home">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-action-accent)] font-mono text-sm font-semibold">FW</span>
+            <span className="font-semibold tracking-[-0.02em]">Fieldwork <span className="text-[var(--color-content-muted)]">/ DS 01</span></span>
+          </Link>
+          <nav aria-label="Primary" className="flex items-center gap-4 text-sm font-semibold">
+            <Link href="/getting-started" className="rounded-full bg-[var(--color-action-primary)] px-4 py-2 text-white hover:bg-[var(--color-action-accent-dark)]">Explore the system <span aria-hidden="true" className="material-symbols-outlined ml-1">arrow_forward</span></Link>
+          </nav>
+        </div>
+      </header>
+
+      <section className="surface-grid border-b border-[var(--color-border-default)] px-6 py-24 lg:px-12 lg:py-36">
+        <div className="mx-auto grid max-w-[1440px] gap-14 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+          <div>
+            <p className="eyebrow mb-6">Fieldwork / design system 01</p>
+            <h1 className="display-title">A system for work that moves.</h1>
+          </div>
+          <div className="max-w-xl lg:pb-2">
+            <p className="body-copy text-lg">Fieldwork is a practical design system for products where people need to make sense of complexity, decide with confidence, and keep moving.</p>
+            <p className="body-copy mt-5">This is a working design and code study: a place to make the rules explicit, test them in interfaces, and show how a small foundation can support meaningful product work.</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/getting-started" className="rounded-full bg-[var(--color-action-primary)] px-5 py-3 text-sm font-semibold text-white hover:bg-[var(--color-action-accent-dark)]">How to get started <span aria-hidden="true" className="material-symbols-outlined">arrow_forward</span></Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1440px] px-6 py-20 lg:px-12 lg:py-28">
+        <div className="grid gap-10 lg:grid-cols-[.75fr_1.25fr]">
+          <div><p className="eyebrow mb-3">Why it exists</p><h2 className="m-0 max-w-sm text-3xl font-extrabold tracking-[-0.04em] md:text-5xl">Design decisions should travel well.</h2></div>
+          <div className="grid gap-4 md:grid-cols-3">{principles.map(([title, description], index) => <article key={title} className="border-t-2 border-[var(--color-action-accent)] pt-5"><span className="font-mono text-xs text-[var(--color-content-muted)]">0{index + 1}</span><h3 className="mt-8 text-lg font-bold">{title}</h3><p className="body-copy mt-2 text-sm">{description}</p></article>)}</div>
+        </div>
+      </section>
+
+      <section className="border-y border-[var(--color-border-default)] bg-[var(--color-surface-subtle)] px-6 py-20 lg:px-12 lg:py-28">
+        <div className="mx-auto grid max-w-[1440px] gap-8 rounded-3xl bg-[var(--color-surface-inverse)] p-8 text-white md:grid-cols-[1fr_auto] md:items-end md:p-12"><div><p className="eyebrow text-[var(--color-action-accent)]">The structure</p><h2 className="mt-3 max-w-2xl text-3xl font-extrabold tracking-[-0.04em] md:text-5xl">Start with foundations. Build with components.</h2><p className="mt-4 max-w-xl text-white/70">Learn the thinking behind the system, inspect the token layer, then see the components assembled in realistic product examples.</p></div><Link href="/components" className="rounded-full bg-[var(--color-action-accent)] px-5 py-3 text-center text-sm font-semibold text-[var(--color-content-primary)] hover:bg-white">Explore components <span aria-hidden="true" className="material-symbols-outlined">arrow_forward</span></Link></div>
+      </section>
+
+      <footer className="mx-auto flex max-w-[1440px] flex-wrap justify-between gap-4 px-6 py-8 text-sm text-[var(--color-content-muted)] lg:px-12"><span>Fieldwork Design System</span><span>Designing and coding in the open.</span></footer>
+    </main>
+  );
+}
