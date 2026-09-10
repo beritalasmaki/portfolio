@@ -20,11 +20,34 @@
     color: #222222;
   }
 
-  /* Visible keyboard focus everywhere — never suppressed. */
+  /* Visible keyboard focus everywhere — never suppressed. Ink, not accent
+     orange: raw accent is ~2.4:1 on white, below the 3:1 WCAG 1.4.11
+     non-text-contrast minimum for UI indicators. Ink passes comfortably
+     against every page background (white, panel, panel-alt, even the
+     accent contact block) except literal dark-ink surfaces, where the
+     handful of affected components (dark buttons, lightbox chrome,
+     selected tab) override to `focus-visible:outline-white` locally. */
   :focus-visible {
-    outline: 2px solid #fc890c;
+    outline: 2px solid #222222;
     outline-offset: 2px;
     border-radius: 4px;
+  }
+
+  /* Hover/focus transitions stay snappy (~120-150ms) for everyone, but for
+     reduced-motion users every transition and animation collapses to
+     effectively instant: the state change still happens (hover/focus
+     styles still apply, the hero illustration still ends up fully drawn),
+     it just isn't animated. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   ::selection {
@@ -44,6 +67,25 @@
 @layer utilities {
   .font-mono-label {
     font-family: var(--font-plex-mono), monospace;
+  }
+
+  /* Hero flourish draw-in: each path uses pathLength=100 so a fixed
+     stroke-dasharray/dashoffset of 100 always maps to "fully drawn",
+     regardless of the path's actual geometric length — no runtime
+     getTotalLength() measurement needed, so there's no flash of a
+     fully-drawn illustration before JS hydrates; the SSR'd HTML is
+     already in the undrawn state via the dasharray/dashoffset
+     attributes baked into the markup. Runs once on load (no `infinite`,
+     `animation-fill-mode: forwards` holds the end state) and is never
+     re-triggered on scroll or re-render. */
+  .hero-flourish-path {
+    animation: hero-draw 700ms ease-out forwards;
+  }
+
+  @keyframes hero-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
   }
 
   /* Visually hide content while keeping it available to screen readers. */

@@ -21,7 +21,7 @@ export default function AboutSection() {
           href={site.linkedinUrl}
           target="_blank"
           rel="noreferrer"
-          className="text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap"
+          className="text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-accent-dark hover:-translate-y-px focus-visible:border-accent-dark focus-visible:-translate-y-px"
         >
           Get to know me on LinkedIn
         </a>

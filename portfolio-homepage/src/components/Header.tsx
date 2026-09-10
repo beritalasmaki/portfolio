@@ -65,13 +65,17 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
           {backHref ? (
             <Link
               href={backHref}
-              className="text-nav font-semibold whitespace-nowrap text-body hover:text-ink"
+              className="text-nav font-semibold whitespace-nowrap text-body underline decoration-transparent underline-offset-4 transition-[color,text-decoration-color] duration-150 ease-out hover:text-ink hover:decoration-current focus-visible:text-ink focus-visible:decoration-current"
             >
               {backLabel}
             </Link>
           ) : (
             primaryNav.map((item) => (
-              <a key={item.href} href={item.href} className="text-nav font-semibold whitespace-nowrap">
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-nav font-semibold whitespace-nowrap text-body underline decoration-transparent underline-offset-4 transition-[color,text-decoration-color] duration-150 ease-out hover:text-ink hover:decoration-current focus-visible:text-ink focus-visible:decoration-current"
+              >
                 {item.label}
               </a>
             ))
@@ -84,13 +88,13 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
               href={site.linkedinUrl}
               target="_blank"
               rel="noreferrer"
-              className="font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 whitespace-nowrap hover:border-ink"
+              className="font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
             >
               LinkedIn
             </a>
             <a
               href="#contact"
-              className="text-nav font-semibold whitespace-nowrap text-white bg-ink rounded-pill py-3 px-6 hover:bg-ink-alt"
+              className="text-nav font-semibold whitespace-nowrap text-white bg-ink rounded-pill py-3 px-6 transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:-translate-y-px focus-visible:outline-white"
             >
               Contact
             </a>
@@ -101,7 +105,7 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
         <button
           ref={toggleRef}
           type="button"
-          className="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 rounded-chrome border border-rule-strong shrink-0"
+          className="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 rounded-chrome border border-rule-strong shrink-0 transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
           aria-expanded={open}
           aria-controls={panelId}
           aria-label={open ? "Close menu" : "Open menu"}
@@ -133,7 +137,10 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
       {open && (
         <nav id={panelId} aria-label="Primary" className="md:hidden flex flex-col items-start gap-4 pt-6">
           {backHref ? (
-            <Link href={backHref} className="text-nav font-semibold text-body whitespace-nowrap">
+            <Link
+              href={backHref}
+              className="text-nav font-semibold text-body whitespace-nowrap underline decoration-transparent underline-offset-4 transition-[color,text-decoration-color] duration-150 ease-out hover:text-ink hover:decoration-current focus-visible:text-ink focus-visible:decoration-current"
+            >
               {backLabel}
             </Link>
           ) : (
@@ -141,7 +148,7 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
               <a
                 key={item.href}
                 href={item.href}
-                className="text-nav font-semibold whitespace-nowrap"
+                className="text-nav font-semibold whitespace-nowrap underline decoration-transparent underline-offset-4 transition-[color,text-decoration-color] duration-150 ease-out hover:text-ink hover:decoration-current focus-visible:text-ink focus-visible:decoration-current"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
@@ -152,14 +159,14 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
             href={site.linkedinUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5"
+            className="font-mono-label text-mono-label-em font-medium uppercase text-body border border-rule-strong rounded-pill py-3 px-5 transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
           >
             LinkedIn
           </a>
           <a
             href="#contact"
             onClick={() => setOpen(false)}
-            className="text-nav font-semibold text-white bg-ink rounded-pill py-3 px-6"
+            className="text-nav font-semibold text-white bg-ink rounded-pill py-3 px-6 transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:-translate-y-px focus-visible:outline-white"
           >
             Contact
           </a>

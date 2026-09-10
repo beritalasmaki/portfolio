@@ -96,7 +96,7 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
               onClick={() => openAt(i)}
               className="group flex flex-col gap-2 text-left cursor-zoom-in"
             >
-              <span className="block bg-white border border-rule rounded-frame p-2 shadow-frame transition-shadow group-hover:shadow-frame-accent group-focus-visible:shadow-frame-accent">
+              <span className="block bg-white border border-rule rounded-frame p-2 shadow-frame transition-shadow duration-150 ease-out group-hover:shadow-frame-accent group-focus-visible:shadow-frame-accent">
                 <Image
                   src={img.src}
                   alt={img.alt}
@@ -145,7 +145,7 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
                       type="button"
                       onClick={() => step(-1)}
                       aria-label="Previous screenshot"
-                      className="text-[13px] font-semibold uppercase tracking-[0.06em] text-white border border-white rounded-pill py-2 px-3 whitespace-nowrap hover:bg-white hover:text-ink"
+                      className="text-[13px] font-semibold uppercase tracking-[0.06em] text-white border border-white rounded-pill py-2 px-3 whitespace-nowrap transition-[background-color,color] duration-150 ease-out hover:bg-white hover:text-ink focus-visible:bg-white focus-visible:text-ink focus-visible:outline-white"
                     >
                       ‹
                     </button>
@@ -153,7 +153,7 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
                       type="button"
                       onClick={() => step(1)}
                       aria-label="Next screenshot"
-                      className="text-[13px] font-semibold uppercase tracking-[0.06em] text-white border border-white rounded-pill py-2 px-3 whitespace-nowrap hover:bg-white hover:text-ink"
+                      className="text-[13px] font-semibold uppercase tracking-[0.06em] text-white border border-white rounded-pill py-2 px-3 whitespace-nowrap transition-[background-color,color] duration-150 ease-out hover:bg-white hover:text-ink focus-visible:bg-white focus-visible:text-ink focus-visible:outline-white"
                     >
                       ›
                     </button>
@@ -163,7 +163,7 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
                   ref={closeButtonRef}
                   type="button"
                   onClick={close}
-                  className="text-[13px] font-semibold uppercase tracking-[0.06em] text-white border border-white rounded-pill py-2 px-4 whitespace-nowrap hover:bg-white hover:text-ink"
+                  className="text-[13px] font-semibold uppercase tracking-[0.06em] text-white border border-white rounded-pill py-2 px-4 whitespace-nowrap transition-[background-color,color] duration-150 ease-out hover:bg-white hover:text-ink focus-visible:bg-white focus-visible:text-ink focus-visible:outline-white"
                 >
                   Close ✕
                 </button>

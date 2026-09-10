@@ -19,7 +19,7 @@ export default function BackToTop() {
   return (
     <a
       href="#page-top"
-      className={`fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-pill bg-ink px-4 py-4 text-[13px] font-semibold uppercase tracking-[0.04em] text-white shadow-lightbox transition-opacity duration-200 whitespace-nowrap ${
+      className={`fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-pill bg-ink px-4 py-4 text-[13px] font-semibold uppercase tracking-[0.04em] text-white shadow-lightbox whitespace-nowrap transition-[opacity,background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:-translate-y-px focus-visible:outline-white ${
         visible ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
       aria-hidden={!visible}

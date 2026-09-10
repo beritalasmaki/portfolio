@@ -23,13 +23,13 @@ export default function Hero() {
           <div className="flex flex-wrap gap-4 mt-10">
             <a
               href="#key-skills"
-              className="inline-block bg-ink text-white text-nav font-semibold py-4 px-8 rounded-pill whitespace-nowrap hover:bg-ink-alt"
+              className="inline-block bg-ink text-white text-nav font-semibold py-4 px-8 rounded-pill whitespace-nowrap transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:-translate-y-px focus-visible:outline-white"
             >
               Find your starting point
             </a>
             <a
               href="#case-studies"
-              className="inline-block border border-rule-strong text-ink text-nav font-semibold py-4 px-8 rounded-pill whitespace-nowrap hover:border-ink"
+              className="inline-block border border-rule-strong text-ink text-nav font-semibold py-4 px-8 rounded-pill whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
             >
               See the work
             </a>
@@ -46,40 +46,106 @@ export default function Hero() {
             aria-hidden="true"
             className="w-full h-auto block overflow-visible"
           >
+            {/* Draw-in on load: pathLength=100 normalizes every path's stroke-
+                dasharray/dashoffset to the same 0-100 scale regardless of its
+                real length, so each one just animates dashoffset 100 -> 0 (see
+                .hero-flourish-path / @keyframes hero-draw in globals.css).
+                Delays are grouped, not purely per-path: the thin "echo" stroke
+                riding each main petal curve shares its partner's delay so the
+                two are read as one hand-drawn line, not two competing draws,
+                and delays otherwise increase top-to-bottom. */}
             <g fill="none" stroke="#FC890C" strokeLinecap="round" strokeLinejoin="round">
               <path
                 d="M 8 24 C 23 20 33 33 41 49 C 49 65 61 74 82 74 C 111 74 143 71 158 78"
                 strokeWidth="13"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "0ms" }}
               />
               <path
                 d="M 10 27 C 26 25 35 37 43 52 C 52 69 63 77 84 77 C 113 77 142 74 156 80"
                 strokeWidth="7"
                 opacity="0.85"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "0ms" }}
+              />
+              <path
+                d="M 88 72 C 104 68 122 67 138 69"
+                strokeWidth="4.5"
+                opacity="0.6"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "150ms" }}
               />
               <path
                 d="M 158 78 C 170 83 172 96 162 108 C 152 120 152 132 164 138"
                 strokeWidth="11"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "250ms" }}
               />
               <path
                 d="M 156 81 C 168 87 169 98 159 110 C 150 121 151 130 162 136"
                 strokeWidth="6.5"
                 opacity="0.8"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "250ms" }}
+              />
+              <path
+                d="M 152 102 C 147 111 148 121 155 128"
+                strokeWidth="5"
+                opacity="0.75"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "400ms" }}
               />
               <path
                 d="M 164 138 C 182 147 217 148 251 156 C 287 165 311 181 335 203"
                 strokeWidth="12.5"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "500ms" }}
               />
               <path
                 d="M 166 141 C 185 150 219 151 252 159 C 287 168 310 184 333 205"
                 strokeWidth="6"
                 opacity="0.8"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "500ms" }}
               />
-              <path d="M 335 203 C 348 215 358 226 366 236" strokeWidth="10" />
-              <path d="M 366 236 C 371 242 375 246 379 249" strokeWidth="6" />
-              <path d="M 379 249 C 383 252 386 254 389 255" strokeWidth="3.2" opacity="0.85" />
-              <path d="M 152 102 C 147 111 148 121 155 128" strokeWidth="5" opacity="0.75" />
-              <path d="M 88 72 C 104 68 122 67 138 69" strokeWidth="4.5" opacity="0.6" />
-              <path d="M 244 154 C 268 158 290 166 308 178" strokeWidth="4.5" opacity="0.55" />
+              <path
+                d="M 244 154 C 268 158 290 166 308 178"
+                strokeWidth="4.5"
+                opacity="0.55"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "650ms" }}
+              />
+              <path
+                d="M 335 203 C 348 215 358 226 366 236"
+                strokeWidth="10"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "750ms" }}
+              />
+              <path
+                d="M 366 236 C 371 242 375 246 379 249"
+                strokeWidth="6"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "900ms" }}
+              />
+              <path
+                d="M 379 249 C 383 252 386 254 389 255"
+                strokeWidth="3.2"
+                opacity="0.85"
+                pathLength={100}
+                className="hero-flourish-path"
+                style={{ strokeDasharray: 100, strokeDashoffset: 100, animationDelay: "1000ms" }}
+              />
             </g>
           </svg>
         </div>

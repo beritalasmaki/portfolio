@@ -121,14 +121,23 @@ export default function MindTabs() {
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(index)}
                 onKeyDown={(event) => onKeyDown(event, index)}
-                className={`flex flex-1 items-center justify-between gap-4 py-[clamp(16px,2.2vw,24px)] px-[clamp(16px,2.2vw,32px)] text-left border-b border-rule last:border-b-0 transition-colors ${
-                  selected ? "bg-ink text-white" : "bg-panel-alt text-ink"
+                className={`group flex flex-1 items-center justify-between gap-4 py-[clamp(16px,2.2vw,24px)] px-[clamp(16px,2.2vw,32px)] text-left border-b border-rule last:border-b-0 border-l-4 transition-[background-color,border-color] duration-150 ease-out ${
+                  selected
+                    ? "bg-ink text-white border-l-ink focus-visible:outline-white"
+                    : "bg-panel-alt text-ink border-l-transparent hover:bg-rule-strong hover:border-l-accent focus-visible:bg-rule-strong focus-visible:border-l-accent"
                 }`}
               >
                 <span className="text-[clamp(15px,1.2vw,17px)] font-semibold leading-snug text-pretty">
                   {tab.question}
                 </span>
-                <span aria-hidden="true" className={`text-[15px] whitespace-nowrap ${selected ? "text-white" : "text-muted"}`}>
+                <span
+                  aria-hidden="true"
+                  className={`text-[15px] whitespace-nowrap transition-[color,transform] duration-150 ease-out ${
+                    selected
+                      ? "text-white"
+                      : "text-muted group-hover:text-accent-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:text-accent-dark group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
+                  }`}
+                >
                   ↗
                 </span>
               </button>
@@ -155,7 +164,7 @@ export default function MindTabs() {
           </div>
           <a
             href={current.linkHref}
-            className="ml-4 text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap"
+            className="ml-4 text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-accent-dark hover:-translate-y-px focus-visible:border-accent-dark focus-visible:-translate-y-px"
           >
             {current.linkLabel}
           </a>

@@ -20,7 +20,7 @@ export default function ContactSection() {
           </p>
           <a
             href={`mailto:${site.email}`}
-            className="text-[clamp(16px,1.5vw,22px)] font-bold text-ink border-b-2 border-ink pb-2 self-start whitespace-nowrap"
+            className="text-[clamp(16px,1.5vw,22px)] font-bold text-ink border-b-2 border-ink pb-2 self-start whitespace-nowrap transition-transform duration-150 ease-out hover:-translate-y-px focus-visible:-translate-y-px focus-visible:outline-ink"
           >
             {site.email}
           </a>
@@ -28,7 +28,7 @@ export default function ContactSection() {
             href={site.linkedinUrl}
             target="_blank"
             rel="noreferrer"
-            className="text-nav font-bold text-ink border-b border-ink pb-2 self-start whitespace-nowrap"
+            className="text-nav font-bold text-ink border-b border-ink pb-2 self-start whitespace-nowrap transition-transform duration-150 ease-out hover:-translate-y-px focus-visible:-translate-y-px focus-visible:outline-ink"
           >
             Connect on LinkedIn
           </a>
