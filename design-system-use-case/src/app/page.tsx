@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SiteHeader } from "@/components/navigation/SiteHeader";
 
 export const metadata: Metadata = { title: "DS by Berit" };
 
@@ -12,17 +13,7 @@ const principles = [
 export default function Home() {
   return (
     <main id="main-content" className="min-h-screen">
-      <header className="border-b border-[var(--color-border-default)] px-6 py-5 lg:px-12">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-6">
-          <Link href="/" className="flex items-center gap-3" aria-label="DS by Berit home">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-action-accent)] font-mono text-sm font-semibold">FW</span>
-            <span className="font-semibold tracking-[-0.02em]">DS by Berit <span className="text-[var(--color-content-muted)]">/ Design System</span></span>
-          </Link>
-          <nav aria-label="Primary" className="flex items-center gap-4 text-sm font-semibold">
-            <Link href="/getting-started" className="rounded-full bg-[var(--color-action-primary)] px-4 py-2 text-white hover:bg-[var(--color-action-accent-dark)]">Explore the system <span aria-hidden="true" className="material-symbols-outlined ml-1">arrow_forward</span></Link>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader actionHref="/getting-started" actionLabel="Explore the system" actionIcon="arrow_forward" />
 
       <section className="surface-grid border-b border-[var(--color-border-default)] px-6 py-24 lg:px-12 lg:py-36">
         <div className="mx-auto grid max-w-[1440px] gap-14 lg:grid-cols-[1.1fr_.9fr] lg:items-end">

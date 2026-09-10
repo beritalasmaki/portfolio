@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
+import { SiteHeader } from "@/components/navigation/SiteHeader";
 
 const componentLinks = [
   { href: "/components/navigation", label: "Navigation" },
@@ -22,12 +23,7 @@ export function DocsShell({ children, active, topLink = { href: "/", label: "Bac
 
   return (
     <div className="min-h-screen bg-[var(--color-surface-canvas)]">
-      <header className="border-b border-[var(--color-border-default)] px-6 py-5 lg:px-10">
-        <div className="mx-auto flex max-w-[1480px] items-center justify-between gap-5">
-          <Link href="/" className="flex items-center gap-3 font-bold"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-action-accent)] font-mono text-xs">DS</span>DS by Berit <span className="hidden font-normal text-[var(--color-content-muted)] sm:inline">Design System</span></Link>
-              <nav aria-label="Primary" className="flex items-center text-sm font-semibold"><Link href={topLink.href} className="rounded-full bg-[var(--color-action-primary)] px-4 py-2 text-white hover:bg-[var(--color-action-accent-dark)]">{topLink.label === "Back to landing page" ? <><span aria-hidden="true" className="material-symbols-outlined mr-1">arrow_back</span>{topLink.label}</> : topLink.label}</Link></nav>
-        </div>
-      </header>
+      <SiteHeader actionHref={topLink.href} actionLabel={topLink.label} actionIcon={topLink.label === "Back to landing page" ? "arrow_back" : "arrow_forward"} />
       <div className="mx-auto grid max-w-[1480px] lg:grid-cols-[240px_1fr]">
         <aside className="border-b border-[var(--color-border-default)] px-6 py-6 lg:min-h-[calc(100vh-81px)] lg:border-b-0 lg:border-r lg:px-8 lg:py-10">
           <nav aria-label="Design system documentation">
