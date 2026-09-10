@@ -276,9 +276,11 @@ Single row, one hairline below:
 ```
 [logo 80px]  ————————  [page links]  |  [LinkedIn pill]  [GitHub pill]  [Contact button]
 ```
-- Logo: `assets/berit-logo.png`, `height: 80px` (same in header and footer) —
-  large enough that the "UX & Product Designer" role line under the
-  wordmark stays legible
+- Logo: real vector mark (blob + signature paths, exact 1:1-scale overlay
+  measured against the original `berit-logo.png`) + real text ("Berit
+  Alasmäki" / "UX & Product Designer"), not a flat image — `height: 80px`
+  (same in header and footer), large enough that the role line under the
+  wordmark stays legible. See `Logo.tsx` and the Entrance sequence below.
 - `border-bottom: 1px solid #eeece7; padding-bottom: 16px`
 - Homepage links: Selected case studies · About
 - Case-study pages: `← Back to work` in place of the page links
@@ -288,9 +290,30 @@ Single row, one hairline below:
 Not covered by the original design files (no interactive states there) — added in
 code and applies site-wide:
 ```
-:focus-visible { outline: 2px solid #FC890C; outline-offset: 2px; border-radius: 4px; }
+:focus-visible { outline: 2px solid #222222; outline-offset: 2px; border-radius: 4px; }
 ::selection { background: #FC890C; color: #222222; }
 ```
+
+### Homepage entrance sequence
+Plays once on load (homepage only — `Header`'s `animateLogo` prop), never on
+scroll or re-render. Every stage is `ease-out`; the whole thing settles by
+~2.3s. `prefers-reduced-motion: reduce` shows every element in its finished
+state immediately (site-wide kill-switch, see the media query in
+`globals.css`), not just for this sequence.
+1. **Logo signature mark** (`Logo.tsx`, 0–600ms) — the blob is present from
+   frame one; the black signature strokes in left to right. It's a filled
+   brush-stroke shape, not a simple open line, so stroking it directly would
+   render as a thin outline of the silhouette rather than "the pen writing
+   the signature" — instead a wide horizontal bar, itself drawn with the
+   same `pathLength`/`stroke-dasharray`/`stroke-dashoffset` technique as the
+   hero line below, sweeps across an SVG `<mask>` that progressively reveals
+   the real, unaltered signature path underneath.
+2. **Hero line** (`Hero.tsx`, starts at 600ms, same relative stagger as
+   before) — picks up right where the logo leaves off.
+3. **Headline → subheadline → buttons** (750ms / 930ms / 1110ms) — fade up
+   (~12px, 550ms each), overlapping the hero line's own draw rather than
+   waiting for it to finish. Case-study pages have no hero to lead into, so
+   their header logo, and the footer's everywhere, just render finished.
 
 ### Back to top
 Fixed bottom-right, appears on scroll, links to `#page-top`. Ink pill, mono label,

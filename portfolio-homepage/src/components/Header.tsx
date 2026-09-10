@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
+import Logo from "./Logo";
 import { primaryNav, site } from "@/data/site";
 
 type HeaderProps = {
@@ -12,6 +12,10 @@ type HeaderProps = {
    */
   backHref?: string;
   backLabel?: string;
+  /** Plays the logo's draw-on entrance, then leads into the hero's own
+   * sequence. Only the homepage sets this — case-study pages have no
+   * hero to hand off to, so their header logo just shows finished. */
+  animateLogo?: boolean;
 };
 
 // Small brand marks next to the LinkedIn/GitHub pill labels, purely
@@ -34,7 +38,7 @@ function GithubIcon() {
   );
 }
 
-export default function Header({ backHref, backLabel = "← Back to work" }: HeaderProps) {
+export default function Header({ backHref, backLabel = "← Back to work", animateLogo = false }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -67,14 +71,7 @@ export default function Header({ backHref, backLabel = "← Back to work" }: Hea
     <header className="border-b border-rule px-gutter pt-8 pb-4">
       <div className="flex items-center justify-between gap-8">
         <Link href="/" className="block shrink-0" aria-label={`${site.name} — home`}>
-          <Image
-            src="/logo.png"
-            alt={`${site.name} — ${site.role}`}
-            width={256}
-            height={80}
-            priority
-            className="h-[80px] w-auto"
-          />
+          <Logo animated={animateLogo} height={80} />
         </Link>
 
         {/* Desktop nav */}

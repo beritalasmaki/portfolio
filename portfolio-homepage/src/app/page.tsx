@@ -11,7 +11,7 @@ import MindTabs from "@/components/MindTabs";
 export default function HomePage() {
   return (
     <>
-      <Header />
+      <Header animateLogo />
       <main className="px-gutter pt-6 pb-24">
         <Hero />
         <ClientLogos />

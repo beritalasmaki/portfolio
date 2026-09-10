@@ -88,6 +88,47 @@
     }
   }
 
+  /* Logo signature mark draw-in: same pathLength=100 trick as the hero
+     flourish, but here it drives an SVG <mask> instead of the stroke
+     itself — the mark is a filled brush-stroke silhouette (not a simple
+     open line), so stroking that path directly would render as a thin
+     outline of the silhouette's edge, not "the pen drawing the
+     signature". A wide horizontal bar animates across the mask instead,
+     progressively revealing the real, exact, unaltered signature shape
+     left to right — same technique (dasharray/dashoffset, no runtime
+     measurement, no pre-hydration flash), correct result for a filled
+     asset. See Logo.tsx. */
+  .logo-mask-path {
+    animation: logo-draw 600ms ease-out forwards;
+  }
+
+  @keyframes logo-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Hero entrance: headline -> subheadline -> buttons fade up with a
+     staggered animation-delay set per element in Hero.tsx (150-200ms
+     apart). opacity: 0 here (not just in the keyframe's `from`) so
+     there's no flash of visible content in the SSR'd HTML before the
+     animation engine takes over on paint. */
+  .fade-up-item {
+    opacity: 0;
+    animation: fade-up 550ms ease-out forwards;
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* Visually hide content while keeping it available to screen readers. */
   .sr-only-focusable:not(:focus):not(:focus-within) {
     position: absolute;
