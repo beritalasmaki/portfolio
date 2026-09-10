@@ -5,8 +5,8 @@ import type { CaseStudy } from "./types";
 export const educationPlatform: CaseStudy = {
   slug: "education-platform",
   title: "National Education Administration Platform",
-  label: "NATIONAL EDUCATION ADMINISTRATION PLATFORM / PUBLIC SECTOR · 2021–2024",
-  headline: "Many teams.\nOne coherent experience.",
+  label: "NATIONAL EDUCATION ADMINISTRATION PLATFORM · 2021–2024",
+  headline: "Many teams, many systems.\nOne coherent experience.",
   description:
     "A shared, standardised design foundation for complex municipal education systems, unifying usability and logic across several platforms.",
   thumbnail: "/case/education-crisp.png",

@@ -4,12 +4,12 @@ export const industrialTool: CaseStudy = {
   slug: "industrial-tool",
   title: "Industrial Data & Expert Interface Design",
   label: "INDUSTRIAL DATA TOOLS · 2020–2023",
-  headline: "Less guesswork.\nMore confident decisions.",
+  headline: "Monitoring, calculation and reporting, in one place.",
   description:
-    "Complex, data-heavy calculation and monitoring tools, cleaned up. Expert users get reliable tools that cut manual errors out of daily work.",
+    "A platform for monitoring, calculation, reporting and statistical analysis, used by specialists both internally and by customers. I redesigned the full expert experience, from dashboards to data views.",
   thumbnail: "/case/kemira.png",
   thumbnailAlt: "Kemira data tools",
-  ctaLabel: "Explore the case",
+  ctaLabel: "Explore the full case study",
   otherCaseStudyDescription:
     "Built practical expert tools for industrial data workflows, making complex calculations and monitoring more reliable for specialists.",
 

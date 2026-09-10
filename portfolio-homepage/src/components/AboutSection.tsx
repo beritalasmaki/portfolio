@@ -8,14 +8,13 @@ export default function AboutSection() {
 
       <div className="mt-4 max-w-prose flex flex-col gap-4">
         <h2 id="about-heading" className="m-0 text-section-h2 text-ink uppercase">
-          A mind worth asking.
-          <br />A designer worth hiring.
+          Ten years of turning complex problems into products people can use.
         </h2>
         <p className="m-0 text-lead text-body">
-          A senior UX and product designer with over ten years of experience across
-          digital products and services. Based in Finland, with international
-          experience, and a collaborative way of working that turns complex problems
-          into clear, sensible solutions.
+          A senior UX and product designer based in Finland, with international
+          experience across more than 25 projects. I work closely with product
+          owners, specialists and engineers, keeping user needs and business goals
+          in view from the first idea to shipped product.
         </p>
         <a
           href={site.linkedinUrl}
@@ -34,7 +33,7 @@ export default function AboutSection() {
           ↗
         </span>
         <p className="m-0 text-[clamp(16px,1.4vw,20px)] leading-snug font-bold text-ink">
-          Whatever the project, we agree on what success looks like before the work starts.
+          We agree, together, on what success looks like before the work starts.
         </p>
       </div>
     </section>

@@ -16,7 +16,7 @@ const tabs: Tab[] = [
   {
     question: "Can design grow our business?",
     eyebrow: "what you get",
-    headline: "Less friction.\nMore room to grow.",
+    headline: "Less friction. More room to grow.",
     body: "Better adoption can support revenue. Less avoidable work can protect margins. I help find the friction in your product, fix the journeys around it, and agree with you on how we measure the business impact.",
     highlight:
       "In university services, clearer self-service helped people find answers faster and eased pressure on staff.",
@@ -26,7 +26,7 @@ const tabs: Tab[] = [
   {
     question: "Can you solve a tricky problem?",
     eyebrow: "what you get",
-    headline: "Complexity, untangled.\nDecisions, made.",
+    headline: "Complexity, untangled. Decisions, made.",
     body: "Long-running problems usually hide in the gaps between teams, tools and rules. I map how the work really flows, name the constraints out loud, and design something the organisation can actually run.",
     highlight:
       "In industrial data tooling, a guided calculation flow replaced error-prone manual steps and cut the guesswork out of daily decisions.",
@@ -36,17 +36,17 @@ const tabs: Tab[] = [
   {
     question: "Will this make a real difference?",
     eyebrow: "what you get",
-    headline: "Evidence first.\nOpinions later.",
+    headline: "Evidence first. Opinions later.",
     body: "We agree on what better looks like before anything is drawn. Then we test with the people who use the product, watch what changes, and let the results steer the next round of work.",
     highlight:
-      "In public sector service design, testing with real users settled a long-standing internal debate that no amount of discussion had resolved.",
+      "In service design for a large organisation, testing with real users settled a long-standing internal debate that no amount of discussion had resolved.",
     linkLabel: "See the project behind the answer",
     linkHref: "#case-studies",
   },
   {
     question: "How can you help my product?",
     eyebrow: "what you get",
-    headline: "A fresh perspective.\nA practical way forward.",
+    headline: "A fresh perspective. A practical way forward.",
     body: "Start with a short review of where your product loses people. From there we shape a plan you can act on: the right problem framed, the design work done, and handover that developers can build from.",
     highlight:
       "I work closely with your product and engineering teams, connecting the details through reusable components and clear decisions. On a large public sector platform, closer collaboration with engineering meant fewer decisions got lost between design and build.",
@@ -152,12 +152,12 @@ export default function MindTabs() {
           tabIndex={0}
           className="flex flex-col gap-4 bg-panel p-pane-pad"
         >
+          <p className="m-0 text-body-lg text-body max-w-prose">{current.body}</p>
           <div className="flex items-center gap-2 font-mono-label text-mono-label-em font-medium uppercase text-accent-dark">
             <span aria-hidden="true" className="block w-6 h-0.5 bg-accent" />
             {current.eyebrow}
           </div>
           <h3 className="m-0 text-card-h3 text-ink whitespace-pre-line">{current.headline}</h3>
-          <p className="m-0 text-body-lg text-body max-w-prose">{current.body}</p>
           <div className="flex gap-4 items-start border-t border-rule-strong pt-4">
             <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent mt-2 shrink-0" />
             <p className="m-0 text-body-sm text-ink-alt max-w-[34em]">{current.highlight}</p>

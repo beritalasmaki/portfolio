@@ -6,12 +6,12 @@ export const environmentalDataTool: CaseStudy = {
   slug: "environmental-data-tool",
   title: "Modernization of Environmental Data Systems",
   label: "ENVIRONMENTAL DATA SYSTEMS · 2020–2024",
-  headline: "Legacy systems.\nModern research tools.",
+  headline: "Legacy systems.\nNow something researchers actually trust.",
   description:
     "Monitoring and reporting tools for environmental data, built so specialists can find, compare and publish results without fighting the interface.",
   thumbnail: "/case/syke-crisp.png",
   thumbnailAlt: "Environmental data systems",
-  ctaLabel: "Explore the case",
+  ctaLabel: "Explore the full case study",
   otherCaseStudyDescription:
     "Transformed outdated legacy systems into modern, efficient tools that help environmental researchers manage and analyze critical data.",
 };
