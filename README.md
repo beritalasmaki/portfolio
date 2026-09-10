@@ -17,13 +17,6 @@ As a designer, most of my work lives in Figma, workshops, and stakeholder conver
 
 *(This list is a work in progress, updated as new experiments get added.)*
 
-## Release note
-
-This release brings together two connected projects: a coded portfolio homepage for presenting UX and product design work, and **DS by Berit**, a standalone design-system showcase focused on tokens, accessible components, documentation, and realistic product examples. Together they demonstrate the full path from design-system foundations to working interface experiences.
-
-- **Portfolio homepage:** A responsive Next.js portfolio with case studies, project navigation, client work, and accessible interactive patterns.
-- **DS by Berit:** A token-first design-system documentation site with Foundations, Components, practice pages, Light/Dark previews, and a separate static showcase.
-
 ## 🛠️ Tools & technologies I work with
 
 - **Design:** Figma, Design Systems, Design Tokens
