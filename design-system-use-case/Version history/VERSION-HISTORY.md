@@ -12,3 +12,10 @@ This file is maintained manually. Add an entry only when the project owner reque
 - Added project-management and analytics practice pages with desktop and mobile mock-ups.
 - Added View, CSS, and JavaScript documentation tabs with Light/Dark component previews.
 - Added accessibility and contrast improvements, including visible focus treatment, semantic table behavior, and color-token swatches.
+
+## 2026-09-10 - DS by Berit handoff
+
+- Renamed the visible product identity to DS by Berit and added route-specific browser titles such as `Get started - DS by Berit`.
+- Added Montserrat as the primary UI font and created separate H1, H2, H3, and H4 typography preview cards.
+- Reorganized navigation so token pages sit under Foundations, component pages sit under Components, and Version history sits under Getting started.
+- Added and pushed the separate `main.html` static showcase without replacing the Next.js landing page.

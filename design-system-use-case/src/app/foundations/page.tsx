@@ -1,5 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { DocsShell } from "@/components/navigation/DocsShell";
+
+export const metadata: Metadata = { title: "Foundations" };
 
 const tokenPages = [
   ["Colors", "Color primitives and semantic roles for content, surfaces, actions, borders, and focus.", "/foundations/colors"],

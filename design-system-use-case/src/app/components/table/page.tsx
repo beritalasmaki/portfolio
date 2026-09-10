@@ -1,7 +1,10 @@
 import { CodeTabs } from "@/components/documentation/CodeTabs";
+import type { Metadata } from "next";
 import { ComponentPage } from "@/components/documentation/ComponentPage";
 import { DataTable } from "@/components/table/DataTable";
 import { Table, TableBody, TableCell, TableColumnHeader, TableHead, TableRow } from "@/components/table/Table";
+
+export const metadata: Metadata = { title: "Table" };
 
 const cssCode = `table {\n  width: 100%;\n  border-collapse: collapse;\n}\nth { text-align: left; }`;
 

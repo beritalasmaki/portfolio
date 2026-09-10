@@ -1,6 +1,8 @@
-# Fieldwork Design System
+# DS by Berit
 
-A standalone Next.js showcase for a token-first design system. The project demonstrates how a small, intentional foundation can support accessible product UI across documentation and real example screens.
+A standalone Next.js showcase for DS by Berit, a token-first design system. The project demonstrates how a small, intentional foundation can support accessible product UI across documentation and real example screens.
+
+The project also includes [main.html](./main.html), a separate static showcase that presents the token foundation and component examples without replacing the Next.js application entry page.
 
 ## Why this project exists
 
@@ -16,7 +18,7 @@ The initial direction was intentionally narrow: build four component families an
 
 ## Steps taken
 
-1. Scaffolded a standalone Next.js, React, and TypeScript application.
+1. Scaffolded a standalone Next.js, React, and TypeScript application under the DS by Berit name.
 2. Established primitive and semantic tokens for color, spacing, typography, shape, borders, elevation, and motion.
 3. Built a landing page explaining the purpose of the system.
 4. Created documentation routes for Getting started, Foundations, Components, and Version history.
@@ -27,6 +29,8 @@ The initial direction was intentionally narrow: build four component families an
 9. Added View, CSS, and JavaScript tabs so each example exposes both behavior and implementation.
 10. Built project-management and analytics practice pages with desktop and mobile mock-ups.
 11. Checked contrast, focus behavior, semantic table structure, keyboard interaction, linting, type safety, and production builds.
+12. Added route-specific browser titles using the `Page title - DS by Berit` format and renamed the visible product branding.
+13. Added a separate static `main.html` showcase with token previews, component examples, code tabs, and Light/Dark modes.
 
 ## How we are moving forward
 
@@ -60,6 +64,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `/version-history` - manually maintained project history
 - `/examples/project-management` - integrated project workspace
 - `/examples/analytics` - integrated analytics view
+- `main.html` - standalone static design-system showcase
 
 ## Token conventions
 

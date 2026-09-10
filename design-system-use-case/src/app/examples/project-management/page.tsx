@@ -1,8 +1,11 @@
 import { Button } from "@/components/buttons/Button";
+import type { Metadata } from "next";
 import { Card, CardBody } from "@/components/cards/Card";
 import { DeviceMockup } from "@/components/examples/DeviceMockup";
 import { DocsShell } from "@/components/navigation/DocsShell";
 import { DataTable } from "@/components/table/DataTable";
+
+export const metadata: Metadata = { title: "Project management" };
 
 function ProjectSummary({ mobile = false }: { mobile?: boolean }) {
   return <div className="min-w-0"><div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><p className="eyebrow mb-3">Project workspace</p><h2 className={`${mobile ? "text-2xl" : "text-3xl"} font-extrabold tracking-[-0.04em]`}>Good morning, Mika.</h2><p className="body-copy mt-2 text-sm">Here is what needs your attention across Fieldwork.</p></div><div className="flex gap-2"><Button variant="secondary">Export</Button><Button>New item <span aria-hidden="true">+</span></Button></div></div><div className={`grid gap-3 ${mobile ? "grid-cols-1" : "md:grid-cols-3"}`}><Card><CardBody><p className="eyebrow mb-2">Open work</p><p className="m-0 text-3xl font-extrabold">24</p><p className="body-copy mt-1 text-xs">Across 6 active projects</p></CardBody></Card><Card><CardBody><p className="eyebrow mb-2">On track</p><p className="m-0 text-3xl font-extrabold">18</p><p className="body-copy mt-1 text-xs">75% of active work</p></CardBody></Card><Card><CardBody><p className="eyebrow mb-2">Needs attention</p><p className="m-0 text-3xl font-extrabold text-[var(--color-action-accent-dark)]">3</p><p className="body-copy mt-1 text-xs">Decisions due this week</p></CardBody></Card></div><section className="mt-8"><div className="mb-4 flex items-center justify-between gap-4"><div><p className="eyebrow mb-2">Current workspace</p><h3 className="m-0 text-xl font-bold">Work items</h3></div><Button variant="tertiary">View all <span aria-hidden="true">↗</span></Button></div><DataTable compact={mobile} /></section></div>;

@@ -1,5 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { DocsShell } from "@/components/navigation/DocsShell";
+
+export const metadata: Metadata = { title: "Components" };
 
 const componentLinks = [
   ["Navigation", "Top, side, tabs, breadcrumbs, and pagination."],

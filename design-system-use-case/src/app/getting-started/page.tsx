@@ -1,5 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { DocsShell } from "@/components/navigation/DocsShell";
+
+export const metadata: Metadata = { title: "Get started" };
 
 const installCode = `git clone <repository-url>
 cd design-system-use-case

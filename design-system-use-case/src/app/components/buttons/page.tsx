@@ -1,6 +1,9 @@
 import { Button } from "@/components/buttons/Button";
+import type { Metadata } from "next";
 import { CodeTabs } from "@/components/documentation/CodeTabs";
 import { ComponentPage } from "@/components/documentation/ComponentPage";
+
+export const metadata: Metadata = { title: "Buttons" };
 
 const cssCode = `.button {\n  min-height: 44px;\n  border-radius: 999px;\n  padding: 12px 20px;\n}`;
 const javascriptCode = `<Button variant="primary">Create project</Button>`;

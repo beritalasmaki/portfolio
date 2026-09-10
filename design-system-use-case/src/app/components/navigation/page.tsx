@@ -1,8 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { CodeTabs } from "@/components/documentation/CodeTabs";
 import { ComponentPage } from "@/components/documentation/ComponentPage";
 import { NavigationLink } from "@/components/navigation/NavigationLink";
 import { Tabs } from "@/components/navigation/Tabs";
+
+export const metadata: Metadata = { title: "Navigation" };
 
 const cssCode = `.navigation-item:hover {
   background: var(--surface-subtle);

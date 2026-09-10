@@ -1,7 +1,10 @@
 import { Card, CardBody, CardFooter, CardHeader } from "@/components/cards/Card";
+import type { Metadata } from "next";
 import { CardImage } from "@/components/cards/CardImage";
 import { CodeTabs } from "@/components/documentation/CodeTabs";
 import { ComponentPage } from "@/components/documentation/ComponentPage";
+
+export const metadata: Metadata = { title: "Cards" };
 
 const cssCode = `.card {\n  border: 1px solid var(--border-default);\n  border-radius: 16px;\n  background: white;\n}`;
 

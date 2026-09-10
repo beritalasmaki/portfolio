@@ -1,8 +1,11 @@
 import { Button } from "@/components/buttons/Button";
+import type { Metadata } from "next";
 import { Card, CardBody } from "@/components/cards/Card";
 import { DeviceMockup } from "@/components/examples/DeviceMockup";
 import { DocsShell } from "@/components/navigation/DocsShell";
 import { DataTable } from "@/components/table/DataTable";
+
+export const metadata: Metadata = { title: "Analytics" };
 
 function AnalyticsSummary({ mobile = false }: { mobile?: boolean }) {
   return <div className="min-w-0"><div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><p className="eyebrow mb-3">Analytics overview</p><h2 className={`${mobile ? "text-2xl" : "text-3xl"} font-extrabold tracking-[-0.04em]`}>Product signals</h2><p className="body-copy mt-2 text-sm">A focused view of the work shaping this month&apos;s outcomes.</p></div><Button variant="secondary">12 Sep 2026 <span aria-hidden="true">⌄</span></Button></div><div className="mb-6 flex gap-2 overflow-x-auto border-b border-[var(--color-border-default)]"><button type="button" className="whitespace-nowrap border-b-2 border-[var(--color-action-accent)] px-2 py-3 text-sm font-bold">Overview</button><button type="button" className="whitespace-nowrap px-2 py-3 text-sm font-semibold text-[var(--color-content-muted)]">Acquisition</button><button type="button" className="whitespace-nowrap px-2 py-3 text-sm font-semibold text-[var(--color-content-muted)]">Retention</button></div><div className={`grid gap-3 ${mobile ? "grid-cols-1" : "md:grid-cols-4"}`}>{[["Active users", "18,420", "+8.2%"], ["Completion", "72.8%", "+3.1%"], ["Time to value", "4.2m", "-0.6m"], ["Signals", "46", "8 new"]].map(([label, value, change]) => <Card key={label}><CardBody><p className="eyebrow mb-2">{label}</p><p className="m-0 text-3xl font-extrabold">{value}</p><p className="mt-2 text-sm font-semibold text-[var(--color-action-accent-dark)]">{change}</p></CardBody></Card>)}</div><section className="mt-8"><div className="mb-4 flex flex-wrap items-end justify-between gap-4"><div><p className="eyebrow mb-2">Signal detail</p><h3 className="m-0 text-xl font-bold">Latest product work</h3></div><Button variant="tertiary">Download CSV <span aria-hidden="true">↓</span></Button></div><DataTable compact={mobile} /></section></div>;

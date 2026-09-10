@@ -24,7 +24,7 @@ export function DocsShell({ children, active, topLink = { href: "/", label: "Bac
     <div className="min-h-screen bg-[var(--color-surface-canvas)]">
       <header className="border-b border-[var(--color-border-default)] px-6 py-5 lg:px-10">
         <div className="mx-auto flex max-w-[1480px] items-center justify-between gap-5">
-          <Link href="/" className="flex items-center gap-3 font-bold"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-action-accent)] font-mono text-xs">FW</span>Fieldwork <span className="hidden font-normal text-[var(--color-content-muted)] sm:inline">Design System</span></Link>
+          <Link href="/" className="flex items-center gap-3 font-bold"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-action-accent)] font-mono text-xs">DS</span>DS by Berit <span className="hidden font-normal text-[var(--color-content-muted)] sm:inline">Design System</span></Link>
               <nav aria-label="Primary" className="flex items-center text-sm font-semibold"><Link href={topLink.href} className="rounded-full bg-[var(--color-action-primary)] px-4 py-2 text-white hover:bg-[var(--color-action-accent-dark)]">{topLink.label === "Back to landing page" ? <><span aria-hidden="true" className="material-symbols-outlined mr-1">arrow_back</span>{topLink.label}</> : topLink.label}</Link></nav>
         </div>
       </header>

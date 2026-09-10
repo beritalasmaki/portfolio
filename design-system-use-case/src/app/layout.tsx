@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Fieldwork Design System",
+  title: {
+    default: "DS by Berit",
+    template: "%s - DS by Berit",
+  },
   description: "A token-first design system for clear, capable product interfaces.",
 };
 
