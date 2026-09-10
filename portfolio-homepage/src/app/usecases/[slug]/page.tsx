@@ -11,6 +11,7 @@ import OtherCaseStudies from "@/components/case-study/OtherCaseStudies";
 import ScreenshotGallery from "@/components/case-study/ScreenshotGallery";
 import TableOfContents, { type TocItem } from "@/components/case-study/TableOfContents";
 import TextSection from "@/components/case-study/TextSection";
+import Reveal from "@/components/Reveal";
 import { caseStudies, getCaseStudy, hasFullContent } from "@/data/case-studies";
 import type { CaseStudySlug } from "@/data/case-studies";
 
@@ -62,25 +63,49 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           <TableOfContents items={tocItems} />
 
           <div className="min-w-0 flex flex-col gap-[clamp(40px,5vw,72px)]">
-            <CaseStudyHero study={study} />
+            <Reveal>
+              <CaseStudyHero study={study} />
+            </Reveal>
 
-            {full && <ScreenshotGallery images={study.gallery} />}
-            {full && <ImpactSection intro={study.impactIntro} cards={study.impactCards} />}
             {full && (
-              <TextSection id="started" label="How it started" heading="How it started" paragraphs={[study.howItStarted]} />
+              <Reveal>
+                <ScreenshotGallery images={study.gallery} />
+              </Reveal>
             )}
-            {full && <ChallengesSection subsections={study.challenges} />}
             {full && (
-              <TextSection
-                id="differently"
-                label="What I would do differently"
-                heading="What I would do differently"
-                paragraphs={study.whatIWouldDoDifferently}
-              />
+              <Reveal>
+                <ImpactSection intro={study.impactIntro} cards={study.impactCards} />
+              </Reveal>
             )}
-            {full && <MethodsSection methods={study.methods} />}
+            {full && (
+              <Reveal>
+                <TextSection id="started" label="How it started" heading="How it started" paragraphs={[study.howItStarted]} />
+              </Reveal>
+            )}
+            {full && (
+              <Reveal>
+                <ChallengesSection subsections={study.challenges} />
+              </Reveal>
+            )}
+            {full && (
+              <Reveal>
+                <TextSection
+                  id="differently"
+                  label="What I would do differently"
+                  heading="What I would do differently"
+                  paragraphs={study.whatIWouldDoDifferently}
+                />
+              </Reveal>
+            )}
+            {full && (
+              <Reveal>
+                <MethodsSection methods={study.methods} />
+              </Reveal>
+            )}
 
-            <OtherCaseStudies currentSlug={study.slug} />
+            <Reveal>
+              <OtherCaseStudies currentSlug={study.slug} />
+            </Reveal>
           </div>
         </div>
       </main>

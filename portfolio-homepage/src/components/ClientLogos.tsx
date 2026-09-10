@@ -7,16 +7,14 @@ export default function ClientLogos() {
       <h2 id="clients-heading" className="font-mono-label text-mono-label uppercase text-muted m-0">
         Experience with well-known organisations
       </h2>
-      {/* Uniform grid cells: every logo sits in the same bordered, evenly
-          padded box (fixed height per breakpoint) and is scaled to fit via
+      {/* Uniform grid cells: every logo gets the same evenly padded space
+          (fixed height per breakpoint) and is scaled to fit via
           object-contain, so the row reads as one neat grid regardless of
-          each logo's own aspect ratio. */}
+          each logo's own aspect ratio — no card background/border behind
+          them, logos sit directly on the page. */}
       <ul className="mt-8 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-11 gap-3 sm:gap-4 list-none p-0 m-0">
         {clientLogos.map((logo) => (
-          <li
-            key={logo.name}
-            className="relative h-20 sm:h-24 lg:h-20 rounded-card border border-rule bg-panel"
-          >
+          <li key={logo.name} className="relative h-20 sm:h-24 lg:h-20">
             <Image
               src={logo.src}
               alt={logo.name}

@@ -344,6 +344,37 @@ state immediately (site-wide kill-switch, see the media query in
    waiting for it to finish. Case-study pages have no hero to lead into, so
    their header logo, and the footer's everywhere, just render finished.
 
+### Scroll reveal (`Reveal.tsx`)
+Below-the-fold content "grows in" as the user scrolls to it, rather than
+just appearing: every major section on the homepage (except `Hero`, which
+has its own load-in sequence above) and every section of a case-study page
+is wrapped in a shared `<Reveal>` component.
+- Starts `opacity: 0`, `translateY(28px) scale(0.97)`; transitions to
+  `opacity: 1`, `translateY(0) scale(1)` over `700ms ease-out`
+- Driven by a real `IntersectionObserver` (`threshold: 0.15`,
+  `rootMargin: "0px 0px -10% 0px"` — triggers a little before the section's
+  top edge reaches the bottom of the viewport), not a scroll listener
+- **Fires once per section** — the observer disconnects after the first
+  reveal, so scrolling back up and down never replays it; this is a one-time
+  entrance, not a repeating effect
+- **Progressive enhancement, not a requirement**: the hidden pre-reveal state
+  is only ever applied client-side after mount (via a layout effect, so
+  there's no flash of the visible state first). Server-rendered HTML, and
+  any visitor whose JS fails or hasn't hydrated yet, sees the section fully
+  visible from the start — content is never gated on JS to become visible
+- `prefers-reduced-motion: reduce` collapses the transition to effectively
+  instant via the site-wide kill-switch in `globals.css`, same as every
+  other animation on the site — the section still becomes visible, it just
+  doesn't visibly move
+- Implemented as a single wrapping `<div>` around each section (not a hook
+  each section calls, and not `cloneElement` onto the child) — the wrapper
+  carries no box of its own (no padding/border/background) and sits in
+  normal block/flex flow, so it doesn't disturb the `mt-rhythm` /
+  `gap-[...]` spacing between sections
+- Section-level only in this pass — individual cards within a grid (case
+  study cards, impact cards, process steps) reveal together with their
+  parent section rather than staggering card-by-card
+
 ### Back to top
 Fixed bottom-right, appears on scroll, links to `#page-top`. Ink pill, mono label,
 `shadow-lightbox`.
@@ -385,18 +416,23 @@ LinkedIn link.
 ```
 assets/berit-logo.png     Logo: orange flourish + "Berit Alasmäki" + "UX & PRODUCT DESIGNER"
 assets/berit-photo.png    Profile photo on the orange organic blob
-assets/<client>.png        Client logos, normalized to #222222 — never redraw
+assets/<client>.png        Client logos, normalized to #222222 on a transparent
+                            background (alpha computed from source luminance,
+                            not a hard cutout) — never redraw
 case/kem-*.png             Industrial data case screenshots
 ```
 
 Client logo row: Kemira, University of Helsinki, Syke, Digione, Espoo, Vantaa,
-Fintraffic, Cardiff University, CSC, Vero, Volkswagen — `#222222`.
+Fintraffic, Cardiff University, CSC, Vero, Volkswagen — `#222222`, transparent
+PNG (source files came in on an opaque white background; converted once so the
+mark sits directly on the page, no visible card behind it).
 Grid of uniform, evenly padded cells (3 cols mobile / 4 cols `sm` / 11 cols `lg`,
-fixed height per breakpoint, `border-radius` = card radius, `1px` rule border,
-panel background) rather than one bare row of differently-sized logos — each
-logo scales to fit its cell via `object-fit: contain` (Next Image `fill` +
-`object-contain`, `16px` padding baked into the image's content-box), so every
-cell reads as the same size regardless of that logo's own aspect ratio.
+fixed height per breakpoint) rather than one bare row of differently-sized
+logos — no card box (no background/border/radius) behind each cell, just
+even spacing. Each logo scales to fit its cell via `object-fit: contain`
+(Next Image `fill` + `object-contain`, `16px` padding baked into the image's
+content-box), so every cell reads as the same size regardless of that logo's
+own aspect ratio.
 
 ---
 
