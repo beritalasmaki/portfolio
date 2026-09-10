@@ -78,7 +78,8 @@ Fallbacks:      Helvetica, Arial, sans-serif / monospace
 
 ### Rules
 - `text-wrap: pretty` on every heading and paragraph.
-- `white-space: nowrap` on all nav items, buttons, pills, TOC items and captions.
+- `white-space: nowrap` on all nav items, buttons, pills and captions — except
+  the sticky TOC's items, which wrap (see Sticky TOC below).
 - Never break words mid-character; no hyphenation.
 - Body copy `max-width: 30–36em`.
 - Mono is used only for labels, eyebrows, captions and numbering — never for body copy.
@@ -231,16 +232,27 @@ Real interactive component (not the design files' CSS-only `:target` version):
   (`· N/M`) when there's more than one image, Previous/Next pill buttons, and a
   Close pill button
 - Cursor `zoom-in` on the thumbnail, `zoom-out` on the backdrop
+- Click-to-zoom on the expanded image itself: opens at 60% of its actual
+  (natural) pixel size — cursor `zoom-in` — click (or Enter/Space, it's a
+  real button) to jump to 100% true size — cursor `zoom-out` — click again
+  to return to 60%. Resets to 60% every time a new image opens or Previous/
+  Next changes the image. The image sits in its own scrollable region below
+  the header bar, so a 100%-size image taller or wider than the viewport
+  scrolls inside that region while the header (caption, Previous/Next,
+  Close) stays fixed in place.
 - Keyboard: `Escape` closes, `←`/`→` navigate between images, `Tab` is trapped
-  inside the dialog. Focus moves to Close on open and returns to the thumbnail
-  that opened it on close.
+  inside the dialog (now including the zoom toggle). Focus moves to Close on
+  open and returns to the thumbnail that opened it on close.
 - Expanded image: `border-radius: 12px`, `box-shadow` = Lightbox shadow (see Radii & elevation above)
 
 ### Sticky TOC (case study pages)
-- Two-column layout under the top header: TOC left, content right
+- Two-column layout under the top header: TOC left (`280px`), content right
 - `position: sticky; top: 32px`
 - `background: #ffffff`, `border: 1px solid #eeece7`, `border-radius: 20px`, `padding: 24px`
-- Items: 15px/600, `white-space: nowrap`, 16px gap
+- Items: 15px/600, 16px gap. **Exception to the general nav `white-space: nowrap`
+  rule** (§2): TOC labels wrap onto a second line instead of overflowing the
+  column — some section headings (e.g. "Challenges & Problem-Solving") are too
+  long to fit one line even at this width.
 - **Active item:** Accent dark (`#A45B0B`) text + `font-weight: 700` + `4px` left
   border in `#FC890C` + a 6px accent dot before the label (both together, not
   either/or) + `border-radius: 0 16px 16px 0`

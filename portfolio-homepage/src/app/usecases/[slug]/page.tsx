@@ -58,7 +58,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     <>
       <Header backHref="/" backLabel="← Back to work" />
       <main className="px-gutter pt-6 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] gap-x-14">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-x-14">
           <TableOfContents items={tocItems} />
 
           <div className="min-w-0 flex flex-col gap-[clamp(40px,5vw,72px)]">

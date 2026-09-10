@@ -7,8 +7,14 @@ import type { GalleryImage } from "@/data/case-studies";
 const FOCUSABLE_SELECTOR =
   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
+// Click-to-zoom levels for the expanded image: opens at 60% of its actual
+// (natural) pixel size, click to jump to 100% (true size, may need to
+// scroll to see the whole thing), click again to return to 60%.
+const ZOOM_LEVELS = [0.6, 1] as const;
+
 export default function ScreenshotGallery({ images }: { images: GalleryImage[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [zoomed, setZoomed] = useState(false);
   const triggerRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -16,15 +22,18 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
 
   const isOpen = openIndex !== null;
   const current = isOpen ? images[openIndex] : null;
+  const zoom = ZOOM_LEVELS[zoomed ? 1 : 0];
 
   function openAt(index: number) {
     lastTriggerRef.current = triggerRefs.current[index];
     setOpenIndex(index);
+    setZoomed(false);
   }
   const close = useCallback(() => setOpenIndex(null), []);
   const step = useCallback(
     (delta: number) => {
       setOpenIndex((i) => (i === null ? i : (i + delta + images.length) % images.length));
+      setZoomed(false);
     },
     [images.length]
   );
@@ -125,10 +134,10 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
             role="dialog"
             aria-modal="true"
             aria-label={current.caption}
-            className="relative flex max-h-full max-w-full flex-col gap-4 cursor-auto"
+            className="relative flex max-w-[92vw] max-h-[92vh] flex-col gap-4 cursor-auto"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-center justify-between gap-6 rounded-chrome bg-ink px-4 py-3">
+            <div className="shrink-0 flex items-center justify-between gap-6 rounded-chrome bg-ink px-4 py-3">
               <p className="font-mono-label text-mono-label uppercase text-white m-0 whitespace-nowrap">
                 {current.caption}
                 {images.length > 1 && (
@@ -169,14 +178,32 @@ export default function ScreenshotGallery({ images }: { images: GalleryImage[] }
                 </button>
               </div>
             </div>
-            <Image
-              src={current.src}
-              alt={current.alt}
-              width={current.width}
-              height={current.height}
-              style={{ maxHeight: "75vh", maxWidth: "100%", width: "auto", height: "auto" }}
-              className="block rounded-chrome bg-white shadow-lightbox"
-            />
+            {/* Click-to-zoom: 60% (fit-ish, whole image visible) <-> 100%
+                (true pixel size, scrolls if it doesn't fit). A real <button>,
+                not a div, so it's reachable in the Tab order the focus trap
+                above already walks. */}
+            <div className="min-h-0 flex-1 overflow-auto">
+              <button
+                type="button"
+                onClick={() => setZoomed((z) => !z)}
+                aria-label={zoomed ? "Zoom out" : "Zoom in"}
+                className={`block ${zoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
+              >
+                <Image
+                  src={current.src}
+                  alt={current.alt}
+                  width={current.width}
+                  height={current.height}
+                  // Higher than the default 75: these are UI screenshots
+                  // with small text, more sensitive to compression softness
+                  // than a photo, and this is the one place on the site
+                  // people are meant to look closely at fine detail.
+                  quality={95}
+                  style={{ width: current.width * zoom, height: current.height * zoom }}
+                  className="block rounded-chrome bg-white shadow-lightbox"
+                />
+              </button>
+            </div>
           </div>
         </div>
       )}

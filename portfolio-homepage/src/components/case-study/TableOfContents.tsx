@@ -52,7 +52,7 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
             key={item.id}
             href={`#${item.id}`}
             aria-current={isActive ? "location" : undefined}
-            className={`flex items-center gap-2 py-2 pl-4 -ml-px text-nav whitespace-nowrap border-l-4 transition-[border-color,color] duration-150 ease-out ${
+            className={`flex items-center gap-2 py-2 pl-4 -ml-px text-nav border-l-4 transition-[border-color,color] duration-150 ease-out ${
               isActive
                 ? "border-accent text-accent-dark font-bold rounded-r-[16px]"
                 : "border-rule text-body font-semibold hover:border-rule-strong hover:text-ink focus-visible:border-rule-strong focus-visible:text-ink"
