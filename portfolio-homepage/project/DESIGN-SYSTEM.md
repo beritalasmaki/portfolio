@@ -296,11 +296,14 @@ code and applies site-wide:
 
 ### Homepage entrance sequence
 Plays once on load (homepage only — `Header`'s `animateLogo` prop), never on
-scroll or re-render. Every stage is `ease-out`; the whole thing settles by
-~2.3s. `prefers-reduced-motion: reduce` shows every element in its finished
+scroll or re-render. Every stage is `ease-out`, deliberately unhurried — an
+earlier, snappier pass (600ms logo, 700ms line segments) read as an instant
+snap rather than a calm draw, since ease-out front-loads most of the visible
+motion into the first fraction of the duration. The whole thing settles by
+~3.2s. `prefers-reduced-motion: reduce` shows every element in its finished
 state immediately (site-wide kill-switch, see the media query in
 `globals.css`), not just for this sequence.
-1. **Logo signature mark** (`Logo.tsx`, 0–600ms) — the blob is present from
+1. **Logo signature mark** (`Logo.tsx`, 0–1300ms) — the blob is present from
    frame one; the black signature strokes in left to right. It's a filled
    brush-stroke shape, not a simple open line, so stroking it directly would
    render as a thin outline of the silhouette rather than "the pen writing
@@ -308,10 +311,11 @@ state immediately (site-wide kill-switch, see the media query in
    same `pathLength`/`stroke-dasharray`/`stroke-dashoffset` technique as the
    hero line below, sweeps across an SVG `<mask>` that progressively reveals
    the real, unaltered signature path underneath.
-2. **Hero line** (`Hero.tsx`, starts at 600ms, same relative stagger as
-   before) — picks up right where the logo leaves off.
-3. **Headline → subheadline → buttons** (750ms / 930ms / 1110ms) — fade up
-   (~12px, 550ms each), overlapping the hero line's own draw rather than
+2. **Hero line** (`Hero.tsx`, starts at 1300ms, each path 900ms, same
+   relative stagger as before) — picks up right where the logo leaves off,
+   finishes around 3200ms.
+3. **Headline → subheadline → buttons** (1450ms / 1630ms / 1810ms) — fade up
+   (~12px, 700ms each), overlapping the hero line's own draw rather than
    waiting for it to finish. Case-study pages have no hero to lead into, so
    their header logo, and the footer's everywhere, just render finished.
 

@@ -79,7 +79,7 @@
      `animation-fill-mode: forwards` holds the end state) and is never
      re-triggered on scroll or re-render. */
   .hero-flourish-path {
-    animation: hero-draw 700ms ease-out forwards;
+    animation: hero-draw 900ms ease-out forwards;
   }
 
   @keyframes hero-draw {
@@ -99,7 +99,7 @@
      measurement, no pre-hydration flash), correct result for a filled
      asset. See Logo.tsx. */
   .logo-mask-path {
-    animation: logo-draw 600ms ease-out forwards;
+    animation: logo-draw 1300ms ease-out forwards;
   }
 
   @keyframes logo-draw {
@@ -115,7 +115,7 @@
      animation engine takes over on paint. */
   .fade-up-item {
     opacity: 0;
-    animation: fade-up 550ms ease-out forwards;
+    animation: fade-up 700ms ease-out forwards;
   }
 
   @keyframes fade-up {
