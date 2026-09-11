@@ -244,25 +244,33 @@ process), not a new top-level numbered section.
   otherwise. Real `role="tablist"`/`role="tab"` with roving tabindex,
   `←`/`→`/Home/End — the horizontal counterpart to the vertical
   `ArrowUp`/`ArrowDown` pattern the homepage tabs use.
-- **Typical timeline card** (`bg-panel`, `rounded-card`, `p-card-pad`) — a
-  week ruler (`W1…Wn`) above stacked rows of stage blocks, each block's
-  width/position computed as a percentage of the tab's total weeks. Blocks
-  are packed left-to-right per row (each one's gap from the previous
-  block's right edge becomes its own left margin) so they can never
-  overlap. Six semantic category colors (Research/Design/Code/Testing/
-  Systems/Ship) — content-intrinsic categorical coding, not part of the
-  site's brand palette, kept as component-local constants. A legend row
-  lists all six regardless of which appear in the active tab.
-- **Detail panel** (`bg-white`, `rounded-card`, `p-card-pad`) — clicking a
-  stage block toggles it open (click again to close); switching tabs always
-  resets it to the closed/prompt state. Prompt state: small hand-drawn
-  accent squiggle icon + "Click a step to see how I work." Open state: stage
-  name, "When I use this" + body copy, "I skip this when…" in a `border-l-4
-  border-accent` / `bg-soft` callout (same left-border-callout convention as
-  case-study impact cards, just accent instead of the un-colored default).
-  Swapping between two already-open stages re-renders the same panel
-  in place (no unmount/remount), so there's no flash — only a genuine
-  prompt↔detail transition changes which branch renders.
+- **One joined surface, not two cards** — the timeline and detail halves
+  share a single outer `border border-rule-strong rounded-card
+  overflow-hidden` (`grid-cols-[3fr_2fr]` at `lg`, detail narrower than the
+  timeline), with a `border-l` (`border-t` when stacked below `lg`) as the
+  only seam between them — same "single joined block, no gap" treatment as
+  the homepage tabs (MindTabs' tablist+pane), just split into unequal
+  widths instead of a fixed tablist column.
+- **Typical timeline half** (`bg-panel`, `p-card-pad`) — a week ruler
+  (`W1…Wn`) above stacked rows of stage blocks, each block's width/position
+  computed as a percentage of the tab's total weeks. Blocks are packed
+  left-to-right per row (each one's gap from the previous block's right
+  edge becomes its own left margin) so they can never overlap. Six semantic
+  category colors (Research/Design/Code/Testing/Systems/Ship) —
+  content-intrinsic categorical coding, not part of the site's brand
+  palette, kept as component-local constants. A legend row lists all six
+  regardless of which appear in the active tab.
+- **Detail half** (`bg-white`, `p-card-pad`) — clicking a stage block
+  toggles it open (click again to close); switching tabs always resets it
+  to the closed/prompt state. Prompt state: small hand-drawn accent
+  squiggle icon + "Click a step to see how I work." Open state: a category
+  tag pill (`rounded-pill`, that category's own fill/text color) above the
+  stage name, "When I use this" + body copy, "I skip this when…" in a
+  `border-l-4 border-accent` / `bg-soft` callout (same left-border-callout
+  convention as case-study impact cards, just accent instead of the
+  un-colored default). Swapping between two already-open stages re-renders
+  the same panel in place (no unmount/remount), so there's no flash — only
+  a genuine prompt↔detail transition changes which branch renders.
 - **Mobile**: the week ruler + stage rows scroll horizontally within the
   timeline card (legend stays outside the scroll region, always visible)
   rather than compress illegibly or overflow the page — the source export

@@ -382,14 +382,20 @@ export default function ProcessTimeline() {
         })}
       </div>
 
+      {/* One joined surface, not two separate cards side by side — same
+          "single block, no gap, overflow-hidden" treatment as the homepage
+          tabs (MindTabs), just split into a wider timeline half and a
+          narrower detail half instead of tablist+pane. The color change
+          (panel -> white) plus a rule divider is what marks the seam,
+          not a gap/shadow between two boxes. */}
       <div
         id={panelId}
         role="tabpanel"
         aria-labelledby={`${baseId}-tab-${tabIndex}`}
         tabIndex={0}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-grid-gap mt-4 items-start"
+        className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] mt-4 items-stretch border border-rule-strong rounded-card overflow-hidden"
       >
-        <div className="bg-panel border border-rule-strong rounded-card p-card-pad min-w-0">
+        <div className="bg-panel p-card-pad min-w-0">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <h3 className="m-0 text-sub-h4 font-extrabold whitespace-nowrap">Typical timeline</h3>
             <span className="font-mono-label text-mono-label-em uppercase text-body bg-white border border-rule-strong rounded-pill py-2 px-4 whitespace-nowrap">
@@ -476,9 +482,15 @@ export default function ProcessTimeline() {
           </div>
         </div>
 
-        <div className="bg-white border border-rule-strong rounded-card p-card-pad min-w-0 flex flex-col gap-6">
+        <div className="bg-white p-card-pad min-w-0 flex flex-col gap-6 border-t lg:border-t-0 lg:border-l border-rule-strong">
           {detail ? (
             <div className="flex flex-col gap-6">
+              <span
+                className="self-start font-mono-label text-mono-label uppercase rounded-pill py-2 px-4 whitespace-nowrap"
+                style={{ background: CATEGORIES[detail.cat].fill, color: CATEGORIES[detail.cat].text }}
+              >
+                {CATEGORIES[detail.cat].label}
+              </span>
               <h4 className="m-0 text-sub-h4 font-extrabold text-pretty">{detail.name}</h4>
               <div className="flex flex-col gap-4">
                 <p className="font-mono-label text-mono-label uppercase text-ink m-0">When I use this</p>
