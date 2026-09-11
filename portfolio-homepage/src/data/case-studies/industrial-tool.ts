@@ -83,8 +83,9 @@ export const industrialTool: CaseStudy = {
     },
   ],
 
-  howItStarted:
+  howItStarted: [
     "I stepped into an ongoing project, picking up work from a previous designer. Some of the first things I focused on were visual improvements to the interface, for example turning widget elements into visual cards instead of plain text lists, making them much easier to scan. From there, we also designed an auto-save feature for data and reporting views, and improved the structure and content of reports.",
+  ],
 
   challenges: [
     {

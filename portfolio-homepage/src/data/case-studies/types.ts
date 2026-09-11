@@ -64,7 +64,8 @@ export type CaseStudyFullContent = {
   gallery: GalleryImage[];
   impactIntro: string;
   impactCards: ImpactCard[];
-  howItStarted: string;
+  /** One or more paragraphs, in order. */
+  howItStarted: string[];
   challenges: ChallengeSubsection[];
   /** One or more paragraphs, in order. */
   whatIWouldDoDifferently: string[];

@@ -79,7 +79,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             )}
             {full && (
               <Reveal>
-                <TextSection id="started" label="How it started" heading="How it started" paragraphs={[study.howItStarted]} />
+                <TextSection id="started" label="How it started" heading="How it started" paragraphs={study.howItStarted} />
               </Reveal>
             )}
             {full && (

@@ -425,8 +425,21 @@ assets/berit-photo.png    Profile photo on the orange organic blob
 assets/<client>.png        Client logos, normalized to #222222 on a transparent
                             background (alpha computed from source luminance,
                             not a hard cutout) — never redraw
-case/kem-*.png             Industrial data case screenshots
+case/kem-*.png             Industrial data case screenshots (original source files,
+                            full resolution)
+case/uni-*.png              University case screenshots
+case/edu-*.png               Education platform case screenshots
+case/syke-*.png               Environmental data case screenshots
 ```
+
+All four case studies now have full detail content (`hasFullContent()` is true for
+all of them — none render the minimal template anymore). Industrial Data's gallery
+(`kem-*.png`) came from original, full-resolution source screenshots; the other
+three case studies' galleries (`uni-*`, `edu-*`, `syke-*`) were cropped from the
+screenshots embedded in the case-study PDFs the client provided, since no separate
+hi-res originals existed for those — noticeably softer than `kem-*` as a result.
+Swap in sharper originals for any of them if/when available; no layout change
+needed, `GalleryImage.width`/`height` just needs updating to match.
 
 Client logo row: Kemira, University of Helsinki, Syke, Digione, Espoo, Vantaa,
 Fintraffic, Cardiff University, CSC, Vero, Volkswagen — `#222222`, transparent
