@@ -21,7 +21,7 @@ As a designer, most of my work lives in Figma, workshops, and stakeholder conver
 ## 🛠️ Tools & technologies I work with
 
 - **Design:** Figma, Design Systems, Design Tokens
-- **AI-assisted prototyping & development:** Claude, Claude Design, VSCode, Gemini
+- **AI-assisted prototyping & development:** Claude, Claude Design, VSCode
 - **Frontend basics:** HTML, CSS, TypeScript
 - **Other:** Jira, Confluence, Miro
 
