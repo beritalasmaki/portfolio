@@ -1,5 +1,5 @@
 import { site } from "@/data/site";
-import ProcessSteps from "./ProcessSteps";
+import ProcessTimeline from "./ProcessTimeline";
 
 export default function AboutSection() {
   return (
@@ -26,7 +26,7 @@ export default function AboutSection() {
         </a>
       </div>
 
-      <ProcessSteps />
+      <ProcessTimeline />
 
       <div className="flex items-center gap-4 bg-panel rounded-card p-card-pad mt-grid-gap">
         <span aria-hidden="true" className="text-xl text-accent-dark whitespace-nowrap">

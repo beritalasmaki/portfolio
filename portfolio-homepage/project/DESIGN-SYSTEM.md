@@ -228,6 +228,59 @@ Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
   + `aria-controls` on the button, `role="region"` on the panel, panel
   conditionally rendered (not the `hidden` attribute).
 
+### Process timeline (About section, "My process")
+Imported from a Claude Design canvas component (`ProcessTimeline.tsx`) and
+reimplemented as a real React component — the `.dc.html` export's own
+template DSL only runs inside the Claude Design canvas. Replaces the earlier
+static three-card "Find the right problem / Make possibilities tangible /
+Help the work ship" list entirely (`ProcessSteps.tsx`, deleted). Sits inside
+`<section id="about">`, right after the existing bio paragraph, as its own
+nested `<section aria-labelledby="process-heading">` with its own eyebrow
+("My process") + h2 — a second beat within the About section (identity, then
+process), not a new top-level numbered section.
+- **Tabs** — one per project type (0→1 Product, Rapid Prototype, Design
+  System, Redesign), horizontal underline style: `3px` `accent` bottom
+  border + bold ink text when active, `muted` text + transparent border
+  otherwise. Real `role="tablist"`/`role="tab"` with roving tabindex,
+  `←`/`→`/Home/End — the horizontal counterpart to the vertical
+  `ArrowUp`/`ArrowDown` pattern the homepage tabs use.
+- **Typical timeline card** (`bg-panel`, `rounded-card`, `p-card-pad`) — a
+  week ruler (`W1…Wn`) above stacked rows of stage blocks, each block's
+  width/position computed as a percentage of the tab's total weeks. Blocks
+  are packed left-to-right per row (each one's gap from the previous
+  block's right edge becomes its own left margin) so they can never
+  overlap. Six semantic category colors (Research/Design/Code/Testing/
+  Systems/Ship) — content-intrinsic categorical coding, not part of the
+  site's brand palette, kept as component-local constants. A legend row
+  lists all six regardless of which appear in the active tab.
+- **Detail panel** (`bg-white`, `rounded-card`, `p-card-pad`) — clicking a
+  stage block toggles it open (click again to close); switching tabs always
+  resets it to the closed/prompt state. Prompt state: small hand-drawn
+  accent squiggle icon + "Click a step to see how I work." Open state: stage
+  name, "When I use this" + body copy, "I skip this when…" in a `border-l-4
+  border-accent` / `bg-soft` callout (same left-border-callout convention as
+  case-study impact cards, just accent instead of the un-colored default).
+  Swapping between two already-open stages re-renders the same panel
+  in place (no unmount/remount), so there's no flash — only a genuine
+  prompt↔detail transition changes which branch renders.
+- **Mobile**: the week ruler + stage rows scroll horizontally within the
+  timeline card (legend stays outside the scroll region, always visible)
+  rather than compress illegibly or overflow the page — the source export
+  was only previewed at a fixed 1200px canvas width and didn't account for
+  narrow viewports; this is linear time-ordered content that can't reflow
+  the way a card grid can, so a contained horizontal scroll is the correct
+  fix, not a design deviation.
+- **No load-time animation of its own** — sits inside the homepage's
+  existing per-section `<Reveal>` scroll-entrance (grows in once scrolled
+  into view, same as every other homepage section) and has nothing that
+  could compete with the hero's own logo/line/text load sequence, which
+  is scoped to `Header.tsx`/`Hero.tsx` and finishes long before this
+  below-the-fold section is ever visible.
+- One reconciliation from the export: its focus-visible outline used accent
+  orange; left as the site's global ink `:focus-visible` default instead,
+  consistent with the WCAG 1.4.11 reasoning already documented for every
+  other interactive element (`globals.css`).
+
 ### Screenshot frame — filmstrip gallery (case study pages)
 ```
 background: #ffffff; border: 1px solid #eeece7; border-radius: 14px; padding: 8px;
