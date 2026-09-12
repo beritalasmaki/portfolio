@@ -614,7 +614,7 @@ Focus box, Starting Point, Impact cards) stays permanently visible.
 ### Header (all pages)
 Single row, one hairline below:
 ```
-[logo 80px] [status pill]  ————————  [page links]  |  [LinkedIn icon]  [GitHub icon]  [Contact button]
+[logo 80px]  ————————  [page links]  |  [LinkedIn icon]  [GitHub icon]  [status pill]  [Contact button]
 ```
 - Logo: real vector mark (blob + signature paths, exact 1:1-scale overlay
   measured against the original `berit-logo.png`) + real text ("Berit
@@ -645,19 +645,34 @@ Single row, one hairline below:
   pills unchanged (plenty of vertical room there; an icon alone reads
   less clearly in a full-screen stacked menu).
 - **Status pill** (`StatusPill.tsx`): a small `bg-success-bg` pill next to
-  the logo that cross-fades through "Open to work" / "Open to networking"
-  / "Open to freelance projects" on a 4.5s `setInterval`, `duration-700`
-  opacity crossfade. The two (or three) overlapping text layers sit in a
-  fixed-width box (`15ch`) so the crossfade doesn't fight itself for size
-  as the text changes. `prefers-reduced-motion` stops the interval outright
-  (checked in JS, not just a CSS transition-duration kill — the requirement
-  is "no rotation happens", not "the rotation happens instantly"), leaving
-  it on the first message. The rotation is `aria-hidden`; a single static
-  `sr-only` label ("Open to work, networking, and freelance projects")
-  covers all three states for screen readers rather than an `aria-live`
-  region re-announcing every few seconds. `hidden lg:inline-flex` — the
-  first thing to disappear as the viewport narrows, before the nav links,
-  icons, or Contact button are ever at risk of wrapping.
+  Contact — inside the same tight-gap `LinkedIn/GitHub/Contact` cluster,
+  not the wider page-links group — that cross-fades through "Open to
+  work" / "Open to networking" / "Open to freelance projects" on a 4.5s
+  `setInterval`, `duration-700` opacity crossfade. It was tried next to
+  the logo first; moved to sit against Contact instead.
+  - **Width hugs the current text** rather than sitting in one box sized
+    for the longest of the three ("Open to freelance projects" made
+    "Open to work" look loose and adrift in too much empty pill). A
+    hidden measurer span (`invisible`, off-canvas, same font/size as the
+    visible text) reports each status's natural rendered width once on
+    mount via `useLayoutEffect`; the text box's `width` is then set to
+    that exact pixel value and transitions (`duration-500`) in step with
+    the opacity crossfade whenever the index changes. Before that first
+    measurement (a few ms on mount, before the browser's first paint in
+    practice), the box has no explicit width and its absolutely-positioned
+    text children don't establish one on their own — it very briefly
+    renders as just the dot.
+  - `prefers-reduced-motion` stops the interval outright (checked in JS,
+    not just a CSS transition-duration kill — the requirement is "no
+    rotation happens", not "the rotation happens instantly"), leaving it
+    on the first message.
+  - The rotation is `aria-hidden`; a single static `sr-only` label ("Open
+    to work, networking, and freelance projects") covers all three states
+    for screen readers rather than an `aria-live` region re-announcing
+    every few seconds.
+  - `hidden lg:inline-flex` — the first thing to disappear as the
+    viewport narrows, before the nav links, icons, or Contact button are
+    ever at risk of wrapping.
 - `nav-gap` (the fluid gap between page links) tightened to
   `clamp(10px, 1.8vw, 32px)` — down from `clamp(16px, 2.2vw, 32px)` — once
   a third nav link (My Process) joined "Selected case studies" and "About"
