@@ -182,8 +182,8 @@ function WorkingWithMeRow({
           {item.icon}
         </span>
         <span className="flex-1 text-body-em font-semibold text-ink text-pretty">{item.statement}</span>
-        <span aria-hidden="true" className="shrink-0 text-muted">
-          ⌄
+        <span aria-hidden="true" className="shrink-0 text-body-sm text-muted whitespace-nowrap">
+          hover for more
         </span>
       </button>
       {/* See point 2 and 3 above: same box as the button (inset-0), always

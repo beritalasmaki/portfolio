@@ -145,7 +145,7 @@ export default function Header({ backHref, backLabel = "← Back to work", anima
             ))
           )}
           <span aria-hidden="true" className="block w-px h-5 bg-rule-strong ml-2" />
-          {/* LinkedIn + GitHub + status pill + Contact grouped with their
+          {/* LinkedIn + GitHub + Contact + status pill grouped with their
               own tight 8px gap, separate from the wider gap-nav-gap the
               rest of the nav uses. */}
           <span className="flex items-center gap-2">
@@ -156,13 +156,13 @@ export default function Header({ backHref, backLabel = "← Back to work", anima
               icon={<LinkedInIcon />}
             />
             <IconLink href={site.githubUrl} label="Visit my GitHub" tooltip="Visit my GitHub" icon={<GithubIcon />} />
-            <StatusPill />
             <a
               href="#contact"
               className="text-nav font-semibold whitespace-nowrap text-white bg-ink rounded-pill py-3 px-6 transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:text-white hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:text-white focus-visible:-translate-y-px focus-visible:outline-white"
             >
               Contact
             </a>
+            <StatusPill />
           </span>
         </nav>
 

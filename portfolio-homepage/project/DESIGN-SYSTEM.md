@@ -614,7 +614,7 @@ Focus box, Starting Point, Impact cards) stays permanently visible.
 ### Header (all pages)
 Single row, one hairline below:
 ```
-[logo 80px]  ————————  [page links]  |  [LinkedIn icon]  [GitHub icon]  [status pill]  [Contact button]
+[logo 80px]  ————————  [page links]  |  [LinkedIn icon]  [GitHub icon]  [Contact button]  [status pill]
 ```
 - Logo: real vector mark (blob + signature paths, exact 1:1-scale overlay
   measured against the original `berit-logo.png`) + real text ("Berit
@@ -644,24 +644,24 @@ Single row, one hairline below:
   tap just navigates. The mobile nav panel keeps the original labeled
   pills unchanged (plenty of vertical room there; an icon alone reads
   less clearly in a full-screen stacked menu).
-- **Status pill** (`StatusPill.tsx`): a small `bg-success-bg` pill next to
-  Contact — inside the same tight-gap `LinkedIn/GitHub/Contact` cluster,
-  not the wider page-links group — that cross-fades through "Open to
-  work" / "Open to networking" / "Open to freelance projects" on a 4.5s
-  `setInterval`, `duration-700` opacity crossfade. It was tried next to
-  the logo first; moved to sit against Contact instead.
-  - **Width hugs the current text** rather than sitting in one box sized
-    for the longest of the three ("Open to freelance projects" made
-    "Open to work" look loose and adrift in too much empty pill). A
-    hidden measurer span (`invisible`, off-canvas, same font/size as the
-    visible text) reports each status's natural rendered width once on
-    mount via `useLayoutEffect`; the text box's `width` is then set to
-    that exact pixel value and transitions (`duration-500`) in step with
-    the opacity crossfade whenever the index changes. Before that first
-    measurement (a few ms on mount, before the browser's first paint in
-    practice), the box has no explicit width and its absolutely-positioned
-    text children don't establish one on their own — it very briefly
-    renders as just the dot.
+- **Status pill** (`StatusPill.tsx`): a small `bg-success-bg` pill on the
+  right of Contact — inside the same tight-gap `LinkedIn/GitHub/Contact`
+  cluster, not the wider page-links group — that cross-fades through
+  "Open to work" / "Open to networking" / "Open to freelance projects" on
+  a 4.5s `setInterval`, `duration-700` opacity crossfade. Tried next to
+  the logo first, then directly to the left of Contact; settled on the
+  right of it.
+  - **Fixed width, not hug-to-content.** An earlier version measured each
+    status's natural width and resized the box to match, but that pill
+    sat wedged against Contact and the icon buttons — its own footprint
+    changing size as the text rotated shifted Contact sideways with it,
+    which is exactly the "things move around" behavior a header shouldn't
+    have. The text box is now a constant `168px` (comfortably fits the
+    longest status, "Open to freelance projects", measured at ~152px at
+    this font/size, plus a safety margin) and never resizes; only its
+    content's opacity crossfades. A shorter status (e.g. "Open to work")
+    centers within that fixed box (`flex items-center justify-center`)
+    instead of hugging its own width and leaving the rest left-aligned.
   - `prefers-reduced-motion` stops the interval outright (checked in JS,
     not just a CSS transition-duration kill — the requirement is "no
     rotation happens", not "the rotation happens instantly"), leaving it
