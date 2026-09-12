@@ -213,6 +213,23 @@ display: flex; flex-direction: column;      /* stretch in a grid row */
   renders a "Visit live project ↗" secondary-pill link (`target="_blank"
   rel="noopener noreferrer"`) under the description, whether or not the case
   study has full content yet.
+- **Isolated last card in a multi-column grid:** both card grids that pull
+  from the full case-study registry (`CaseStudyCards` on the homepage,
+  `OtherCaseStudies` at the bottom of a case-study page) can end up with a
+  count that doesn't divide evenly into the grid's column count at its
+  widest breakpoint — currently always true (5 total case studies ÷ 2
+  columns on the homepage; 4 "other" studies ÷ 3 columns on a case-study
+  page), leaving the last card alone in its row with one or two empty
+  card-widths of gap next to it. Rather than leave that gap, that last card
+  spans every column in the row and switches to a horizontal layout
+  (thumbnail on the left at a fraction of the row's width, text centered on
+  the right) instead of stretching its normal stacked layout across the
+  full width — the thumbnail's `aspect-[16/13]` box is relative to its own
+  (now much narrower) width, so it keeps normal proportions instead of
+  becoming a huge stretched image. Computed per-render from the actual
+  array length (`items.length % columns === 1`, applied to `index ===
+  items.length - 1`), not hardcoded, so it stays correct as case studies
+  are added.
 
 ### Tag / method label
 Understated, no pill background:
@@ -221,6 +238,13 @@ font-size: clamp(14px, 1.1vw, 16px); font-weight: 600; color: #222222;
 white-space: nowrap;
 ```
 Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
+- **Wrapping method lists (`MethodsSection`):** the divider is each item's
+  own `border-left` (all but the first item), not a separate element
+  inserted between items. A separate divider element dangles at the end of
+  a line with nothing after it whenever the list wraps right after one; a
+  per-item left border just drops off the start of whichever item wraps to
+  the next line instead, which reads as normal spacing rather than an
+  orphaned mark.
 
 ### Tabs (homepage "your next move")
 - Single joined block, `border-radius: 20px; overflow: hidden`, no gap between column
@@ -299,25 +323,30 @@ before `ProcessTimeline`):
     cursor arrived at the new row, occasionally shifting the new row's
     hoverable area out from under an otherwise-stationary pointer —
     confirmed with Playwright, not just theoretical.)
-  - **The reveal is an absolutely-positioned overlay, not an inline block**
-    that pushes the rows below it down — for the same reason: even with
-    hover fully decoupled per row, an inline reveal still physically moves
-    whatever comes after it, and that's exactly the shift a
-    stationary-feeling cursor can lose hover to. An overlay still visually
-    reads as "text appears beneath the statement" (the literal ask), it
-    just doesn't displace anything else while doing it. `pointer-events-none`
-    while collapsed — even at `opacity-0` it still sits on top of the row
-    underneath and would otherwise steal that row's hover. The **last row
-    opens upward** instead of down (nothing below it to overlap, and
-    nothing to keep it inside the card's own bottom edge otherwise) —
-    it deliberately overlaps the row above for as long as it's open, which
-    self-resolves the moment focus/hover moves on.
-  - Asymmetric transition: reveal `duration-300 ease-out`, collapse
-    `duration-150 ease-in` (opacity + a small translate) — a relaxed
-    entrance, a quick exit, via the "duration/easing live on whichever
-    class list is active" CSS trick (switch both together with the
-    state-driven value, no keyframes needed since it's a plain two-state
-    toggle rather than MindTabs' swapped-content case).
+  - **The reveal sits directly on top of its own row** (`absolute inset-0`,
+    the exact footprint of the row's button), not in the space above or
+    below it: hovering/focusing/pinning a row cross-fades its icon +
+    statement out and a white detail card in, both with a `blur-md ->
+    blur-none` filter running alongside the opacity change — not a plain
+    fade, a *blurry* transition. Because the detail card never leaves its
+    own row's box, it can never encroach on a neighboring row, so every row
+    (including the last) behaves identically — no "last row has nowhere to
+    open into" special case the way an adjacent-space reveal would need.
+    Each row has a `min-h-[124px]` floor so the longer detail sentences
+    have room to wrap without the box needing to resize on hover (resizing
+    on hover was the thing that caused real, Playwright-confirmed hover
+    loss on adjacent rows in an earlier version of this component — see the
+    note above).
+  - The overlay is `pointer-events-none` in **every** state, not just while
+    collapsed. It sits precisely on top of the button that controls it, so
+    if it ever accepted pointer events, the instant it faded in the cursor
+    would be "over" the overlay instead of the button beneath — firing that
+    button's `mouseleave`, hiding the overlay, handing hover back to the
+    button, re-firing `mouseenter`... a flicker loop. Passing every pointer
+    event through to the button underneath avoids it outright.
+  - Asymmetric transition duration: reveal `duration-300 ease-out` on both
+    layers, applied via the "duration/easing live on whichever class list
+    is active" CSS trick (no keyframes needed for a plain two-state toggle).
 
 ### Process timeline (About section, "My process")
 Imported from a Claude Design canvas component (`ProcessTimeline.tsx`) and
@@ -461,19 +490,24 @@ Real interactive component (not the design files' CSS-only `:target` version):
   Selecting a link closes the dropdown. `<details>` chosen over a custom
   JS-toggled panel for its built-in keyboard/screen-reader disclosure
   semantics with no extra wiring.
-- **Item list (full case studies):** The Impact, How it started, Challenges
-  & Problem-Solving, What I would do differently, Methods, Other case
-  studies, Back to main page. "Back to main page" is a real link to `/`
-  (`TocItem.href` overrides the default `#id` anchor) — same destination as
-  the header's own "← Back to work", offered again here since scrolling
-  deep into a long case study puts the header's link off-screen. Minimal
+- **Item list (full case studies):** Starting Point, Examples of UI-screens,
+  The Impact, How it started, Challenges & Problem-Solving, What I would do
+  differently, Methods, Other case studies, Back to main page. Minimal
   (summary-only) case studies keep their own shorter list unchanged (About
   the project, Other case studies).
-- **Opens the matching accordion section on click:** every TOC link click
-  dispatches a `cs:open-section` window `CustomEvent` with the clicked id
-  (see `AccordionSection`) in addition to its normal anchor/page
-  navigation — a harmless no-op for ids nothing is listening for (a plain
-  anchor, or "Back to main page"'s real link).
+- **Opens the matching accordion section on click:** every section-anchor
+  TOC link click dispatches a `cs:open-section` window `CustomEvent` with
+  the clicked id (see `AccordionSection`) in addition to its normal anchor
+  navigation — a harmless no-op for ids nothing is listening for.
+- **"Back to main page" renders separately and looks different on
+  purpose** (`pageLinks()`, vs. the section anchors' `sectionLinks()`) — a
+  real link to `/` (`TocItem.href` overrides the default `#id` anchor;
+  same destination as the header's own "← Back to work", offered again
+  here since scrolling deep into a long case study puts the header's link
+  off-screen), so it's styled as leaving the page rather than one more
+  stop within it: a `←` prefix, bold ink text (not the section anchors'
+  left-border-tab treatment), separated from the list above by its own
+  `border-t` divider.
 
 ### Sneak-peek hero (full case studies, above "Starting Point")
 Replaces `CaseStudyHero` entirely for the four full case studies — that
@@ -503,10 +537,13 @@ Two-column (`lg:grid-cols-[1.15fr_0.85fr]`), left column stacked `gap-6`:
 - No CTA button — "explore full case study" would be redundant on the
   page it's already the top of
 
-Right column: 2-3 stacked, overlapping, rotated screenshot cards
+Right column: exactly 2 stacked, overlapping, rotated screenshot cards
 (`sneakPeekImages` — hand-picked `gallery` entries, not just its first N;
-prioritize whatever reads clearly at a glance over anything text-dense,
-since these render small and cropped). Each card is a fixed `aspect-[3/4]`
+**desktop shots only, never mobile** — a mobile screenshot's own header
+crops to something far less recognizable at this card size than a desktop
+one does, and prioritize whatever reads clearly at a glance over anything
+text-dense in general, since these render small and cropped). Each card is
+a fixed `aspect-[3/4]`
 box regardless of the source image's real aspect ratio (mixed desktop/
 mobile shots) — `next/image` `fill` + `object-cover object-top` crops to
 fit, favoring the top of the shot (its most recognizable part) over
@@ -514,22 +551,49 @@ showing the whole thing. Position/rotation/z-index per card index is
 hand-tuned (`CARD_POSITION`) so every card gets its own corner and nothing
 is fully hidden underneath another.
 
+### Section cards (full case studies)
+Every titled content section below the sneak-peek hero — Starting Point,
+The Impact, the three accordions, and Methods — shares one card treatment:
+`rounded-card border border-rule bg-white p-card-pad`. Plain white, not the
+`bg-panel` cream fill used elsewhere on the site (that's reserved for
+content *inside* a card — the Role/Focus box, ImpactSection's individual
+number cards — not the section chrome itself). This replaced an earlier
+version where only the accordion buttons got a `bg-panel` box: that read
+as its own separately-styled control rather than a section like its
+neighbors, so the card moved to the whole section instead and the fill
+was dropped in favor of a plain border. Applying it to the plain sections
+too (not just the accordions) is what makes the page read as one
+consistent "each section is a card" system rather than the accordions
+looking singled out.
+
 ### Starting Point (full case studies)
-Plain (non-accordion) section directly below the sneak-peek hero, same
-eyebrow+`<h2>` chrome as any other plain section. Renders `study.intro` —
-the field name didn't change (`hasFullContent` type-guards on its
-presence), only where it's displayed: previously inline in the old hero
-right under the `<h1>`, now its own labeled section.
+Plain (non-accordion) section card directly below the sneak-peek hero,
+same eyebrow+`<h2>` chrome as any other plain section. Renders
+`study.intro` — the field name didn't change (`hasFullContent`
+type-guards on its presence), only where it's displayed: previously
+inline in the old hero right under the `<h1>`, now its own card.
 
 ### Accordion sections (`AccordionSection`, full case studies)
 "How it started", "Challenges & Problem-Solving", and "What I would do
 differently" — everything else on a case study page (sneak-peek hero, Role/
 Focus box, Starting Point, Impact cards, Methods) stays permanently visible.
-- Same eyebrow+`<h2>` chrome as a plain section, but the `<h2>` itself
-  *is* the toggle button (`<h2><button aria-expanded aria-controls>`,
-  matching MindTabs' mobile accordion precedent of a heading wrapping a
-  button rather than a heading nested inside one), with a chevron that
-  rotates 180° open
+- Same section-card wrapper as every other titled section (see above), and
+  the same eyebrow+`<h2>` chrome, but the `<h2>` itself *is* the toggle
+  button (`<h2><button aria-expanded aria-controls>`, matching MindTabs'
+  mobile accordion precedent of a heading wrapping a button rather than a
+  heading nested inside one)
+- **The button itself carries no background or border of its own** — it's
+  just the heading, full width, inside the card. A "Show more"/"Show less"
+  mono-label next to the chevron (which rotates 180° open) is what marks it
+  as a clickable control with more underneath — learned the hard way twice
+  over: with only the chevron as a cue, a collapsed section read as if it
+  simply had no content under the title; giving the button its own shaded
+  box then made accordions look like a visually distinct, separately-styled
+  control instead of a section like its neighbors
+- When open, a `border-t border-rule` divider separates the heading from
+  the revealed content — it lives inside the same `overflow-hidden`
+  wrapper the panel collapses to zero height, so it's invisible while
+  closed and only appears once there's content underneath it
 - **Independent per section, not a single exclusive accordion** — opening
   one never closes another. Each section owns its own `useState`, matching
   this codebase's established preference for state to live as close to the
@@ -553,9 +617,15 @@ Single row, one hairline below:
 ```
 - Logo: real vector mark (blob + signature paths, exact 1:1-scale overlay
   measured against the original `berit-logo.png`) + real text ("Berit
-  Alasmäki" / "UX & Product Designer"), not a flat image — `height: 80px`
-  (same in header and footer), large enough that the role line under the
-  wordmark stays legible. See `Logo.tsx` and the Entrance sequence below.
+  Alasmäki" / "UX & Product Designer"), not a flat image — `height: 64px`
+  below `md`, `80px` at `md:` and up (same in header and footer), large
+  enough that the role line under the wordmark stays legible. Fixed at 80px
+  everywhere used to overflow the header row by ~22px at a 390px mobile
+  viewport (logo + wordmark + the mobile menu button don't fit un-shrunk,
+  and the row doesn't wrap), pushing the menu button half off-screen —
+  confirmed with Playwright (`scrollWidth` > `clientWidth`) and fixed by
+  making the mark's own height responsive rather than touching the row
+  layout. See `Logo.tsx` and the Entrance sequence below.
 - `border-bottom: 1px solid #eeece7; padding-bottom: 16px`
 - Homepage links: Selected case studies · About
 - Case-study pages: `← Back to work` in place of the page links

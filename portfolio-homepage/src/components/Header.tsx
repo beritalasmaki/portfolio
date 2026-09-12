@@ -71,7 +71,7 @@ export default function Header({ backHref, backLabel = "← Back to work", anima
     <header className="border-b border-rule px-gutter pt-8 pb-4">
       <div className="flex items-center justify-between gap-8">
         <Link href="/" className="block shrink-0" aria-label={`${site.name} — home`}>
-          <Logo animated={animateLogo} height={80} />
+          <Logo animated={animateLogo} />
         </Link>
 
         {/* Desktop nav */}

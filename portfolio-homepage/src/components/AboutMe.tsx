@@ -112,31 +112,34 @@ const items: WorkingWithMeItem[] = [
 ];
 
 /**
- * One "Working with me" row. Two things worth calling out:
+ * One "Working with me" row. Three things worth calling out:
  *
  * 1. Hover/focus state is local to each row (not lifted to the parent), so
  *    hovering row N never programmatically forces row N-1 to close — each
  *    row only reacts to the mouse actually entering/leaving *its own*
  *    bounds.
- * 2. The revealed detail text is an absolutely-positioned overlay, not an
- *    inline block that pushes the rows below it down. That's deliberate,
- *    not just a style choice: an inline reveal that displaces layout caused
- *    a real, observed glitch (confirmed with Playwright) — hovering row 1
- *    shifts row 2 upward as row 1's own reveal collapses, and if row 2 is
- *    hovered right as that shift lands, row 2's hoverable area moves out
- *    from under an otherwise-stationary cursor and it loses hover before
- *    the user has even finished reading it. An overlay still visually
- *    reads as "text appears beneath the statement," it just doesn't move
- *    anything else while doing it. The last row opens *upward* instead,
- *    since there's no row below it to overlap and nothing to keep it
- *    inside the card's bottom edge otherwise.
+ * 2. The detail card sits directly on top of the row it belongs to
+ *    (`absolute inset-0`, exactly the button's own box), not in the space
+ *    above or below it — the two cross-fade with a blur, statement-side
+ *    blurring out as the detail card blurs in. Since it never leaves its
+ *    own row's footprint, it can't encroach on a neighboring row the way
+ *    an adjacent-space reveal could, so unlike that approach every row
+ *    behaves identically — no "last row has nowhere to open into" case to
+ *    special-case.
+ * 3. The overlay is `pointer-events-none` in *every* state, not just while
+ *    collapsed. It has to be: it sits precisely on top of the button that
+ *    controls it, so if it ever accepted pointer events, the moment it
+ *    faded in the cursor would suddenly be "over" the overlay instead of
+ *    the button beneath it — firing that button's `onMouseLeave`, which
+ *    hides the overlay, which hands hover back to the button, which
+ *    re-fires `onMouseEnter`... a flicker loop. Letting every pointer
+ *    event pass through to the button underneath avoids it entirely.
  */
 function WorkingWithMeRow({
   item,
   pinned,
   onTogglePin,
   hoverCapable,
-  isLast,
   buttonId,
   panelId,
 }: {
@@ -144,7 +147,6 @@ function WorkingWithMeRow({
   pinned: boolean;
   onTogglePin: () => void;
   hoverCapable: boolean;
-  isLast: boolean;
   buttonId: string;
   panelId: string;
 }) {
@@ -163,39 +165,30 @@ function WorkingWithMeRow({
         onMouseLeave={() => setHovered(false)}
         onFocus={() => setHovered(true)}
         onBlur={() => setHovered(false)}
-        className="group relative z-0 flex w-full items-center gap-4 bg-panel rounded-frame p-4 text-left transition-colors duration-150 ease-out hover:bg-rule-strong focus-visible:bg-rule-strong"
+        className={`group relative z-0 flex w-full min-h-[124px] items-center gap-4 bg-panel rounded-frame p-4 text-left transition-[background-color,opacity,filter] duration-300 ease-out hover:bg-rule-strong focus-visible:bg-rule-strong ${
+          expanded ? "opacity-0 blur-md" : "opacity-100 blur-none"
+        }`}
       >
         <span className="w-11 h-11 flex items-center justify-center bg-white border border-rule rounded-frame shrink-0">
           {item.icon}
         </span>
         <span className="flex-1 text-body-em font-semibold text-ink text-pretty">{item.statement}</span>
-        <span
-          aria-hidden="true"
-          className={`shrink-0 text-muted transition-transform duration-150 ease-out ${expanded ? "-rotate-180" : ""}`}
-        >
+        <span aria-hidden="true" className="shrink-0 text-muted">
           ⌄
         </span>
       </button>
-      {/* Absolutely positioned so expanding/collapsing never resizes the
-          `<li>` itself — see the note above for why that matters. Opacity +
-          a small slide, asymmetric duration (relaxed reveal, quick close).
-          `pointer-events-none` while collapsed: even at opacity 0 this sits
-          right on top of the row underneath (or above, for the last row)
-          and would otherwise steal its hover. */}
+      {/* See point 2 and 3 above: same box as the button (inset-0), always
+          pointer-events-none, cross-fading opacity + blur in step with it. */}
       <div
         id={panelId}
         role="region"
         aria-labelledby={buttonId}
         aria-hidden={!expanded}
-        className={`absolute inset-x-0 z-10 ${isLast ? "bottom-full mb-2" : "top-full mt-2"} transition-[opacity,transform] ${
-          expanded
-            ? "duration-300 ease-out opacity-100 translate-y-0"
-            : `duration-150 ease-in opacity-0 pointer-events-none ${isLast ? "translate-y-1" : "-translate-y-1"}`
+        className={`absolute inset-0 z-10 flex items-center rounded-frame border border-rule bg-white shadow-frame-accent p-4 pointer-events-none transition-[opacity,filter] duration-300 ease-out ${
+          expanded ? "opacity-100 blur-none" : "opacity-0 blur-md"
         }`}
       >
-        <p className="m-0 bg-white border border-rule rounded-frame shadow-frame p-4 text-body-sm text-ink-alt">
-          {item.detail}
-        </p>
+        <p className="m-0 text-body-sm text-ink-alt text-pretty">{item.detail}</p>
       </div>
     </li>
   );
@@ -237,7 +230,6 @@ function WorkingWithMe() {
             pinned={openIndex === index}
             onTogglePin={() => setOpenIndex((current) => (current === index ? null : index))}
             hoverCapable={hoverCapable}
-            isLast={index === items.length - 1}
             buttonId={`${baseId}-wwm-button-${index}`}
             panelId={`${baseId}-wwm-panel-${index}`}
           />

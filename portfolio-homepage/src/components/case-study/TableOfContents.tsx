@@ -49,33 +49,55 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
     return () => observer.disconnect();
   }, [items]);
 
-  function links(onNavigate?: () => void) {
-    return items.map((item) => {
-      const isActive = item.id === activeId;
-      return (
+  // Same-page section anchors (scroll-spy tab-style left border). Real page
+  // links (`item.href` set — "Back to main page") are rendered separately
+  // by `pageLinks()` below, deliberately styled differently: a real
+  // navigation away from the page reads as a different kind of action than
+  // jumping to a section within it, not just one more item in the list.
+  function sectionLinks(onNavigate?: () => void) {
+    return items
+      .filter((item) => !item.href)
+      .map((item) => {
+        const isActive = item.id === activeId;
+        return (
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            aria-current={isActive ? "location" : undefined}
+            onClick={() => {
+              // Opens the matching accordion section if it is one — harmless
+              // no-op for ids nothing is listening for. See AccordionSection
+              // for why this is a plain event rather than shared state.
+              window.dispatchEvent(new CustomEvent(OPEN_SECTION_EVENT, { detail: { id: item.id } }));
+              onNavigate?.();
+            }}
+            className={`flex items-center gap-2 py-2 pl-4 -ml-px text-nav border-l-4 transition-[border-color,color] duration-150 ease-out ${
+              isActive
+                ? "border-accent text-accent-dark font-bold rounded-r-[16px]"
+                : "border-rule text-body font-semibold hover:border-rule-strong hover:text-ink focus-visible:border-rule-strong focus-visible:text-ink"
+            }`}
+          >
+            {isActive && <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent shrink-0" />}
+            {item.label}
+          </a>
+        );
+      });
+  }
+
+  function pageLinks(onNavigate?: () => void) {
+    return items
+      .filter((item) => item.href)
+      .map((item) => (
         <a
           key={item.id}
-          href={item.href ?? `#${item.id}`}
-          aria-current={isActive ? "location" : undefined}
-          onClick={() => {
-            // Harmless no-op for ids nothing is listening for (a plain
-            // anchor, or a real page link like "Back to main page") — see
-            // AccordionSection for why this is a plain event rather than
-            // shared state.
-            window.dispatchEvent(new CustomEvent(OPEN_SECTION_EVENT, { detail: { id: item.id } }));
-            onNavigate?.();
-          }}
-          className={`flex items-center gap-2 py-2 pl-4 -ml-px text-nav border-l-4 transition-[border-color,color] duration-150 ease-out ${
-            isActive
-              ? "border-accent text-accent-dark font-bold rounded-r-[16px]"
-              : "border-rule text-body font-semibold hover:border-rule-strong hover:text-ink focus-visible:border-rule-strong focus-visible:text-ink"
-          }`}
+          href={item.href}
+          onClick={onNavigate}
+          className="flex items-center gap-2 mt-2 pt-4 border-t border-rule text-nav font-bold text-ink transition-colors duration-150 ease-out hover:text-accent-dark focus-visible:text-accent-dark"
         >
-          {isActive && <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent shrink-0" />}
+          <span aria-hidden="true">←</span>
           {item.label}
         </a>
-      );
-    });
+      ));
   }
 
   return (
@@ -98,7 +120,8 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
         className="hidden lg:sticky lg:top-8 lg:flex flex-col gap-4 rounded-card border border-rule bg-white p-6"
       >
         <p className="font-mono-label text-mono-label uppercase text-muted m-0 pb-2">On this page</p>
-        {links()}
+        {sectionLinks()}
+        {pageLinks()}
       </nav>
 
       {/* Mobile: collapsed dropdown, native <details> for built-in keyboard
@@ -118,7 +141,8 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
           </span>
         </summary>
         <nav aria-label="On this page" className="flex flex-col gap-4 px-6 pb-6 pt-1">
-          {links(() => setMobileOpen(false))}
+          {sectionLinks(() => setMobileOpen(false))}
+          {pageLinks(() => setMobileOpen(false))}
         </nav>
       </details>
     </div>

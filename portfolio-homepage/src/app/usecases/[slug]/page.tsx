@@ -44,6 +44,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   const tocItems: TocItem[] = full
     ? ([
+        { id: "starting-point", label: "Starting Point" },
+        { id: "screens", label: "Examples of UI-screens" },
         { id: "impact", label: "The Impact" },
         { id: "started", label: "How it started" },
         { id: "challenges", label: "Challenges & Problem-Solving" },
@@ -78,7 +80,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 </Reveal>
 
                 <Reveal>
-                  <section id="starting-point" aria-labelledby="starting-point-heading">
+                  <section
+                    id="starting-point"
+                    aria-labelledby="starting-point-heading"
+                    className="rounded-card border border-rule bg-white p-card-pad"
+                  >
                     <p className="font-mono-label text-mono-label uppercase text-muted m-0">Starting Point</p>
                     <h2 id="starting-point-heading" className="mt-4 m-0 text-section-h2 text-ink">
                       Starting Point

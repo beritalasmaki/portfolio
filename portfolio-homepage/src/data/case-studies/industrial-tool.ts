@@ -84,7 +84,7 @@ export const industrialTool: CaseStudy = {
       height: 495,
     },
   ],
-  sneakPeekImages: ["/case/kem-dash.png", "/case/kem-dash-menu.png", "/case/kem-mob-b.png"],
+  sneakPeekImages: ["/case/kem-dash.png", "/case/kem-dash-menu.png"],
 
   impactIntro:
     "After launching new features, we systematically ran feedback and testing sessions with actual users. This continuous loop helped us validate what worked in daily operations, identify areas for refinement, and keep the product evolving based on real user needs.",

@@ -63,7 +63,7 @@ export const universityAiTool: CaseStudy = {
       height: 1851,
     },
   ],
-  sneakPeekImages: ["/case/uni-homepage.png", "/case/uni-mobile-home.png"],
+  sneakPeekImages: ["/case/uni-homepage.png", "/case/uni-search-results.png"],
 
   impactIntro: "These impacts were confirmed through user interviews and surveys carried out after launch.",
   impactCards: [

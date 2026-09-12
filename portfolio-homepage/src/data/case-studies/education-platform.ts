@@ -90,7 +90,7 @@ export const educationPlatform: CaseStudy = {
       height: 791,
     },
   ],
-  sneakPeekImages: ["/case/edu-dashboard.png", "/case/edu-mobile-dashboard.png", "/case/edu-mobile-menu.png"],
+  sneakPeekImages: ["/case/edu-dashboard.png", "/case/edu-timetable.png"],
 
   impactIntro:
     "Feedback from the pilot schools has been largely positive. The platform has been described as easy to use, versatile, and modern. Teachers and administrative staff in particular praised how logical the service felt and how well it supported everyday school routines. Usability and speed stood out specifically, with users reporting that they could find what they needed quickly and easily. Practical use cases, like printing report cards and transferring student data, proved reliable in daily use. End users, including teachers, were also involved directly in acceptance testing, which helped ensure the platform actually fit how teaching work happens in practice. The platform only launched in spring 2026, with a wider school rollout this autumn, so the full impact is still ahead of us — what we do know so far is that we delivered a consistent, accessible foundation that several municipalities are now building their daily school administration on.",

@@ -20,26 +20,26 @@ const BLOB_TRANSFORM = "translate(39,26)";
 const SIGNATURE_TRANSFORM = "translate(31,28)";
 const MARK_VIEWBOX = "27 22 186 115";
 
-export default function Logo({
-  animated = false,
-  height = 80,
-}: {
+export default function Logo({ animated = false }: {
   /** Plays the signature's draw-on entrance once. Off by default — only
    * the homepage pairs it with the hero sequence; every other render
    * (case-study headers, the footer) shows the finished mark immediately. */
   animated?: boolean;
-  height?: number;
 }) {
   const maskId = useId();
 
   return (
-    <span className="inline-flex items-center gap-3" style={{ height }}>
+    <span className="inline-flex items-center gap-3">
+      {/* h-16 (64px) below md, h-20 (80px) at md+ — a fixed 80px mark plus
+          the wordmark next to it doesn't fit a 390px-wide mobile header
+          without pushing into the menu button (confirmed with Playwright:
+          ~22px of horizontal overflow at 390px). Width stays auto so the
+          mark keeps its own aspect ratio at both sizes. */}
       <svg
         viewBox={MARK_VIEWBOX}
         role="presentation"
         aria-hidden="true"
-        style={{ height, width: "auto" }}
-        className="shrink-0 block"
+        className="shrink-0 block h-16 w-auto md:h-20"
       >
         {animated && (
           <defs>

@@ -16,10 +16,15 @@ export const OPEN_SECTION_EVENT = "cs:open-section";
 
 /**
  * A collapsible page section ("How it started", "Challenges &
- * Problem-Solving", "What I would do differently"). Same eyebrow + heading
- * chrome as the site's plain sections (ImpactSection, MethodsSection), but
- * the heading is itself the toggle button, with a chevron that rotates on
- * open.
+ * Problem-Solving", "What I would do differently"), presented as a white
+ * card (`rounded-card border border-rule bg-white p-card-pad`) — the same
+ * treatment given to the plain sections around it (Starting Point,
+ * ImpactSection, MethodsSection), so the page reads as one consistent
+ * "each section is a card" system rather than the accordions looking like
+ * a visually distinct, separately-styled control. The heading doubles as
+ * the toggle button; it carries no background fill of its own — the
+ * "Show more/less" label plus the rotating chevron are what mark it as
+ * interactive, not a shaded box behind the text.
  *
  * The panel is always in the DOM (not conditionally rendered) and animates
  * via the `grid-template-rows: 0fr -> 1fr` technique — animates to an
@@ -56,9 +61,17 @@ export default function AccordionSection({
   }, [id]);
 
   return (
-    <section id={id} aria-labelledby={headingId}>
+    <section
+      id={id}
+      aria-labelledby={headingId}
+      className="rounded-card border border-rule bg-white p-card-pad"
+    >
       <p className="font-mono-label text-mono-label uppercase text-muted m-0">{label}</p>
       <h2 id={headingId} className="mt-4 m-0">
+        {/* The heading itself is the toggle — no background box behind it.
+            "Show more/less" plus the rotating chevron carry the "this is
+            clickable" signal instead, so the card stays visually identical
+            to the plain sections around it whether open or closed. */}
         <button
           type="button"
           aria-expanded={open}
@@ -67,13 +80,18 @@ export default function AccordionSection({
           className="group flex w-full items-center justify-between gap-4 text-left"
         >
           <span className="text-section-h2 text-ink">{heading}</span>
-          <span
-            aria-hidden="true"
-            className={`shrink-0 text-muted text-2xl transition-transform duration-300 ease-out group-hover:text-accent-dark group-focus-visible:text-accent-dark ${
-              open ? "rotate-180" : ""
-            }`}
-          >
-            ⌄
+          <span className="flex items-center gap-3 shrink-0">
+            <span className="font-mono-label text-mono-label uppercase text-muted whitespace-nowrap group-hover:text-accent-dark group-focus-visible:text-accent-dark">
+              {open ? "Show less" : "Show more"}
+            </span>
+            <span
+              aria-hidden="true"
+              className={`text-muted text-2xl transition-transform duration-300 ease-out group-hover:text-accent-dark group-focus-visible:text-accent-dark ${
+                open ? "rotate-180" : ""
+              }`}
+            >
+              ⌄
+            </span>
           </span>
         </button>
       </h2>
@@ -87,7 +105,10 @@ export default function AccordionSection({
         }`}
       >
         <div className="overflow-hidden">
-          <div className="pt-8">{children}</div>
+          {/* Divider only becomes visible once the panel has real height —
+              collapsed (grid-rows-[0fr]) this whole block, border included,
+              is clipped to nothing, so it never shows on a closed card. */}
+          <div className="mt-8 pt-8 border-t border-rule">{children}</div>
         </div>
       </div>
     </section>

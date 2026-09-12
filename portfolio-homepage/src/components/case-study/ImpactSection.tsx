@@ -2,7 +2,11 @@ import type { ImpactCard } from "@/data/case-studies";
 
 export default function ImpactSection({ intro, cards }: { intro: string; cards: ImpactCard[] }) {
   return (
-    <section id="impact" aria-labelledby="impact-heading">
+    <section
+      id="impact"
+      aria-labelledby="impact-heading"
+      className="rounded-card border border-rule bg-white p-card-pad"
+    >
       <p className="font-mono-label text-mono-label uppercase text-muted m-0">The Impact</p>
       <h2 id="impact-heading" className="mt-4 m-0 text-section-h2 text-ink">
         The Impact
