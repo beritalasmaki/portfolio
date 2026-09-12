@@ -7,7 +7,7 @@ export default function CaseStudyCards() {
     <section id="case-studies" aria-labelledby="case-studies-heading" className="mt-rhythm">
       <p className="font-mono-label text-mono-label uppercase text-muted m-0">02 / selected case studies</p>
       <h2 id="case-studies-heading" className="mt-4 m-0 text-section-h2 text-ink">
-        What better looks like.
+        A closer look at the work.
       </h2>
 
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-grid-gap items-stretch">

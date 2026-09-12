@@ -87,7 +87,7 @@ export default function MindTabs() {
       <p className="font-mono-label text-mono-label uppercase text-muted m-0">01 / your next move</p>
       <div className="flex items-end justify-between gap-grid-gap-lg flex-wrap mt-4">
         <h2 id="mind-heading" className="m-0 text-section-h2 text-ink">
-          What&apos;s on your mind?
+          The questions behind the résumé
         </h2>
         <p className="m-0 text-[15px] leading-snug text-footer-meta max-w-[20em]">
           A good collaboration starts with a better question.

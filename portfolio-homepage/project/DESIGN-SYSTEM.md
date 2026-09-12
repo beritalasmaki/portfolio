@@ -30,6 +30,8 @@ introduce new colors, sizes or radii without adding them here first.
 | Rule strong | `#e2ded6` | Medium borders, inner card dividers, pill outlines |
 | Ink alt | `#3a3a3a` | Dark-on-dark separators inside the dark tab column; also the body-text color for the highlight-quote callout inside each tab pane |
 | Overlay | `rgba(34, 34, 34, 0.8)` | Lightbox backdrop (Ink at 80%) |
+| Success | `#3F7A54` | Dot + text on the header's rotating status pill only. A sage green chosen to sit next to this palette's warm cream/orange rather than a stock Tailwind green. |
+| Success bg | `#E9F3EA` | Fill for the same status pill. |
 
 ### Rules
 - Two neutral background tones maximum per page (`#ffffff` + `#f5f3ee`).
@@ -612,7 +614,7 @@ Focus box, Starting Point, Impact cards) stays permanently visible.
 ### Header (all pages)
 Single row, one hairline below:
 ```
-[logo 80px]  ————————  [page links]  |  [LinkedIn pill]  [GitHub pill]  [Contact button]
+[logo 80px] [status pill]  ————————  [page links]  |  [LinkedIn icon]  [GitHub icon]  [Contact button]
 ```
 - Logo: real vector mark (blob + signature paths, exact 1:1-scale overlay
   measured against the original `berit-logo.png`) + real text ("Berit
@@ -626,9 +628,43 @@ Single row, one hairline below:
   making the mark's own height responsive rather than touching the row
   layout. See `Logo.tsx` and the Entrance sequence below.
 - `border-bottom: 1px solid #eeece7; padding-bottom: 16px`
-- Homepage links: Selected case studies · About
+- Homepage links: Selected case studies · About · My Process (scrolls to
+  `ProcessTimeline`'s `#process`)
 - Case-study pages: `← Back to work` in place of the page links
 - Contact button scrolls to `#contact` on the same page (`html { scroll-behavior: smooth }`)
+- **LinkedIn/GitHub are icon-only buttons** (`IconLink` in `Header.tsx`), not
+  labeled pills — a 44px circle, `border-rule-strong`, with a custom
+  `aria-hidden` tooltip (not the native `title` attribute: `title` only
+  shows on mouse hover after a browser delay, with inconsistent
+  screen-reader support, so it can't give keyboard users the same
+  hover/focus parity everything else on this site gets). The tooltip shows
+  on both `group-hover` and `group-focus-within`; the accessible name comes
+  from the link's own `aria-label` regardless of whether the tooltip is
+  even rendered. On touch there's no hover/focus-within to trigger it — a
+  tap just navigates. The mobile nav panel keeps the original labeled
+  pills unchanged (plenty of vertical room there; an icon alone reads
+  less clearly in a full-screen stacked menu).
+- **Status pill** (`StatusPill.tsx`): a small `bg-success-bg` pill next to
+  the logo that cross-fades through "Open to work" / "Open to networking"
+  / "Open to freelance projects" on a 4.5s `setInterval`, `duration-700`
+  opacity crossfade. The two (or three) overlapping text layers sit in a
+  fixed-width box (`15ch`) so the crossfade doesn't fight itself for size
+  as the text changes. `prefers-reduced-motion` stops the interval outright
+  (checked in JS, not just a CSS transition-duration kill — the requirement
+  is "no rotation happens", not "the rotation happens instantly"), leaving
+  it on the first message. The rotation is `aria-hidden`; a single static
+  `sr-only` label ("Open to work, networking, and freelance projects")
+  covers all three states for screen readers rather than an `aria-live`
+  region re-announcing every few seconds. `hidden lg:inline-flex` — the
+  first thing to disappear as the viewport narrows, before the nav links,
+  icons, or Contact button are ever at risk of wrapping.
+- `nav-gap` (the fluid gap between page links) tightened to
+  `clamp(10px, 1.8vw, 32px)` — down from `clamp(16px, 2.2vw, 32px)` — once
+  a third nav link (My Process) joined "Selected case studies" and "About"
+  competing for the same row as the icon buttons and Contact. Shrinking the
+  gap first, rather than letting the row wrap to a second line, is the
+  explicit priority; `flex-wrap` stays on the nav as a last-resort safety
+  net, not the primary narrow-viewport behavior.
 
 ### Focus & selection state
 Not covered by the original design files (no interactive states there) — added in

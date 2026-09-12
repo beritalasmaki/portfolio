@@ -31,6 +31,12 @@ const config: Config = {
         rule: "#eeece7",
         "rule-strong": "#e2ded6",
         "ink-alt": "#3a3a3a",
+        // "Available/status" green — sage-leaning rather than a stock
+        // Tailwind green, so it reads as part of this warm cream/orange
+        // palette rather than a generic UI-kit color. Currently only the
+        // header's rotating status pill (StatusPill.tsx).
+        success: "#3F7A54",
+        "success-bg": "#E9F3EA",
       },
       fontFamily: {
         sans: ["Manrope", "Helvetica", "Arial", "sans-serif"],
@@ -82,7 +88,11 @@ const config: Config = {
         "pane-pad": "clamp(24px, 3vw, 40px)",
         "grid-gap": "clamp(16px, 2vw, 32px)",
         "grid-gap-lg": "clamp(24px, 4vw, 64px)",
-        "nav-gap": "clamp(16px, 2.2vw, 32px)",
+        // Slightly tighter min bound than most fluid gaps on the site —
+        // the header nav now carries 3 links + a divider + 2 icon buttons
+        // + Contact, and this is what keeps all of it on one line down to
+        // fairly narrow desktop widths instead of wrapping to a second row.
+        "nav-gap": "clamp(10px, 1.8vw, 32px)",
         "contact-y": "clamp(48px, 7vw, 96px)",
       },
       borderRadius: {

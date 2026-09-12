@@ -12,6 +12,7 @@ export const site = {
 export const primaryNav = [
   { label: "Selected case studies", href: "/#case-studies" },
   { label: "About", href: "/#about" },
+  { label: "My Process", href: "/#process" },
 ] as const;
 
 export type ClientLogo = {
