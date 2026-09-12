@@ -231,21 +231,6 @@ display: flex; flex-direction: column;      /* stretch in a grid row */
   items.length - 1`), not hardcoded, so it stays correct as case studies
   are added.
 
-### Tag / method label
-Understated, no pill background:
-```
-font-size: clamp(14px, 1.1vw, 16px); font-weight: 600; color: #222222;
-white-space: nowrap;
-```
-Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
-- **Wrapping method lists (`MethodsSection`):** the divider is each item's
-  own `border-left` (all but the first item), not a separate element
-  inserted between items. A separate divider element dangles at the end of
-  a line with nothing after it whenever the list wraps right after one; a
-  per-item left border just drops off the start of whichever item wraps to
-  the next line instead, which reads as normal spacing rather than an
-  orphaned mark.
-
 ### Tabs (homepage "your next move")
 - Single joined block, `border-radius: 20px; overflow: hidden`, no gap between column
   and pane
@@ -326,17 +311,29 @@ before `ProcessTimeline`):
   - **The reveal sits directly on top of its own row** (`absolute inset-0`,
     the exact footprint of the row's button), not in the space above or
     below it: hovering/focusing/pinning a row cross-fades its icon +
-    statement out and a white detail card in, both with a `blur-md ->
-    blur-none` filter running alongside the opacity change — not a plain
-    fade, a *blurry* transition. Because the detail card never leaves its
-    own row's box, it can never encroach on a neighboring row, so every row
-    (including the last) behaves identically — no "last row has nowhere to
-    open into" special case the way an adjacent-space reveal would need.
-    Each row has a `min-h-[124px]` floor so the longer detail sentences
-    have room to wrap without the box needing to resize on hover (resizing
-    on hover was the thing that caused real, Playwright-confirmed hover
-    loss on adjacent rows in an earlier version of this component — see the
-    note above).
+    statement out and a white detail card in, with a slow, soft transition
+    — a blur filter was tried here first and read as fussy/distracting
+    rather than calm, so it's gone. Because the detail card never leaves
+    its own row's box, it can never encroach on a neighboring row, so every
+    row (including the last) behaves identically — no "last row has
+    nowhere to open into" special case the way an adjacent-space reveal
+    would need. Each row has a `min-h-[124px]` floor so the longer detail
+    sentences have room to wrap without the box needing to resize on hover
+    (resizing on hover was the thing that caused real, Playwright-confirmed
+    hover loss on adjacent rows in an earlier version of this component —
+    see the note above).
+  - **Only the overlay scales in (`scale-[0.98] -> scale-100`); the button
+    itself only fades (`opacity` alone, no transform).** Scaling the button
+    too was tried first and broke hover almost immediately — confirmed by
+    sampling `aria-expanded` every 50ms after a synthetic hover, it flips
+    back to `false` at ~100ms and stays there. Shrinking the very element
+    whose `onMouseLeave` drives the hover state shrinks its own
+    hit-tested area out from under a perfectly stationary cursor, firing
+    that `onMouseLeave` before the transition even finishes — a
+    self-inflicted version of the exact "element moves out from under the
+    cursor" bug class this component was already built to avoid (see the
+    note above on lifted hover state). The overlay has no such risk since
+    it's `pointer-events-none` (below), so it's free to scale.
   - The overlay is `pointer-events-none` in **every** state, not just while
     collapsed. It sits precisely on top of the button that controls it, so
     if it ever accepted pointer events, the instant it faded in the cursor
@@ -344,9 +341,11 @@ before `ProcessTimeline`):
     button's `mouseleave`, hiding the overlay, handing hover back to the
     button, re-firing `mouseenter`... a flicker loop. Passing every pointer
     event through to the button underneath avoids it outright.
-  - Asymmetric transition duration: reveal `duration-300 ease-out` on both
-    layers, applied via the "duration/easing live on whichever class list
-    is active" CSS trick (no keyframes needed for a plain two-state toggle).
+  - Deliberately relaxed transition: `duration-500 ease-out` on both
+    layers (slower than the site's usual `duration-150`/`duration-300`
+    hover timings) — a soft, unhurried settle rather than a snap, applied
+    via the "duration/easing live on whichever class list is active" CSS
+    trick (no keyframes needed for a plain two-state toggle).
 
 ### Process timeline (About section, "My process")
 Imported from a Claude Design canvas component (`ProcessTimeline.tsx`) and
@@ -492,7 +491,7 @@ Real interactive component (not the design files' CSS-only `:target` version):
   semantics with no extra wiring.
 - **Item list (full case studies):** Starting Point, Examples of UI-screens,
   The Impact, How it started, Challenges & Problem-Solving, What I would do
-  differently, Methods, Other case studies, Back to main page. Minimal
+  differently, Other case studies, Back to main page. Minimal
   (summary-only) case studies keep their own shorter list unchanged (About
   the project, Other case studies).
 - **Opens the matching accordion section on click:** every section-anchor
@@ -553,7 +552,7 @@ is fully hidden underneath another.
 
 ### Section cards (full case studies)
 Every titled content section below the sneak-peek hero — Starting Point,
-The Impact, the three accordions, and Methods — shares one card treatment:
+The Impact, and the three accordions — shares one card treatment:
 `rounded-card border border-rule bg-white p-card-pad`. Plain white, not the
 `bg-panel` cream fill used elsewhere on the site (that's reserved for
 content *inside* a card — the Role/Focus box, ImpactSection's individual
@@ -576,7 +575,7 @@ inline in the old hero right under the `<h1>`, now its own card.
 ### Accordion sections (`AccordionSection`, full case studies)
 "How it started", "Challenges & Problem-Solving", and "What I would do
 differently" — everything else on a case study page (sneak-peek hero, Role/
-Focus box, Starting Point, Impact cards, Methods) stays permanently visible.
+Focus box, Starting Point, Impact cards) stays permanently visible.
 - Same section-card wrapper as every other titled section (see above), and
   the same eyebrow+`<h2>` chrome, but the `<h2>` itself *is* the toggle
   button (`<h2><button aria-expanded aria-controls>`, matching MindTabs'

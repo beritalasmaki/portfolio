@@ -12,9 +12,8 @@ type Tab = {
 
 const tabs: Tab[] = [
   {
-    question:
-      "Does she understand what development needs from a designer today, or does she design without thinking about that?",
-    body: "I stay closely involved with developers while a project is being built, not only at the start. Today, this also means I use AI tools like Claude Design and VS Code to build real prototypes and components myself, so developers can test the real thing early.",
+    question: "Is she keeping her collaboration skills up to date?",
+    body: "Developer collaboration looks different today than it did a few years ago. I keep adapting to that: I don't just hand off a finished design and disappear, I stay part of the conversation while developers are building. I also build real prototypes myself with tools like Claude Design and VS Code, so developers see working components early, not just static images to interpret.",
     highlight:
       "On a national education platform with many municipalities and vendors, I ran the team's daily meetings and created the workshop process the team used to move from research to real concepts.",
     linkLabel: "See the National Education case study →",

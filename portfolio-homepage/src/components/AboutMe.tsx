@@ -112,7 +112,7 @@ const items: WorkingWithMeItem[] = [
 ];
 
 /**
- * One "Working with me" row. Three things worth calling out:
+ * One "Working with me" row. Four things worth calling out:
  *
  * 1. Hover/focus state is local to each row (not lifted to the parent), so
  *    hovering row N never programmatically forces row N-1 to close — each
@@ -120,13 +120,22 @@ const items: WorkingWithMeItem[] = [
  *    bounds.
  * 2. The detail card sits directly on top of the row it belongs to
  *    (`absolute inset-0`, exactly the button's own box), not in the space
- *    above or below it — the two cross-fade with a blur, statement-side
- *    blurring out as the detail card blurs in. Since it never leaves its
- *    own row's footprint, it can't encroach on a neighboring row the way
- *    an adjacent-space reveal could, so unlike that approach every row
+ *    above or below it — the two cross-fade with a slow, soft transition
+ *    (a blur filter was tried here first and read as fussy/distracting
+ *    rather than calm, so it's gone). Since the detail card never leaves
+ *    its own row's footprint, it can't encroach on a neighboring row the
+ *    way an adjacent-space reveal could, so unlike that approach every row
  *    behaves identically — no "last row has nowhere to open into" case to
  *    special-case.
- * 3. The overlay is `pointer-events-none` in *every* state, not just while
+ * 3. Only the (non-interactive) overlay scales in — the button itself only
+ *    fades, never scales. Scaling the button was tried first too, and
+ *    broke hover almost immediately (confirmed by sampling `aria-expanded`
+ *    every 50ms): shrinking the very element whose `onMouseLeave` drives
+ *    `hovered` shrinks its own hit-tested hitbox out from under a
+ *    stationary cursor, firing that `onMouseLeave` before the transition
+ *    even finishes. The overlay has no such risk since it's
+ *    `pointer-events-none` (see 4), so it's free to scale.
+ * 4. The overlay is `pointer-events-none` in *every* state, not just while
  *    collapsed. It has to be: it sits precisely on top of the button that
  *    controls it, so if it ever accepted pointer events, the moment it
  *    faded in the cursor would suddenly be "over" the overlay instead of
@@ -165,8 +174,8 @@ function WorkingWithMeRow({
         onMouseLeave={() => setHovered(false)}
         onFocus={() => setHovered(true)}
         onBlur={() => setHovered(false)}
-        className={`group relative z-0 flex w-full min-h-[124px] items-center gap-4 bg-panel rounded-frame p-4 text-left transition-[background-color,opacity,filter] duration-300 ease-out hover:bg-rule-strong focus-visible:bg-rule-strong ${
-          expanded ? "opacity-0 blur-md" : "opacity-100 blur-none"
+        className={`group relative z-0 flex w-full min-h-[124px] items-center gap-4 bg-panel rounded-frame p-4 text-left transition-[background-color,opacity] duration-500 ease-out hover:bg-rule-strong focus-visible:bg-rule-strong ${
+          expanded ? "opacity-0" : "opacity-100"
         }`}
       >
         <span className="w-11 h-11 flex items-center justify-center bg-white border border-rule rounded-frame shrink-0">
@@ -178,14 +187,14 @@ function WorkingWithMeRow({
         </span>
       </button>
       {/* See point 2 and 3 above: same box as the button (inset-0), always
-          pointer-events-none, cross-fading opacity + blur in step with it. */}
+          pointer-events-none, cross-fading opacity + scale in step with it. */}
       <div
         id={panelId}
         role="region"
         aria-labelledby={buttonId}
         aria-hidden={!expanded}
-        className={`absolute inset-0 z-10 flex items-center rounded-frame border border-rule bg-white shadow-frame-accent p-4 pointer-events-none transition-[opacity,filter] duration-300 ease-out ${
-          expanded ? "opacity-100 blur-none" : "opacity-0 blur-md"
+        className={`absolute inset-0 z-10 flex items-center rounded-frame border border-rule bg-white shadow-frame-accent p-4 pointer-events-none transition-[opacity,transform] duration-500 ease-out ${
+          expanded ? "opacity-100 scale-100" : "opacity-0 scale-[0.98]"
         }`}
       >
         <p className="m-0 text-body-sm text-ink-alt text-pretty">{item.detail}</p>

@@ -14,12 +14,34 @@ import { useEffect, useState, type ReactNode } from "react";
  * every click is a harmless no-op for ids nothing is listening for. */
 export const OPEN_SECTION_EVENT = "cs:open-section";
 
+// A real SVG, not the "⌄" text glyph this used to be — that character's
+// ink sits noticeably off-center within its own line box in the mono
+// typeface at the 24px size this needs, so flex's `items-center` was
+// centering two *boxes* that didn't visually align (confirmed by eye and
+// by comparing rendered screenshots). `currentColor` picks up the
+// wrapping span's text color, so it still follows the same
+// muted -> accent-dark hover/focus swap as before.
+function ChevronIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="w-4 h-4 shrink-0 block">
+      <path
+        d="M5 8 L10 13 L15 8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /**
  * A collapsible page section ("How it started", "Challenges &
  * Problem-Solving", "What I would do differently"), presented as a white
  * card (`rounded-card border border-rule bg-white p-card-pad`) — the same
  * treatment given to the plain sections around it (Starting Point,
- * ImpactSection, MethodsSection), so the page reads as one consistent
+ * ImpactSection), so the page reads as one consistent
  * "each section is a card" system rather than the accordions looking like
  * a visually distinct, separately-styled control. The heading doubles as
  * the toggle button; it carries no background fill of its own — the
@@ -86,11 +108,11 @@ export default function AccordionSection({
             </span>
             <span
               aria-hidden="true"
-              className={`text-muted text-2xl transition-transform duration-300 ease-out group-hover:text-accent-dark group-focus-visible:text-accent-dark ${
+              className={`flex items-center text-muted transition-transform duration-300 ease-out group-hover:text-accent-dark group-focus-visible:text-accent-dark ${
                 open ? "rotate-180" : ""
               }`}
             >
-              ⌄
+              <ChevronIcon />
             </span>
           </span>
         </button>

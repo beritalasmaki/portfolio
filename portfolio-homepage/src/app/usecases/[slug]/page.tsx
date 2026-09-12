@@ -7,7 +7,6 @@ import AccordionSection from "@/components/case-study/AccordionSection";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import ChallengesSection from "@/components/case-study/ChallengesSection";
 import ImpactSection from "@/components/case-study/ImpactSection";
-import MethodsSection from "@/components/case-study/MethodsSection";
 import OtherCaseStudies from "@/components/case-study/OtherCaseStudies";
 import ParagraphList from "@/components/case-study/ParagraphList";
 import ScreenshotGallery from "@/components/case-study/ScreenshotGallery";
@@ -50,7 +49,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         { id: "started", label: "How it started" },
         { id: "challenges", label: "Challenges & Problem-Solving" },
         { id: "differently", label: "What I would do differently" },
-        { id: "methods", label: "Methods" },
         { id: "other", label: "Other case studies" },
         { id: "back-to-main", label: "Back to main page", href: "/" },
       ] satisfies TocItem[])
@@ -127,10 +125,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                   >
                     <ParagraphList paragraphs={study.whatIWouldDoDifferently} />
                   </AccordionSection>
-                </Reveal>
-
-                <Reveal>
-                  <MethodsSection methods={study.methods} />
                 </Reveal>
               </>
             )}
