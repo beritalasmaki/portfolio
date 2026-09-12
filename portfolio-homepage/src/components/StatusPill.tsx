@@ -11,15 +11,16 @@ import { useEffect, useState } from "react";
 const STATUSES = ["Open to work", "Open to networking", "Open to freelance projects"] as const;
 
 // Fixed regardless of which status is showing, sized to fit the longest
-// ("Open to freelance projects", ~152px measured at this pill's font/
-// size, plus a safety margin) — the pill sits right next to the nav's
-// other buttons, and its own footprint changing size as the text rotates
-// would shift Contact and everything else in that row. A shorter status
-// just centers within this same fixed box instead of hugging its own
-// width. See the width-hugging version this replaced in git history if
-// that behavior is ever wanted back for a pill that isn't wedged against
-// other controls.
-const TEXT_WIDTH = "168px";
+// ("Open to freelance projects" — 196px measured at this pill's
+// mono-label face + 0.14em tracking) with ~8px of slack per side, enough
+// to absorb modest font-fallback variance without clipping. The pill sits
+// right next to the nav's other buttons, and its own footprint changing
+// size as the text rotates would shift Contact and everything else in
+// that row; a shorter status just centers within this same fixed box
+// instead of hugging its own width. See the width-hugging version this
+// replaced in git history if that behavior is ever wanted back for a pill
+// that isn't wedged against other controls.
+const TEXT_WIDTH = "212px";
 
 export default function StatusPill() {
   const [index, setIndex] = useState(0);
@@ -46,8 +47,15 @@ export default function StatusPill() {
     return () => clearInterval(id);
   }, [reducedMotion]);
 
+  // `min-[1360px]` rather than `lg:` — the mono-label face with 0.14em
+  // tracking makes this pill ~248px wide, and measuring the real header
+  // showed the nav row wrapping to a second line at every width up to
+  // 1320px with it visible, but fitting cleanly from 1360px up. Since the
+  // pill is meant to be the first thing to go when the row gets tight
+  // (never the nav links or Contact), its breakpoint follows the width it
+  // actually fits at instead of a stock one.
   return (
-    <span className="hidden lg:inline-flex items-center gap-1.5 rounded-pill bg-success-bg py-1.5 px-3 shrink-0">
+    <span className="hidden min-[1360px]:inline-flex items-center gap-1.5 rounded-pill bg-success-bg py-1.5 px-3 shrink-0">
       <span className="relative w-1.5 h-1.5 shrink-0" aria-hidden="true">
         <span className="absolute inset-0 rounded-pill bg-success animate-pulse" />
       </span>
@@ -59,14 +67,14 @@ export default function StatusPill() {
           Fixed width (see TEXT_WIDTH above): only opacity crossfades, the
           box itself never resizes, so nothing beside it ever shifts. */}
       <span
-        className="relative inline-block h-[1em] overflow-hidden shrink-0"
+        className="relative inline-block h-4 overflow-hidden shrink-0 font-mono-label text-mono-label uppercase text-muted"
         style={{ width: TEXT_WIDTH }}
         aria-hidden="true"
       >
         {STATUSES.map((status, i) => (
           <span
             key={status}
-            className={`absolute inset-0 flex items-center justify-center whitespace-nowrap text-[12px] font-semibold text-success transition-opacity duration-700 ease-in-out ${
+            className={`absolute inset-0 flex items-center justify-center whitespace-nowrap transition-opacity duration-700 ease-in-out ${
               i === index ? "opacity-100" : "opacity-0"
             }`}
           >

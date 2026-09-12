@@ -30,7 +30,7 @@ introduce new colors, sizes or radii without adding them here first.
 | Rule strong | `#e2ded6` | Medium borders, inner card dividers, pill outlines |
 | Ink alt | `#3a3a3a` | Dark-on-dark separators inside the dark tab column; also the body-text color for the highlight-quote callout inside each tab pane |
 | Overlay | `rgba(34, 34, 34, 0.8)` | Lightbox backdrop (Ink at 80%) |
-| Success | `#3F7A54` | Dot + text on the header's rotating status pill only. A sage green chosen to sit next to this palette's warm cream/orange rather than a stock Tailwind green. |
+| Success | `#3F7A54` | The dot on the header's rotating status pill only (its text is `muted` grey — see the Status pill entry). A sage green chosen to sit next to this palette's warm cream/orange rather than a stock Tailwind green. |
 | Success bg | `#E9F3EA` | Fill for the same status pill. |
 
 ### Rules
@@ -291,7 +291,11 @@ before `ProcessTimeline`):
   white-vs-cream distinction from the left card, not the dark/light contrast
   of the reference layout this was built from; DESIGN-SYSTEM.md's "existing
   light theme" always wins over a visual reference's own color choices).
-  Five rows (`bg-panel` chips, icon badge + statement + chevron), each
+  Five rows (`bg-panel` chips, icon badge + statement + a grey "hover for
+  more" label in the standard mono eyebrow style — `font-mono-label
+  text-mono-label uppercase text-muted`, matching "03 / ABOUT"; it
+  replaced a "⌄" chevron, which said less about what the interaction
+  actually is), each
   revealing a short explanation:
   - Desktop (an actual mouse): reveals on **hover**, detected via
     `(hover: hover) and (pointer: fine)` — not a viewport-width guess.
@@ -651,17 +655,27 @@ Single row, one hairline below:
   a 4.5s `setInterval`, `duration-700` opacity crossfade. Tried next to
   the logo first, then directly to the left of Contact; settled on the
   right of it.
+  - **Typography is the standard mono eyebrow**, identical to "03 / ABOUT"
+    and every other label on the site: `font-mono-label text-mono-label
+    uppercase text-muted` (IBM Plex Mono, 11px, 0.14em tracking, `#6b6660`
+    grey). It started as 12px semibold sans in the sage green, which read
+    as a foreign element next to the site's own labels. Only the dot stays
+    `success` green now — it alone carries the "available" signal.
   - **Fixed width, not hug-to-content.** An earlier version measured each
     status's natural width and resized the box to match, but that pill
     sat wedged against Contact and the icon buttons — its own footprint
     changing size as the text rotated shifted Contact sideways with it,
     which is exactly the "things move around" behavior a header shouldn't
-    have. The text box is now a constant `168px` (comfortably fits the
-    longest status, "Open to freelance projects", measured at ~152px at
-    this font/size, plus a safety margin) and never resizes; only its
-    content's opacity crossfades. A shorter status (e.g. "Open to work")
-    centers within that fixed box (`flex items-center justify-center`)
-    instead of hugging its own width and leaving the rest left-aligned.
+    have. The text box is now a constant `212px` (the longest status,
+    "Open to freelance projects", measures 196px at the mono-label face
+    and tracking, leaving ~8px of slack per side for font-fallback
+    variance) and never resizes; only its content's opacity crossfades. A
+    shorter status (e.g. "Open to work") centers within that fixed box
+    (`flex items-center justify-center`) instead of hugging its own width
+    and leaving the rest left-aligned. Height is a fixed `h-4` rather than
+    `1em` so the box doesn't depend on inherited font-size and has room
+    for the uppercase J in "PROJECTS" without `overflow-hidden` clipping
+    it.
   - `prefers-reduced-motion` stops the interval outright (checked in JS,
     not just a CSS transition-duration kill — the requirement is "no
     rotation happens", not "the rotation happens instantly"), leaving it
@@ -670,9 +684,15 @@ Single row, one hairline below:
     to work, networking, and freelance projects") covers all three states
     for screen readers rather than an `aria-live` region re-announcing
     every few seconds.
-  - `hidden lg:inline-flex` — the first thing to disappear as the
-    viewport narrows, before the nav links, icons, or Contact button are
-    ever at risk of wrapping.
+  - `hidden min-[1360px]:inline-flex` — the first thing to disappear as
+    the viewport narrows, before the nav links, icons, or Contact button
+    are ever at risk of wrapping. Not a stock breakpoint on purpose:
+    measuring the real header showed that at the mono-label width (~248px
+    for the whole pill) the nav row wraps to a second line at every width
+    up to 1320px but fits cleanly from 1360px up, so the breakpoint
+    tracks the width the pill actually fits at. Below it, the nav now
+    stays on one line down to ~1180px (it used to wrap from 1320px down
+    while the pill was still showing).
 - `nav-gap` (the fluid gap between page links) tightened to
   `clamp(10px, 1.8vw, 32px)` — down from `clamp(16px, 2.2vw, 32px)` — once
   a third nav link (My Process) joined "Selected case studies" and "About"

@@ -182,7 +182,10 @@ function WorkingWithMeRow({
           {item.icon}
         </span>
         <span className="flex-1 text-body-em font-semibold text-ink text-pretty">{item.statement}</span>
-        <span aria-hidden="true" className="shrink-0 text-body-sm text-muted whitespace-nowrap">
+        <span
+          aria-hidden="true"
+          className="shrink-0 font-mono-label text-mono-label uppercase text-muted whitespace-nowrap"
+        >
           hover for more
         </span>
       </button>
