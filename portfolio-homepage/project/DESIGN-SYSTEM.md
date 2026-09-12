@@ -228,18 +228,36 @@ Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
 - Tab column: inactive `#f0eee9`, **active `#222222`** with `#ffffff` text
 - Tabs stretch to fill the block height equally
 - Pane background matches the tab column tone so the two read as one surface
-- Pure CSS (`:target` / radio), no JS
+- React state (`useState`), not CSS-only — selecting a question re-renders the
+  shared pane's content directly, no page reload
+- Pane content fades in on every selection via `.panel-fade-item` (220ms,
+  opacity only — see "Detail-panel cross-fade" below), keyed to the active
+  question so React remounts the node and the animation restarts each click
 - **Below `md`, this becomes an accordion instead** — two separate markup
   blocks (desktop tablist+pane hidden, mobile accordion shown), not one
   responsive layout. Each question is its own disclosure button (`4px` left
   border, same active-state ink/white treatment as the desktop tab column);
-  its answer — same eyebrow/headline/body/highlight/link content as the
-  desktop pane — renders directly below that question when expanded, not in
-  a shared panel after the full list. One open at a time; the first
-  question's answer is open by default (matching the desktop panel, which
-  always shows an active answer), the rest start collapsed. `aria-expanded`
-  + `aria-controls` on the button, `role="region"` on the panel, panel
-  conditionally rendered (not the `hidden` attribute).
+  its answer — same body/highlight/link content as the desktop pane —
+  renders directly below that question when expanded, not in a shared panel
+  after the full list. One open at a time; the first question's answer is
+  open by default (matching the desktop panel, which always shows an active
+  answer), the rest start collapsed. `aria-expanded` + `aria-controls` on the
+  button, `role="region"` on the panel, panel conditionally rendered (not the
+  `hidden` attribute) — each expand is a genuine mount, so the same
+  `.panel-fade-item` fade applies with no extra key needed.
+
+### Detail-panel cross-fade (`.panel-fade-item`)
+For a detail panel whose content swaps in place on click (MindTabs' answer
+pane) rather than appearing once on page load:
+```
+opacity: 0; animation: panel-fade 220ms ease-out forwards;  /* opacity only, no translateY */
+```
+Shorter and lighter than `.fade-up-item` (700ms, fades *and* rises) by
+design — that class is a once-per-page entrance; this one re-fires on every
+click, so it needs to read as a quick settle, not a repeated flourish.
+Requires the panel to remount per selection (`key={activeIndex}` on desktop;
+the mobile accordion's conditional rendering already remounts it) — a prop
+change on a persisted DOM node won't restart a CSS animation.
 
 ### Process timeline (About section, "My process")
 Imported from a Claude Design canvas component (`ProcessTimeline.tsx`) and

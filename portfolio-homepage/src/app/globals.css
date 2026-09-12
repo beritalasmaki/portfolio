@@ -129,6 +129,27 @@
     }
   }
 
+  /* Soft cross-fade for a detail panel whose content swaps in place (e.g.
+     MindTabs' question/answer panel) — opacity only, no vertical shift and
+     a shorter run than `.fade-up-item`: this retriggers on every click, not
+     once on page load, so it needs to read as a quick settle rather than an
+     entrance. Pair with `key={state}` on the panel so React remounts the
+     node per selection; changing text on a persisted node wouldn't restart
+     the animation. */
+  .panel-fade-item {
+    opacity: 0;
+    animation: panel-fade 220ms ease-out forwards;
+  }
+
+  @keyframes panel-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   /* Visually hide content while keeping it available to screen readers. */
   .sr-only-focusable:not(:focus):not(:focus-within) {
     position: absolute;

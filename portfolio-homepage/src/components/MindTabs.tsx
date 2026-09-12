@@ -4,8 +4,6 @@ import { useId, useRef, useState } from "react";
 
 type Tab = {
   question: string;
-  eyebrow: string;
-  headline: string;
   body: string;
   highlight: string;
   linkLabel: string;
@@ -14,44 +12,37 @@ type Tab = {
 
 const tabs: Tab[] = [
   {
-    question: "Can design grow our business?",
-    eyebrow: "what you get",
-    headline: "Less friction. More room to grow.",
-    body: "Better adoption can support revenue. Less avoidable work can protect margins. I help find the friction in your product, fix the journeys around it, and agree with you on how we measure the business impact.",
+    question:
+      "Does she understand what development needs from a designer today, or does she design without thinking about that?",
+    body: "I stay closely involved with developers while a project is being built, not only at the start. Today, this also means I use AI tools like Claude Design and VS Code to build real prototypes and components myself, so developers can test the real thing early.",
     highlight:
-      "In university services, clearer self-service helped people find answers faster and eased pressure on staff.",
-    linkLabel: "See the project behind the answer",
-    linkHref: "#case-studies",
+      "On a national education platform with many municipalities and vendors, I ran the team's daily meetings and created the workshop process the team used to move from research to real concepts.",
+    linkLabel: "See the National Education case study →",
+    linkHref: "/usecases/education-platform",
   },
   {
-    question: "Can you solve a tricky problem?",
-    eyebrow: "what you get",
-    headline: "Complexity, untangled. Decisions, made.",
-    body: "Long-running problems usually hide in the gaps between teams, tools and rules. I map how the work really flows, name the constraints out loud, and design something the organisation can actually run.",
+    question: "Can she handle complex problems, or does she avoid them?",
+    body: "I start working on complex problems early and adjust my approach as I learn more, instead of trying to plan everything in advance.",
     highlight:
-      "In industrial data tooling, a guided calculation flow replaced error-prone manual steps and cut the guesswork out of daily decisions.",
-    linkLabel: "See the project behind the answer",
-    linkHref: "#case-studies",
+      "Modernizing old environmental data systems meant working with tools researchers had used for years without a clear structure. Instead of waiting for a perfect solution, I focused on shipping something useful quickly, and then improving it based on what we learned.",
+    linkLabel: "See the Environmental Data Systems case study →",
+    linkHref: "/usecases/environmental-data-tool",
   },
   {
-    question: "Will this make a real difference?",
-    eyebrow: "what you get",
-    headline: "Evidence first. Opinions later.",
-    body: "We agree on what better looks like before anything is drawn. Then we test with the people who use the product, watch what changes, and let the results steer the next round of work.",
+    question: "Does her work survive the handoff to developers?",
+    body: "Before a handoff, I walk developers through the design and explain the reasoning behind each decision, not just what to build.",
     highlight:
-      "In service design for a large organisation, testing with real users settled a long-standing internal debate that no amount of discussion had resolved.",
-    linkLabel: "See the project behind the answer",
-    linkHref: "#case-studies",
+      "I moved a design system from Sketch to Figma during an active project, rebuilding the components properly instead of copying them as they were. Both the developers and the project manager told me how much smoother their work became because of this.",
+    linkLabel: "See the Industrial Data case study →",
+    linkHref: "/usecases/industrial-tool",
   },
   {
-    question: "How can you help my product?",
-    eyebrow: "what you get",
-    headline: "A fresh perspective. A practical way forward.",
-    body: "Start with a short review of where your product loses people. From there we shape a plan you can act on: the right problem framed, the design work done, and handover that developers can build from.",
+    question: "Does she ship her work, or keep polishing it?",
+    body: "I prefer to release something, learn from real feedback, and improve it, instead of spending too much time perfecting a first version nobody has tested yet.",
     highlight:
-      "I work closely with your product and engineering teams, connecting the details through reusable components and clear decisions. On a large public sector platform, closer collaboration with engineering meant fewer decisions got lost between design and build.",
-    linkLabel: "See the project behind the answer",
-    linkHref: "#case-studies",
+      "A university's digital portal launched as a first version, then kept improving based on real usage after launch.",
+    linkLabel: "See the University Onboarding case study →",
+    linkHref: "/usecases/university-ai-tool",
   },
 ];
 
@@ -152,18 +143,18 @@ export default function MindTabs() {
           })}
         </div>
 
+        {/* `key={active}` forces a fresh DOM node per question, restarting
+            the `.panel-fade-item` entrance animation each time — a plain
+            prop/text change on a persisted node wouldn't retrigger a CSS
+            animation. See globals.css for the keyframe. */}
         <div
+          key={active}
           id={`${baseId}-panel`}
           role="tabpanel"
           aria-labelledby={`${baseId}-tab-${active}`}
           tabIndex={0}
-          className="flex flex-col gap-4 bg-panel p-pane-pad"
+          className="panel-fade-item flex flex-col gap-4 bg-panel p-pane-pad"
         >
-          <div className="flex items-center gap-2 font-mono-label text-mono-label-em font-medium uppercase text-ink">
-            <span aria-hidden="true" className="block w-6 h-0.5 bg-accent" />
-            {current.eyebrow}
-          </div>
-          <h3 className="m-0 text-card-h3 text-ink whitespace-pre-line">{current.headline}</h3>
           <p className="m-0 text-body-lg text-body max-w-prose">{current.body}</p>
           <div className="flex gap-4 items-start border-t border-rule-strong pt-4">
             <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent mt-2 shrink-0" />
@@ -171,7 +162,7 @@ export default function MindTabs() {
           </div>
           <a
             href={current.linkHref}
-            className="ml-4 text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-accent-dark hover:-translate-y-px focus-visible:border-accent-dark focus-visible:-translate-y-px"
+            className="ml-4 text-nav font-semibold text-ink border-b border-accent pb-2 self-start md:whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-accent-dark hover:-translate-y-px focus-visible:border-accent-dark focus-visible:-translate-y-px"
           >
             {current.linkLabel}
           </a>
@@ -181,7 +172,9 @@ export default function MindTabs() {
       {/* Mobile: accordion — each answer expands directly below its own
           question, instead of a shared panel after the full list of
           questions. Panels are conditionally rendered (not the `hidden`
-          attribute), same precedent as Header.tsx's mobile nav. */}
+          attribute), same precedent as Header.tsx's mobile nav — which also
+          means each panel is a genuine fresh mount, so `.panel-fade-item`
+          fades in on every expand with no extra key needed. */}
       <div className="mt-8 flex flex-col bg-panel rounded-card overflow-hidden divide-y divide-rule md:hidden">
         {tabs.map((tab, index) => {
           const expanded = index === openMobile;
@@ -218,13 +211,8 @@ export default function MindTabs() {
                   id={panelId}
                   role="region"
                   aria-labelledby={buttonId}
-                  className="flex flex-col gap-4 bg-panel p-pane-pad"
+                  className="panel-fade-item flex flex-col gap-4 bg-panel p-pane-pad"
                 >
-                  <div className="flex items-center gap-2 font-mono-label text-mono-label-em font-medium uppercase text-ink">
-                    <span aria-hidden="true" className="block w-6 h-0.5 bg-accent" />
-                    {tab.eyebrow}
-                  </div>
-                  <h4 className="m-0 text-card-h3 text-ink whitespace-pre-line">{tab.headline}</h4>
                   <p className="m-0 text-body-lg text-body max-w-prose">{tab.body}</p>
                   <div className="flex gap-4 items-start border-t border-rule-strong pt-4">
                     <span aria-hidden="true" className="w-1.5 h-1.5 rounded-pill bg-accent mt-2 shrink-0" />
@@ -232,7 +220,7 @@ export default function MindTabs() {
                   </div>
                   <a
                     href={tab.linkHref}
-                    className="ml-4 text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-accent-dark hover:-translate-y-px focus-visible:border-accent-dark focus-visible:-translate-y-px"
+                    className="ml-4 text-nav font-semibold text-ink border-b border-accent pb-2 self-start md:whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-accent-dark hover:-translate-y-px focus-visible:border-accent-dark focus-visible:-translate-y-px"
                   >
                     {tab.linkLabel}
                   </a>
