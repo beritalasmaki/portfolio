@@ -200,6 +200,19 @@ display: flex; flex-direction: column;      /* stretch in a grid row */
 - Case-study cards: the image sits flush at the top with **no gap** — image and text
   form one seamless card (image `border-radius: 0`, card clips it via `overflow: hidden`)
 - Cards in the same grid row are always equal height (`align-items: stretch`)
+- **In-progress case study (no screenshot yet):** the thumbnail area renders a
+  dashed-border placeholder box (`border: 1px dashed` rule-strong, inset ~16px
+  from the image edges) with a centered mono label (e.g. "Currently in
+  process") instead of an `<Image>`. A small solid pill (`bg-ink`, white mono
+  label, e.g. "Personal project") sits absolute top-left of the thumbnail
+  area, independent of the placeholder — a finished project can carry the
+  same tag over a real screenshot. Both are data-driven (`placeholderLabel`,
+  `tag` on the case study), and shared by the homepage grid and the "Other
+  case studies" cross-links via one `CaseStudyThumbnail` component so the two
+  don't drift. A case study can also carry a `liveUrl`; when set, the hero
+  renders a "Visit live project ↗" secondary-pill link (`target="_blank"
+  rel="noopener noreferrer"`) under the description, whether or not the case
+  study has full content yet.
 
 ### Tag / method label
 Understated, no pill background:

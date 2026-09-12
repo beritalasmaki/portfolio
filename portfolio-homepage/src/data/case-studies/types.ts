@@ -4,14 +4,16 @@
 //
 // Only the Summary fields are required. A case study with nothing more than
 // that renders the minimal /usecases/[slug] template (hero + "other case
-// studies") instead of 404ing — see industrial-tool.ts vs. the other three
-// for the full vs. minimal shape in practice.
+// studies") instead of 404ing — see design-system.ts (in progress, no full
+// content yet) vs. any of the other four for the minimal vs. full shape in
+// practice.
 
 export type CaseStudySlug =
   | "industrial-tool"
   | "university-ai-tool"
   | "education-platform"
-  | "environmental-data-tool";
+  | "environmental-data-tool"
+  | "design-system";
 
 /** The subset of a case study's content used by homepage/summary cards. */
 export type CaseStudySummary = {
@@ -33,6 +35,20 @@ export type CaseStudySummary = {
    * homepage card `description` (shorter, written for that context).
    */
   otherCaseStudyDescription: string;
+  /**
+   * Short pill label overlaid on the thumbnail's top-left corner, e.g.
+   * "Personal project". Omit for client work.
+   */
+  tag?: string;
+  /**
+   * When set, the thumbnail area renders this text in a dashed placeholder
+   * box instead of the `thumbnail` image — for a project still in progress
+   * with no screenshot to show yet. `thumbnail`/`thumbnailAlt` are unused
+   * (but still required) while this is set.
+   */
+  placeholderLabel?: string;
+  /** Optional external link to a live/deployed version of the project. */
+  liveUrl?: string;
 };
 
 export type ImpactCard = {

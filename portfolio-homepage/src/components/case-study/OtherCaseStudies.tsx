@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import CaseStudyThumbnail from "@/components/case-study/CaseStudyThumbnail";
 import { getOtherCaseStudies } from "@/data/case-studies";
 import type { CaseStudySlug } from "@/data/case-studies";
 
@@ -20,15 +20,10 @@ export default function OtherCaseStudies({ currentSlug }: { currentSlug: CaseStu
               href={`/usecases/${study.slug}`}
               className="flex flex-1 flex-col group rounded-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink focus-visible:outline-offset-[-2px]"
             >
-              <div className="relative aspect-[16/13] bg-panel-alt overflow-hidden">
-                <Image
-                  src={study.thumbnail}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover object-top transition-transform duration-150 ease-out group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
-                />
-              </div>
+              <CaseStudyThumbnail
+                study={study}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              />
               <div className="flex flex-1 flex-col gap-4 p-card-pad">
                 <h3 className="m-0 text-card-h3 text-ink group-hover:underline group-focus-visible:underline decoration-accent underline-offset-4">
                   {study.title}

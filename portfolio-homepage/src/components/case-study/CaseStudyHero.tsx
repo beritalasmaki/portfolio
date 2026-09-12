@@ -12,6 +12,17 @@ export default function CaseStudyHero({ study }: { study: CaseStudy }) {
       </h1>
       <p className="mt-6 max-w-prose-cs text-lead text-body">{full ? study.intro : study.description}</p>
 
+      {study.liveUrl && (
+        <a
+          href={study.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex w-fit items-center gap-2 border border-rule-strong text-ink text-nav font-semibold py-3 px-6 rounded-pill whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-ink hover:-translate-y-px focus-visible:border-ink focus-visible:-translate-y-px"
+        >
+          Visit live project ↗
+        </a>
+      )}
+
       {full && (
         <div className="mt-[clamp(32px,3.5vw,48px)] grid grid-cols-1 sm:grid-cols-2 gap-grid-gap">
           <div className="flex flex-col gap-2 bg-panel rounded-card p-card-pad">
