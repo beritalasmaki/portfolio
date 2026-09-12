@@ -14,9 +14,36 @@ export const educationPlatform: CaseStudy = {
     "Brought structure to a massive public sector platform by uniting complex municipal school workflows into a clear, accessible tool for teachers and administrators.",
 
   intro:
-    "This project involved building a national digital service platform for a consortium of public sector organizations, designed to replace legacy systems used across basic and upper secondary education. The platform served multiple municipalities with different needs, and covered several microservices from admissions to daily school administration, some fully custom-built, others based on purchased platforms that needed to be adapted and aligned visually and functionally.",
+    "A consortium of public sector organizations needed to replace legacy systems used across basic and upper secondary education, serving many municipalities with different needs. I joined as UX & Product Designer, later becoming Lead Designer, over a three-year period.",
   roleLabel: "UX & Product Designer, and later Lead Designer, over a three-year period",
   focusLabel: "Service design, Design Systems, and cross-team design consistency across a multi-vendor public sector platform",
+  categoryTag: "Public Sector Platform",
+  skillTags: [
+    {
+      label: "Service Design",
+      description: "Mapped complex school workflows into one clear experience",
+    },
+    {
+      label: "Design System Leadership",
+      description: "Set the visual and functional standard across teams",
+    },
+    {
+      label: "Cross-Vendor Consistency",
+      description: "Aligned in-house and third-party platforms into one experience",
+    },
+    {
+      label: "Workshop Facilitation",
+      description: "Proposed and ran the three-phase research model the team used",
+    },
+    {
+      label: "Mobile Experience",
+      description: "Delivered a mobile app that actually felt easy to use",
+    },
+    {
+      label: "Team Leadership",
+      description: "Led visual direction across a team of three designers",
+    },
+  ],
 
   gallery: [
     {
@@ -63,6 +90,7 @@ export const educationPlatform: CaseStudy = {
       height: 791,
     },
   ],
+  sneakPeekImages: ["/case/edu-dashboard.png", "/case/edu-mobile-dashboard.png", "/case/edu-mobile-menu.png"],
 
   impactIntro:
     "Feedback from the pilot schools has been largely positive. The platform has been described as easy to use, versatile, and modern. Teachers and administrative staff in particular praised how logical the service felt and how well it supported everyday school routines. Usability and speed stood out specifically, with users reporting that they could find what they needed quickly and easily. Practical use cases, like printing report cards and transferring student data, proved reliable in daily use. End users, including teachers, were also involved directly in acceptance testing, which helped ensure the platform actually fit how teaching work happens in practice. The platform only launched in spring 2026, with a wider school rollout this autumn, so the full impact is still ahead of us — what we do know so far is that we delivered a consistent, accessible foundation that several municipalities are now building their daily school administration on.",

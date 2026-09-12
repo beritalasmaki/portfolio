@@ -14,9 +14,36 @@ export const environmentalDataTool: CaseStudy = {
     "Transformed outdated legacy systems into modern, efficient tools that help environmental researchers manage and analyze critical data.",
 
   intro:
-    "This was a long-term relationship with an environmental research institute, spanning several separate projects between 2020 and 2023. I was the institute's only UX designer, brought in as needed across different systems, all centered on modernizing outdated tools used by environmental researchers and specialists to manage, analyze and report on environmental data.",
+    "An environmental research institute relied on outdated tools to manage and analyze critical data, often defaulting to Excel just to make sense of it. Over several projects between 2020 and 2023, I was brought in as the institute's only UX designer to modernize these tools.",
   roleLabel: "UI/UX Designer (sole designer, long-term client relationship)",
   focusLabel: "Modernizing legacy data systems, combining UX/UI design with lightweight service design",
+  categoryTag: "Data Platform",
+  skillTags: [
+    {
+      label: "Legacy System Modernization",
+      description: "Rebuilt tools around how researchers actually work today",
+    },
+    {
+      label: "Data Visualization",
+      description: "Replaced manual Excel work with built-in analytics views",
+    },
+    {
+      label: "Lightweight Service Design",
+      description: "Combined UX/UI work with simple service thinking",
+    },
+    {
+      label: "Lean Discovery",
+      description: "Shipped something small and useful fast, then iterated",
+    },
+    {
+      label: "Solo Ownership",
+      description: "Sole designer across multiple separate projects",
+    },
+    {
+      label: "Long-Term Client Relationship",
+      description: "Maintained trust and continuity over three years",
+    },
+  ],
 
   gallery: [
     { src: "/case/syke-graph.png", alt: "Observation data graph view", caption: "Observation data", width: 1208, height: 700 },
@@ -37,6 +64,7 @@ export const environmentalDataTool: CaseStudy = {
       height: 1802,
     },
   ],
+  sneakPeekImages: ["/case/syke-map.png", "/case/syke-graph.png"],
 
   impactIntro: "These impacts are based on feedback gathered directly from users during the projects.",
   impactCards: [

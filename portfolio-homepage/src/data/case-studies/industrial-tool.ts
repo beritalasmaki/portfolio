@@ -14,9 +14,36 @@ export const industrialTool: CaseStudy = {
     "Built practical expert tools for industrial data workflows, making complex calculations and monitoring more reliable for specialists.",
 
   intro:
-    "This project involved a platform used by an industrial company for monitoring, calculation, reporting and statistical analysis, both internally and as a service for their customers. I joined as the sole UX designer on the project, taking over from a previous designer, and was responsible for the full UX and UI design across the platform.",
+    "An industrial platform for monitoring and reporting had grown complex over time, with expert users struggling through long text lists and manual calculations. I joined as the sole designer, taking over from a previous one, to make the tool work the way specialists actually needed it to.",
   roleLabel: "UX Designer (sole designer on the project)",
   focusLabel: "Expert tools, data visualization, and Design System modernization",
+  categoryTag: "Industrial Platform",
+  skillTags: [
+    {
+      label: "UX & Interface Design",
+      description: "Turned dense data into visual, scannable dashboards",
+    },
+    {
+      label: "Design System Migration",
+      description: "Rebuilt the component library from Sketch to Figma",
+    },
+    {
+      label: "Data Visualization",
+      description: "Designed multi-step calculation flows for expert workflows",
+    },
+    {
+      label: "Stakeholder Research",
+      description: "Interviewed specialists and factory workers across time zones",
+    },
+    {
+      label: "Reliability Improvements",
+      description: "Solved data-loss issues in remote, time-sensitive work",
+    },
+    {
+      label: "Solo Ownership",
+      description: "Sole UX designer responsible for the full platform",
+    },
+  ],
 
   gallery: [
     { src: "/case/kem-dash.png", alt: "Dashboard", caption: "Dashboard", width: 1043, height: 734 },
@@ -57,6 +84,7 @@ export const industrialTool: CaseStudy = {
       height: 495,
     },
   ],
+  sneakPeekImages: ["/case/kem-dash.png", "/case/kem-dash-menu.png", "/case/kem-mob-b.png"],
 
   impactIntro:
     "After launching new features, we systematically ran feedback and testing sessions with actual users. This continuous loop helped us validate what worked in daily operations, identify areas for refinement, and keep the product evolving based on real user needs.",

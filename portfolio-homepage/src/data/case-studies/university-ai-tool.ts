@@ -14,9 +14,36 @@ export const universityAiTool: CaseStudy = {
     "Designed a smarter search and service hub so students can find guidance and support without getting lost in fragmented systems.",
 
   intro:
-    "This project was a unified digital portal for a major university, built to help students, staff, and visitors find information and support in one place, instead of navigating a fragmented mix of separate sites and systems. The portal combines AI-powered search with a clear range of support options, so people can pick whatever fits their situation: quick, instant answers through AI search, live chat for urgent issues, service request forms for more complex questions, physical service point details for in-person help, and quick links to the most-used daily tools and services.",
+    "A major university had information scattered across many separate websites, so students, staff, and visitors often didn't know where to start looking. I joined as Senior UX & Product Designer to turn early concepts into real screens, test them with users, and shape the first version people could actually use.",
   roleLabel: "Senior UX & Product Designer",
   focusLabel: "UX/UI Design, AI search flow, service architecture, Design System adoption, post-launch iteration",
+  categoryTag: "AI Search Platform",
+  skillTags: [
+    {
+      label: "AI Search Flow",
+      description: "Designed the entry point for natural-language search across services",
+    },
+    {
+      label: "Service Architecture",
+      description: "Brought chat, forms, and in-person help into one structure",
+    },
+    {
+      label: "Design System Adoption",
+      description: "Guided developers toward shared components over one-off builds",
+    },
+    {
+      label: "Mobile-First UX",
+      description: "Made the service usable from day one, on any device",
+    },
+    {
+      label: "Post-Launch Iteration",
+      description: "Kept improving based on real usage after the MVP shipped",
+    },
+    {
+      label: "Stakeholder Mentoring",
+      description: "Supported a new Product Owner through their first agile project",
+    },
+  ],
 
   gallery: [
     { src: "/case/uni-homepage.png", alt: "AI assistant homepage", caption: "AI assistant", width: 1332, height: 2000 },
@@ -36,6 +63,7 @@ export const universityAiTool: CaseStudy = {
       height: 1851,
     },
   ],
+  sneakPeekImages: ["/case/uni-homepage.png", "/case/uni-mobile-home.png"],
 
   impactIntro: "These impacts were confirmed through user interviews and surveys carried out after launch.",
   impactCards: [

@@ -72,12 +72,36 @@ export type ChallengeSubsection = {
   body: string;
 };
 
+/** A "sneak peek" skill/contribution pill — short label plus a one-line
+ * elaboration (used as the pill's `title` tooltip, not shown inline). */
+export type SkillTag = {
+  label: string;
+  description: string;
+};
+
 /** Everything beyond the summary — present only on fully-written case studies. */
 export type CaseStudyFullContent = {
+  /**
+   * Now displayed in its own labeled "Starting Point" section (below the
+   * sneak-peek hero), not inline in the hero itself — the field name stays
+   * `intro` since `hasFullContent` type-guards on its presence.
+   */
   intro: string;
   roleLabel: string;
   focusLabel: string;
+  /** Short category pill in the sneak-peek hero, e.g. "AI Search Platform". */
+  categoryTag: string;
+  /** Exactly the pills shown in the sneak-peek hero — not the same list as
+   * `methods` (research methodology) below; these are skill/contribution
+   * areas specific to this project. */
+  skillTags: SkillTag[];
   gallery: GalleryImage[];
+  /**
+   * `src` values of 2-3 `gallery` images to feature in the sneak-peek
+   * hero's stacked "peek" card — the strongest, most-legible-at-a-glance
+   * shots, not necessarily `gallery`'s first entries.
+   */
+  sneakPeekImages: string[];
   impactIntro: string;
   impactCards: ImpactCard[];
   /** One or more paragraphs, in order. */

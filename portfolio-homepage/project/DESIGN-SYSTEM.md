@@ -427,7 +427,19 @@ Real interactive component (not the design files' CSS-only `:target` version):
 
 ### Sticky TOC (case study pages)
 - Two-column layout under the top header: TOC left (`280px`), content right
-- `position: sticky; top: 32px`
+- `position: sticky; top: 32px` — **the sticky element's wrapper must not
+  carry `self-start`/shrink-to-fit at the breakpoint where TOC and the
+  main content share a grid row.** A sticky element's "stick range" is
+  bounded by its own containing block; `self-start` shrinks that block to
+  the nav's own short content height, so the nav stops sticking after a
+  couple hundred pixels instead of for the whole page (found and fixed via
+  Playwright: without this, the nav's on-screen position tracked scroll
+  1:1 — not sticky at all — for all but the very top of the page). Let the
+  wrapper use the grid's default `align-items: stretch` instead, so it
+  matches the main content column's full height and the nav can travel the
+  whole way down it, stopping naturally at the wrapper's own bottom edge —
+  which is also how it stays clear of the footer (`<main>`, and therefore
+  this grid, ends before `<Footer />` begins) without any extra scroll-math.
 - `background: #ffffff`, `border: 1px solid #eeece7`, `border-radius: 20px`, `padding: 24px`
 - Items: 15px/600, 16px gap. **Exception to the general nav `white-space: nowrap`
   rule** (§2): TOC labels wrap onto a second line instead of overflowing the
@@ -449,6 +461,90 @@ Real interactive component (not the design files' CSS-only `:target` version):
   Selecting a link closes the dropdown. `<details>` chosen over a custom
   JS-toggled panel for its built-in keyboard/screen-reader disclosure
   semantics with no extra wiring.
+- **Item list (full case studies):** The Impact, How it started, Challenges
+  & Problem-Solving, What I would do differently, Methods, Other case
+  studies, Back to main page. "Back to main page" is a real link to `/`
+  (`TocItem.href` overrides the default `#id` anchor) — same destination as
+  the header's own "← Back to work", offered again here since scrolling
+  deep into a long case study puts the header's link off-screen. Minimal
+  (summary-only) case studies keep their own shorter list unchanged (About
+  the project, Other case studies).
+- **Opens the matching accordion section on click:** every TOC link click
+  dispatches a `cs:open-section` window `CustomEvent` with the clicked id
+  (see `AccordionSection`) in addition to its normal anchor/page
+  navigation — a harmless no-op for ids nothing is listening for (a plain
+  anchor, or "Back to main page"'s real link).
+
+### Sneak-peek hero (full case studies, above "Starting Point")
+Replaces `CaseStudyHero` entirely for the four full case studies — that
+component now renders only for the minimal (summary-only) template.
+Two-column (`lg:grid-cols-[1.15fr_0.85fr]`), left column stacked `gap-6`:
+- Eyebrow "Case study" (plain mono-label, same as before)
+- Category pill: `bg-panel border border-rule-strong rounded-pill`, accent-dark
+  mono-label text — a short 2-3 word tag (e.g. "AI Search Platform"),
+  `categoryTag` on the case study, distinct from the mono eyebrow `label`
+  field (which keeps its own "INDUSTRIAL DATA TOOLS · 2020–2023" job)
+- `<h1>` (`text-hero`, reused verbatim from the old hero) + one-sentence
+  summary (`description` — the homepage-card copy, not `intro`)
+- **Role/Focus box:** single `bg-panel border border-rule-strong rounded-card`
+  box, two lines ("Role:" / "Focus:" bold inline, not the old hero's two
+  separate side-by-side cards)
+- "~N min read" with a small clock icon (muted, not accent — a meta
+  indicator, not a content highlight). Computed from actual word count
+  across the sections a visitor would read (Starting Point, Impact,
+  accordions) at ~200wpm, not a hand-maintained number that could drift
+  out of sync with the copy
+- Six skill-tag pills (`skillTags`): `bg-white border border-rule-strong
+  rounded-pill`, mono-label text, each with a `title` tooltip carrying its
+  one-line elaboration (not shown inline — the pill itself stays a short
+  label). A distinct list from `methods` at the page bottom: skill tags are
+  project-specific contribution areas ("AI Search Flow"), `methods` is
+  general research methodology ("User interviews") reused across projects
+- No CTA button — "explore full case study" would be redundant on the
+  page it's already the top of
+
+Right column: 2-3 stacked, overlapping, rotated screenshot cards
+(`sneakPeekImages` — hand-picked `gallery` entries, not just its first N;
+prioritize whatever reads clearly at a glance over anything text-dense,
+since these render small and cropped). Each card is a fixed `aspect-[3/4]`
+box regardless of the source image's real aspect ratio (mixed desktop/
+mobile shots) — `next/image` `fill` + `object-cover object-top` crops to
+fit, favoring the top of the shot (its most recognizable part) over
+showing the whole thing. Position/rotation/z-index per card index is
+hand-tuned (`CARD_POSITION`) so every card gets its own corner and nothing
+is fully hidden underneath another.
+
+### Starting Point (full case studies)
+Plain (non-accordion) section directly below the sneak-peek hero, same
+eyebrow+`<h2>` chrome as any other plain section. Renders `study.intro` —
+the field name didn't change (`hasFullContent` type-guards on its
+presence), only where it's displayed: previously inline in the old hero
+right under the `<h1>`, now its own labeled section.
+
+### Accordion sections (`AccordionSection`, full case studies)
+"How it started", "Challenges & Problem-Solving", and "What I would do
+differently" — everything else on a case study page (sneak-peek hero, Role/
+Focus box, Starting Point, Impact cards, Methods) stays permanently visible.
+- Same eyebrow+`<h2>` chrome as a plain section, but the `<h2>` itself
+  *is* the toggle button (`<h2><button aria-expanded aria-controls>`,
+  matching MindTabs' mobile accordion precedent of a heading wrapping a
+  button rather than a heading nested inside one), with a chevron that
+  rotates 180° open
+- **Independent per section, not a single exclusive accordion** — opening
+  one never closes another. Each section owns its own `useState`, matching
+  this codebase's established preference for state to live as close to the
+  thing it controls as possible (see AboutMe's per-row independent hover
+  state for the same call made previously)
+- "How it started" starts open (`defaultOpen`), the other two start closed
+- Panel is always in the DOM (not conditionally rendered) and animates via
+  the `grid-template-rows: 0fr -> 1fr` technique — animates to an
+  intrinsic, unmeasured height in pure CSS, the same pattern as AboutMe's
+  WorkingWithMe rows. Unlike those rows, no absolute-overlay trick is
+  needed here: a click-toggled, page-level accordion pushing the sections
+  below it down as it opens is expected, normal behavior, not an accidental
+  side effect competing with a hovering mouse
+- Listens for the TOC's `cs:open-section` event and opens if its own id
+  matches — see the Sticky TOC entry above
 
 ### Header (all pages)
 Single row, one hairline below:

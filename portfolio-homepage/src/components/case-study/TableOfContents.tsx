@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { OPEN_SECTION_EVENT } from "./AccordionSection";
 
-export type TocItem = { id: string; label: string };
+/** `href` overrides the default same-page `#id` anchor for a real
+ * navigation link ("Back to main page" → `/`). */
+export type TocItem = { id: string; label: string; href?: string };
 
 /**
  * In-page table of contents with real scroll-spy: a single
@@ -52,9 +55,16 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
       return (
         <a
           key={item.id}
-          href={`#${item.id}`}
+          href={item.href ?? `#${item.id}`}
           aria-current={isActive ? "location" : undefined}
-          onClick={onNavigate}
+          onClick={() => {
+            // Harmless no-op for ids nothing is listening for (a plain
+            // anchor, or a real page link like "Back to main page") — see
+            // AccordionSection for why this is a plain event rather than
+            // shared state.
+            window.dispatchEvent(new CustomEvent(OPEN_SECTION_EVENT, { detail: { id: item.id } }));
+            onNavigate?.();
+          }}
           className={`flex items-center gap-2 py-2 pl-4 -ml-px text-nav border-l-4 transition-[border-color,color] duration-150 ease-out ${
             isActive
               ? "border-accent text-accent-dark font-bold rounded-r-[16px]"
@@ -69,7 +79,19 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
   }
 
   return (
-    <div className="mb-10 lg:mb-0 lg:self-start">
+    // No `lg:self-start` here: a sticky element's "stick range" is bounded
+    // by its own containing block, so this wrapper needs to stretch to the
+    // full grid-row height (matching the main content column) for the
+    // sticky nav below to have anywhere to travel — with self-start it
+    // shrinks to just the nav's own short content height, and the nav
+    // stops sticking after a couple hundred pixels of scroll instead of
+    // for the whole page (confirmed with Playwright: without this, the
+    // nav's on-screen position tracked scroll 1:1, i.e. not sticky at all,
+    // for all but the very top of the page). Grid's default
+    // `align-items: stretch` only applies at `lg:` anyway, where TOC and
+    // the main content share a grid row — below `lg:` they're separate
+    // stacked rows (`grid-cols-1`), so mobile is unaffected either way.
+    <div className="mb-10 lg:mb-0">
       {/* Desktop / tablet: fully expanded, sticky sidebar. */}
       <nav
         aria-label="On this page"
