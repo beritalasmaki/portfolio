@@ -19,20 +19,48 @@ export const educationPlatform: CaseStudy = {
   focusLabel: "Service design, Design Systems, and cross-team design consistency across a multi-vendor public sector platform",
 
   gallery: [
-    { src: "/case/edu-detail.png", alt: "Student administration detail view", caption: "Student details", width: 1208, height: 1512 },
+    {
+      src: "/case/edu-dashboard.png",
+      alt: "Teacher home dashboard",
+      caption: "Teacher dashboard",
+      width: 2000,
+      height: 1899,
+    },
+    {
+      src: "/case/edu-mobile-dashboard.png",
+      alt: "Teacher home dashboard, mobile",
+      caption: "Mobile dashboard",
+      width: 339,
+      height: 2000,
+    },
+    { src: "/case/edu-detail.png", alt: "Student administration detail view", caption: "Student details", width: 553, height: 731 },
+    {
+      src: "/case/edu-timetable.png",
+      alt: "Timetable and course offering view",
+      caption: "Timetable",
+      width: 553,
+      height: 623,
+    },
+    {
+      src: "/case/edu-timetable-edit.png",
+      alt: "Timetable and course offering, editing selections",
+      caption: "Editing selections",
+      width: 553,
+      height: 623,
+    },
     {
       src: "/case/edu-mobile-detail.png",
       alt: "Student administration detail, mobile",
       caption: "Mobile detail",
-      width: 596,
-      height: 3036,
+      width: 369,
+      height: 2000,
     },
     {
       src: "/case/edu-mobile-menu.png",
       alt: "Student tabs menu, mobile",
       caption: "Mobile menu",
-      width: 564,
-      height: 1096,
+      width: 410,
+      height: 791,
     },
   ],
 

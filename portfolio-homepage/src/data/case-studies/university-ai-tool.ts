@@ -19,14 +19,21 @@ export const universityAiTool: CaseStudy = {
   focusLabel: "UX/UI Design, AI search flow, service architecture, Design System adoption, post-launch iteration",
 
   gallery: [
-    { src: "/case/uni-homepage.png", alt: "AI assistant homepage", caption: "AI assistant", width: 1052, height: 1568 },
-    { src: "/case/uni-mobile-home.png", alt: "AI assistant, mobile", caption: "Mobile home", width: 386, height: 2128 },
+    { src: "/case/uni-homepage.png", alt: "AI assistant homepage", caption: "AI assistant", width: 1332, height: 2000 },
+    {
+      src: "/case/uni-search-results.png",
+      alt: "AI search results, desktop",
+      caption: "AI search results",
+      width: 1904,
+      height: 2000,
+    },
+    { src: "/case/uni-mobile-home.png", alt: "AI assistant, mobile", caption: "Mobile home", width: 369, height: 2000 },
     {
       src: "/case/uni-mobile-search.png",
       alt: "AI search results, mobile",
       caption: "Mobile search",
-      width: 378,
-      height: 1748,
+      width: 410,
+      height: 1851,
     },
   ],
 
