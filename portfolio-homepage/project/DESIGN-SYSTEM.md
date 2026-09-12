@@ -30,8 +30,8 @@ introduce new colors, sizes or radii without adding them here first.
 | Rule strong | `#e2ded6` | Medium borders, inner card dividers, pill outlines |
 | Ink alt | `#3a3a3a` | Dark-on-dark separators inside the dark tab column; also the body-text color for the highlight-quote callout inside each tab pane |
 | Overlay | `rgba(34, 34, 34, 0.8)` | Lightbox backdrop (Ink at 80%) |
-| Success | `#3F7A54` | The dot on the header's rotating status pill only (its text is `muted` grey — see the Status pill entry). A sage green chosen to sit next to this palette's warm cream/orange rather than a stock Tailwind green. |
-| Success bg | `#E9F3EA` | Fill for the same status pill. |
+| Success | `#3F7A54` | The dot on the header's rotating status badge — and nothing else (the badge's text is `muted` grey; see the Status badge entry). A sage green chosen to sit next to this palette's warm cream/orange rather than a stock Tailwind green. |
+| ~~Success bg~~ | ~~`#E9F3EA`~~ | **Retired.** Was the status badge's pill fill; the badge no longer has one (see the Status badge entry for why). Still defined in `tailwind.config.ts` — reuse it if a tinted "available/positive" surface is ever needed again, rather than inventing a second green. |
 
 ### Rules
 - Two neutral background tones maximum per page (`#ffffff` + `#f5f3ee`).
@@ -618,7 +618,7 @@ Focus box, Starting Point, Impact cards) stays permanently visible.
 ### Header (all pages)
 Single row, one hairline below:
 ```
-[logo 80px]  ————————  [page links]  |  [LinkedIn icon]  [GitHub icon]  [Contact button]  [status pill]
+[logo 80px]  ————————  [page links]  |  [LinkedIn icon]  [GitHub icon]  [Contact button]  [status badge]
 ```
 - Logo: real vector mark (blob + signature paths, exact 1:1-scale overlay
   measured against the original `berit-logo.png`) + real text ("Berit
@@ -631,6 +631,22 @@ Single row, one hairline below:
   confirmed with Playwright (`scrollWidth` > `clientWidth`) and fixed by
   making the mark's own height responsive rather than touching the row
   layout. See `Logo.tsx` and the Entrance sequence below.
+- **Wordmark lockup: the two text lines are the same width.** "Berit
+  Alasmäki" (22px/800 Manrope) naturally paints 151.97px while "UX &
+  PRODUCT DESIGNER" (11px IBM Plex Mono + 0.14em tracking) paints
+  170.95px, so the name read as noticeably short over a wider subtitle.
+  The name carries `tracking-[0.0616em]` to close that 18.98px gap across
+  its 14 characters, bringing both lines flush at 170.95px (verified to
+  within 0.01px in header, footer, case-study header and mobile). It's a
+  hand-measured constant — the same convention as the mark's own
+  transforms — because no CSS mechanism letter-spaces text to fit a
+  width: `text-align: justify` only widens *word* gaps (this name has one
+  space, so it would read "Berit          Alasmäki") and can never shrink
+  the role line, `text-justify: inter-character` isn't reliably
+  supported, and measuring in JS would force `Logo` to become a client
+  component when the footer renders it as a server one. `Logo.tsx`
+  carries the derivation to recompute from if `site.name`/`site.role`
+  ever change.
 - `border-bottom: 1px solid #eeece7; padding-bottom: 16px`
 - Homepage links: Selected case studies · About · My Process (scrolls to
   `ProcessTimeline`'s `#process`)
@@ -648,19 +664,30 @@ Single row, one hairline below:
   tap just navigates. The mobile nav panel keeps the original labeled
   pills unchanged (plenty of vertical room there; an icon alone reads
   less clearly in a full-screen stacked menu).
-- **Status pill** (`StatusPill.tsx`): a small `bg-success-bg` pill on the
-  right of Contact — inside the same tight-gap `LinkedIn/GitHub/Contact`
-  cluster, not the wider page-links group — that cross-fades through
-  "Open to work" / "Open to networking" / "Open to freelance projects" on
-  a 4.5s `setInterval`, `duration-700` opacity crossfade. Tried next to
-  the logo first, then directly to the left of Contact; settled on the
-  right of it.
+- **Status badge** (`StatusPill.tsx` — filename kept, but it is no longer
+  a pill): a small `success`-green dot plus rotating text, on the right of
+  Contact, inside the same tight-gap `LinkedIn/GitHub/Contact` cluster
+  rather than the wider page-links group. Cross-fades through "Open to
+  work" / "Open to networking" / "Open to freelance projects" on a 4.5s
+  `setInterval`, `duration-700` opacity crossfade. Tried next to the logo
+  first, then directly to the left of Contact; settled on the right of it.
+  - **No pill chrome.** It began as a rounded `bg-success-bg` pill, but
+    the fill is what made the fixed width below *visible*: a short status
+    left a wide stretch of empty green, and the whole box read as heavy
+    chrome for what is really a caption. With the fill gone the leftover
+    width is simply invisible, so only the dot and the text remain.
   - **Typography is the standard mono eyebrow**, identical to "03 / ABOUT"
     and every other label on the site: `font-mono-label text-mono-label
     uppercase text-muted` (IBM Plex Mono, 11px, 0.14em tracking, `#6b6660`
     grey). It started as 12px semibold sans in the sage green, which read
     as a foreign element next to the site's own labels. Only the dot stays
     `success` green now — it alone carries the "available" signal.
+  - **Text is left-aligned in the fixed box, not centered.** Centering
+    split the leftover width evenly, which pushed a short status ~50px
+    away from the dot and left the dot stranded. Left-aligning keeps the
+    dot a constant 8px from the first glyph on every status, and keeps the
+    dot's own x-position perfectly still as the text rotates (verified
+    pixel-identical across all three).
   - **Fixed width, not hug-to-content.** An earlier version measured each
     status's natural width and resized the box to match, but that pill
     sat wedged against Contact and the icon buttons — its own footprint
@@ -668,14 +695,11 @@ Single row, one hairline below:
     which is exactly the "things move around" behavior a header shouldn't
     have. The text box is now a constant `212px` (the longest status,
     "Open to freelance projects", measures 196px at the mono-label face
-    and tracking, leaving ~8px of slack per side for font-fallback
-    variance) and never resizes; only its content's opacity crossfades. A
-    shorter status (e.g. "Open to work") centers within that fixed box
-    (`flex items-center justify-center`) instead of hugging its own width
-    and leaving the rest left-aligned. Height is a fixed `h-4` rather than
-    `1em` so the box doesn't depend on inherited font-size and has room
-    for the uppercase J in "PROJECTS" without `overflow-hidden` clipping
-    it.
+    and tracking, leaving a little slack for font-fallback variance) and
+    never resizes; only its content's opacity crossfades. Height is a
+    fixed `h-4` rather than `1em` so the box doesn't depend on inherited
+    font-size and has room for the uppercase J in "PROJECTS" without
+    `overflow-hidden` clipping it.
   - `prefers-reduced-motion` stops the interval outright (checked in JS,
     not just a CSS transition-duration kill — the requirement is "no
     rotation happens", not "the rotation happens instantly"), leaving it
@@ -684,15 +708,17 @@ Single row, one hairline below:
     to work, networking, and freelance projects") covers all three states
     for screen readers rather than an `aria-live` region re-announcing
     every few seconds.
-  - `hidden min-[1360px]:inline-flex` — the first thing to disappear as
+  - `hidden min-[1340px]:inline-flex` — the first thing to disappear as
     the viewport narrows, before the nav links, icons, or Contact button
     are ever at risk of wrapping. Not a stock breakpoint on purpose:
-    measuring the real header showed that at the mono-label width (~248px
-    for the whole pill) the nav row wraps to a second line at every width
-    up to 1320px but fits cleanly from 1360px up, so the breakpoint
-    tracks the width the pill actually fits at. Below it, the nav now
-    stays on one line down to ~1180px (it used to wrap from 1320px down
-    while the pill was still showing).
+    measuring the real header showed the nav row wrapping to a second
+    line at every width up to 1300px with the badge visible, but fitting
+    cleanly from 1320px up, so the breakpoint tracks the width it
+    actually fits at plus a small cushion. 1340 specifically because it
+    is low enough that a 1366px-wide laptop still shows the badge once a
+    classic scrollbar is subtracted — `min-[1360px]` (the value this had
+    while the pill chrome made it 248px instead of 226px) would not.
+    Verified exactly: visible at 1340, hidden at 1339.
 - `nav-gap` (the fluid gap between page links) tightened to
   `clamp(10px, 1.8vw, 32px)` — down from `clamp(16px, 2.2vw, 32px)` — once
   a third nav link (My Process) joined "Selected case studies" and "About"

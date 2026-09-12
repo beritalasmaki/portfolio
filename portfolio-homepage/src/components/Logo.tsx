@@ -67,7 +67,27 @@ export default function Logo({ animated = false }: {
       </svg>
 
       <span className="flex flex-col justify-center gap-1 whitespace-nowrap">
-        <span className="text-[22px] leading-none font-bold text-ink">{site.name}</span>
+        {/* `tracking-[0.0616em]` makes the name span exactly as wide as
+            the role line under it, so the two read as one justified
+            lockup instead of a short name over a wider subtitle. Another
+            hand-measured constant, same as the transforms above, because
+            no CSS mechanism letter-spaces text to fit a width: `justify`
+            only widens *word* gaps (this name has one space, so it would
+            read "Berit          Alasmäki") and can never shrink the role,
+            and `text-justify: inter-character` isn't reliably supported.
+            Measuring JS-side instead would mean making this a client
+            component, which the footer renders as a server one.
+            Derived by measuring the two rendered lines:
+              role      = 170.95px ("UX & Product Designer", 21 chars at
+                          11px IBM Plex Mono + 0.14em tracking)
+              name      = 151.97px at normal tracking
+              needed    = (170.95 − 151.97) / 14 chars
+                        = 1.356px = 0.0616em at this 22px size
+            (÷ 14 rather than ÷ 13 gaps because letter-spacing also adds
+            one trailing space after the last glyph — as it does on the
+            role line, so both lines carry it and they cancel out.)
+            Recompute the same way if `site.name` or `site.role` changes. */}
+        <span className="text-[22px] leading-none font-bold tracking-[0.0616em] text-ink">{site.name}</span>
         <span className="font-mono-label text-mono-label uppercase text-muted">{site.role}</span>
       </span>
     </span>
