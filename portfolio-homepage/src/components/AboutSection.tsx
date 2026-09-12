@@ -1,4 +1,4 @@
-import { site } from "@/data/site";
+import AboutMe from "./AboutMe";
 import ProcessTimeline from "./ProcessTimeline";
 
 export default function AboutSection() {
@@ -6,25 +6,16 @@ export default function AboutSection() {
     <section id="about" aria-labelledby="about-heading" className="mt-rhythm">
       <p className="font-mono-label text-mono-label uppercase text-muted m-0">03 / about</p>
 
-      <div className="mt-4 max-w-prose flex flex-col gap-4">
-        <h2 id="about-heading" className="m-0 text-section-h2 text-ink uppercase">
-          Ten years of turning complex problems into products people can use.
+      <div className="flex items-end justify-between gap-grid-gap-lg flex-wrap mt-4">
+        <h2 id="about-heading" className="m-0 text-section-h2 text-ink">
+          About Me
         </h2>
-        <p className="m-0 text-lead text-body">
-          A senior UX and product designer based in Finland, with international
-          experience across more than 25 projects. I work closely with product
-          owners, specialists and engineers, keeping user needs and business goals
-          in view from the first idea to shipped product.
+        <p className="m-0 text-[15px] leading-snug text-footer-meta max-w-[20em]">
+          The person behind the pixels.
         </p>
-        <a
-          href={site.linkedinUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="text-nav font-semibold text-ink border-b border-accent pb-2 self-start whitespace-nowrap transition-[border-color,transform] duration-150 ease-out hover:border-accent-dark hover:-translate-y-px focus-visible:border-accent-dark focus-visible:-translate-y-px"
-        >
-          Get to know me on LinkedIn
-        </a>
       </div>
+
+      <AboutMe />
 
       <ProcessTimeline />
 

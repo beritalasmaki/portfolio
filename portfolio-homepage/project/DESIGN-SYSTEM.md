@@ -227,10 +227,15 @@ Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
   and pane
 - Tab column: inactive `#f0eee9`, **active `#222222`** with `#ffffff` text
 - Tabs stretch to fill the block height equally
+- Every question row reserves `min-height: 2.75em` on its own text (em-based,
+  so it scales with the row's fluid `clamp()` font-size) regardless of that
+  question's actual length — rows read as a uniform list instead of hugging
+  each question's own line count, so nothing reflows as the selection moves
+  between a one-line and a two-line question
 - Pane background matches the tab column tone so the two read as one surface
 - React state (`useState`), not CSS-only — selecting a question re-renders the
   shared pane's content directly, no page reload
-- Pane content fades in on every selection via `.panel-fade-item` (220ms,
+- Pane content fades in on every selection via `.panel-fade-item` (340ms,
   opacity only — see "Detail-panel cross-fade" below), keyed to the active
   question so React remounts the node and the animation restarts each click
 - **Below `md`, this becomes an accordion instead** — two separate markup
@@ -248,16 +253,71 @@ Separated by a `1px × 16px` `#e2ded6` divider or 24px+ spacing.
 
 ### Detail-panel cross-fade (`.panel-fade-item`)
 For a detail panel whose content swaps in place on click (MindTabs' answer
-pane) rather than appearing once on page load:
+pane, WorkingWithMe's expanding rows) rather than appearing once on page load:
 ```
-opacity: 0; animation: panel-fade 220ms ease-out forwards;  /* opacity only, no translateY */
+opacity: 0; animation: panel-fade 340ms cubic-bezier(0.4, 0, 0.2, 1) forwards;  /* opacity only, no translateY */
 ```
-Shorter and lighter than `.fade-up-item` (700ms, fades *and* rises) by
-design — that class is a once-per-page entrance; this one re-fires on every
-click, so it needs to read as a quick settle, not a repeated flourish.
+Lighter than `.fade-up-item` (700ms, fades *and* rises) by design — that
+class is a once-per-page entrance; this one re-fires on every click, so it's
+tuned as an unhurried, relaxed settle (a smooth ease-in-out curve) rather
+than a repeated flourish or an instant snap.
 Requires the panel to remount per selection (`key={activeIndex}` on desktop;
 the mobile accordion's conditional rendering already remounts it) — a prop
 change on a persisted DOM node won't restart a CSS animation.
+
+### About Me (About section, "About Me")
+Two cards side by side (`md:grid-cols-2`, `items-stretch`), replacing the
+section's earlier one-paragraph intro entirely (`AboutMe.tsx`, rendered
+before `ProcessTimeline`):
+- **Left, bio card** (`bg-panel`): photo (reuses the Hero's `/photo.png`,
+  already carrying its own hand-drawn orange-ring treatment — no separate
+  "placeholder" asset), an italic greeting line (plain `Manrope` italic, not
+  a second typeface — a whole extra web font for one line of copy wasn't
+  worth it), three body paragraphs, then a `Connect on LinkedIn` pill button
+  in the site's primary filled-pill style (`bg-ink`/`hover:bg-ink-alt`,
+  matching Hero's primary CTA and Header's "Contact" button).
+- **Right, "Working with me" card** (`bg-white border border-rule` — a subtle
+  white-vs-cream distinction from the left card, not the dark/light contrast
+  of the reference layout this was built from; DESIGN-SYSTEM.md's "existing
+  light theme" always wins over a visual reference's own color choices).
+  Five rows (`bg-panel` chips, icon badge + statement + chevron), each
+  revealing a short explanation:
+  - Desktop (an actual mouse): reveals on **hover**, detected via
+    `(hover: hover) and (pointer: fine)` — not a viewport-width guess.
+    Touch devices reveal on **tap** instead (tap again to collapse).
+  - Every row is a real `<button>`; clicking/Enter/Space **pins** it open
+    (persists after blur/mouse-leave) — the same mechanism drives both the
+    mouse-hover preview and the keyboard/touch toggle, just OR'd together
+    (`pinned || (hoverCapable && hovered)`), rather than two separate code
+    paths.
+  - **Hover state is local to each row**, not lifted to a shared parent
+    index. Hovering row N must never programmatically force row N-1 to
+    close — only that row's own real mouseenter/mouseleave should. (Lifting
+    it to a single shared index was tried and reverted: closing the
+    previous row on every new hover caused *that row's own collapse* to
+    still be resizing page content for another ~150-300ms right as the
+    cursor arrived at the new row, occasionally shifting the new row's
+    hoverable area out from under an otherwise-stationary pointer —
+    confirmed with Playwright, not just theoretical.)
+  - **The reveal is an absolutely-positioned overlay, not an inline block**
+    that pushes the rows below it down — for the same reason: even with
+    hover fully decoupled per row, an inline reveal still physically moves
+    whatever comes after it, and that's exactly the shift a
+    stationary-feeling cursor can lose hover to. An overlay still visually
+    reads as "text appears beneath the statement" (the literal ask), it
+    just doesn't displace anything else while doing it. `pointer-events-none`
+    while collapsed — even at `opacity-0` it still sits on top of the row
+    underneath and would otherwise steal that row's hover. The **last row
+    opens upward** instead of down (nothing below it to overlap, and
+    nothing to keep it inside the card's own bottom edge otherwise) —
+    it deliberately overlaps the row above for as long as it's open, which
+    self-resolves the moment focus/hover moves on.
+  - Asymmetric transition: reveal `duration-300 ease-out`, collapse
+    `duration-150 ease-in` (opacity + a small translate) — a relaxed
+    entrance, a quick exit, via the "duration/easing live on whichever
+    class list is active" CSS trick (switch both together with the
+    state-driven value, no keyframes needed since it's a plain two-state
+    toggle rather than MindTabs' swapped-content case).
 
 ### Process timeline (About section, "My process")
 Imported from a Claude Design canvas component (`ProcessTimeline.tsx`) and

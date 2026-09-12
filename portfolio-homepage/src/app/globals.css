@@ -130,15 +130,15 @@
   }
 
   /* Soft cross-fade for a detail panel whose content swaps in place (e.g.
-     MindTabs' question/answer panel) — opacity only, no vertical shift and
-     a shorter run than `.fade-up-item`: this retriggers on every click, not
-     once on page load, so it needs to read as a quick settle rather than an
-     entrance. Pair with `key={state}` on the panel so React remounts the
-     node per selection; changing text on a persisted node wouldn't restart
-     the animation. */
+     MindTabs' question/answer panel) — opacity only, no vertical shift.
+     Retriggers on every click, not once on page load, so it's tuned as an
+     unhurried settle (a gentle ease-in-out, not a snap) rather than the
+     quicker ease-out used for one-off entrances elsewhere. Pair with
+     `key={state}` on the panel so React remounts the node per selection;
+     changing text on a persisted node wouldn't restart the animation. */
   .panel-fade-item {
     opacity: 0;
-    animation: panel-fade 220ms ease-out forwards;
+    animation: panel-fade 340ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
   @keyframes panel-fade {

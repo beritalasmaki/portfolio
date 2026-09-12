@@ -1,0 +1,298 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useId, useState, type ReactNode } from "react";
+import { site } from "@/data/site";
+
+// Small brand mark for the LinkedIn button — same path Header.tsx uses for
+// its own LinkedIn pill, duplicated locally rather than shared, matching
+// this codebase's existing per-file icon convention (see ProcessTimeline's
+// icon set).
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true" className="w-4 h-4 shrink-0" fill="currentColor">
+      <path d="M13.5 0h-11C1.12 0 0 1.12 0 2.5v11C0 14.88 1.12 16 2.5 16h11c1.38 0 2.5-1.12 2.5-2.5v-11C16 1.12 14.88 0 13.5 0zM4.94 13.44H2.4V5.98h2.54v7.46zM3.67 4.94c-.81 0-1.47-.66-1.47-1.47 0-.81.66-1.47 1.47-1.47.81 0 1.47.66 1.47 1.47 0 .81-.65 1.47-1.47 1.47zM13.6 13.44h-2.54V9.83c0-.86-.02-1.97-1.2-1.97-1.2 0-1.39.94-1.39 1.91v3.67H6.14V5.98h2.44v1.02h.03c.34-.64 1.17-1.32 2.4-1.32 2.57 0 3.05 1.69 3.05 3.89v3.87z" />
+    </svg>
+  );
+}
+
+// "Working with me" row icons — same visual language as ProcessTimeline's
+// icon set: viewBox 0 0 20 20, w-5 h-5, accent-stroke line art.
+function ShieldIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="w-5 h-5 shrink-0 block">
+      <g fill="none" stroke="#FC890C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10 2.5 L16.5 4.8 V9.5 C16.5 13.5 13.6 16.7 10 17.8 C6.4 16.7 3.5 13.5 3.5 9.5 V4.8 Z" />
+        <path d="M7 10 L9 12 L13.2 7.5" />
+      </g>
+    </svg>
+  );
+}
+
+function CoffeeIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="w-5 h-5 shrink-0 block">
+      <g fill="none" stroke="#FC890C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 8.5 H13.5 V13 C13.5 15.2 11.8 17 9.6 17 H8.4 C6.2 17 4.5 15.2 4.5 13 Z" />
+        <path d="M13.5 9.5 H15 C16.1 9.5 17 10.4 17 11.5 C17 12.6 16.1 13.5 15 13.5 H13.3" />
+        <path d="M7.3 3 C7.3 4 8.3 4 8.3 5 M10.7 3 C10.7 4 11.7 4 11.7 5" />
+      </g>
+    </svg>
+  );
+}
+
+function DetailIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="w-5 h-5 shrink-0 block">
+      <g fill="none" stroke="#FC890C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="8.7" cy="8.7" r="5.2" />
+        <path d="M12.6 12.6 L17 17" />
+      </g>
+    </svg>
+  );
+}
+
+function FeedbackIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="w-5 h-5 shrink-0 block">
+      <g fill="none" stroke="#FC890C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3.5 5.5 H16.5 V12.5 H8.5 L5.5 15.2 V12.5 H3.5 Z" />
+        <path d="M6.3 8.3 H13.7 M6.3 10.3 H11.2" />
+      </g>
+    </svg>
+  );
+}
+
+function TeamIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="w-5 h-5 shrink-0 block">
+      <g fill="none" stroke="#FC890C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="7" cy="7" r="2.6" />
+        <path d="M2.5 16.2 C2.5 12.6 4.5 10.8 7 10.8 C9.5 10.8 11.5 12.6 11.5 16.2" />
+        <circle cx="14.2" cy="8.2" r="2.1" />
+        <path d="M11.9 16.2 C12.1 13.2 13.5 11.8 14.4 11.8 C16.3 11.8 17.5 13.4 17.5 16.2" />
+      </g>
+    </svg>
+  );
+}
+
+type WorkingWithMeItem = {
+  icon: ReactNode;
+  statement: string;
+  detail: string;
+};
+
+const items: WorkingWithMeItem[] = [
+  {
+    icon: <ShieldIcon />,
+    statement: "I'll push back, respectfully.",
+    detail:
+      "If something won't work for users or developers, I'll say so early. I always explain the reason, not just share an opinion.",
+  },
+  {
+    icon: <CoffeeIcon />,
+    statement: "I'll make the coffee and bring the snacks.",
+    detail: "Good work happens in a good mood. I like keeping the atmosphere light, even during crunch time.",
+  },
+  {
+    icon: <DetailIcon />,
+    statement: "I'll notice the details that matter.",
+    detail: "Not every detail needs attention, but the ones that affect trust or usability always get mine.",
+  },
+  {
+    icon: <FeedbackIcon />,
+    statement: "I'll ask for feedback early, not just at the end.",
+    detail: "I'd rather show a rough version early than a polished one too late to change.",
+  },
+  {
+    icon: <TeamIcon />,
+    statement: "I'll speak up for both the user and the developer building it.",
+    detail: "Good design has to work for the person using it and the person building it. I try not to forget either side.",
+  },
+];
+
+/**
+ * One "Working with me" row. Two things worth calling out:
+ *
+ * 1. Hover/focus state is local to each row (not lifted to the parent), so
+ *    hovering row N never programmatically forces row N-1 to close — each
+ *    row only reacts to the mouse actually entering/leaving *its own*
+ *    bounds.
+ * 2. The revealed detail text is an absolutely-positioned overlay, not an
+ *    inline block that pushes the rows below it down. That's deliberate,
+ *    not just a style choice: an inline reveal that displaces layout caused
+ *    a real, observed glitch (confirmed with Playwright) — hovering row 1
+ *    shifts row 2 upward as row 1's own reveal collapses, and if row 2 is
+ *    hovered right as that shift lands, row 2's hoverable area moves out
+ *    from under an otherwise-stationary cursor and it loses hover before
+ *    the user has even finished reading it. An overlay still visually
+ *    reads as "text appears beneath the statement," it just doesn't move
+ *    anything else while doing it. The last row opens *upward* instead,
+ *    since there's no row below it to overlap and nothing to keep it
+ *    inside the card's bottom edge otherwise.
+ */
+function WorkingWithMeRow({
+  item,
+  pinned,
+  onTogglePin,
+  hoverCapable,
+  isLast,
+  buttonId,
+  panelId,
+}: {
+  item: WorkingWithMeItem;
+  pinned: boolean;
+  onTogglePin: () => void;
+  hoverCapable: boolean;
+  isLast: boolean;
+  buttonId: string;
+  panelId: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const expanded = pinned || (hoverCapable && hovered);
+
+  return (
+    <li className="relative">
+      <button
+        id={buttonId}
+        type="button"
+        aria-expanded={expanded}
+        aria-controls={panelId}
+        onClick={onTogglePin}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
+        className="group relative z-0 flex w-full items-center gap-4 bg-panel rounded-frame p-4 text-left transition-colors duration-150 ease-out hover:bg-rule-strong focus-visible:bg-rule-strong"
+      >
+        <span className="w-11 h-11 flex items-center justify-center bg-white border border-rule rounded-frame shrink-0">
+          {item.icon}
+        </span>
+        <span className="flex-1 text-body-em font-semibold text-ink text-pretty">{item.statement}</span>
+        <span
+          aria-hidden="true"
+          className={`shrink-0 text-muted transition-transform duration-150 ease-out ${expanded ? "-rotate-180" : ""}`}
+        >
+          ⌄
+        </span>
+      </button>
+      {/* Absolutely positioned so expanding/collapsing never resizes the
+          `<li>` itself — see the note above for why that matters. Opacity +
+          a small slide, asymmetric duration (relaxed reveal, quick close).
+          `pointer-events-none` while collapsed: even at opacity 0 this sits
+          right on top of the row underneath (or above, for the last row)
+          and would otherwise steal its hover. */}
+      <div
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
+        aria-hidden={!expanded}
+        className={`absolute inset-x-0 z-10 ${isLast ? "bottom-full mb-2" : "top-full mt-2"} transition-[opacity,transform] ${
+          expanded
+            ? "duration-300 ease-out opacity-100 translate-y-0"
+            : `duration-150 ease-in opacity-0 pointer-events-none ${isLast ? "translate-y-1" : "-translate-y-1"}`
+        }`}
+      >
+        <p className="m-0 bg-white border border-rule rounded-frame shadow-frame p-4 text-body-sm text-ink-alt">
+          {item.detail}
+        </p>
+      </div>
+    </li>
+  );
+}
+
+/**
+ * Right-hand card of the About Me section: a list of rows that reveal a
+ * short explanation each. Desktop (an actual mouse) reveals on hover;
+ * touch devices have no hover, so they reveal on tap instead — detected via
+ * `(hover: hover) and (pointer: fine)`, the standard feature query, rather
+ * than a viewport-width guess or a long-press workaround. Independently of
+ * input type, every row is a real `<button>`, so Tab + Enter/Space always
+ * works; activating it "pins" the row open (persists on blur/mouse-leave)
+ * so a keyboard user isn't required to keep focus on it to keep reading.
+ */
+function WorkingWithMe() {
+  const [hoverCapable, setHoverCapable] = useState(true);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const baseId = useId();
+
+  useEffect(() => {
+    const query = window.matchMedia("(hover: hover) and (pointer: fine)");
+    function onChange() {
+      setHoverCapable(query.matches);
+    }
+    onChange();
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
+
+  return (
+    <div className="flex flex-col gap-6 bg-white border border-rule rounded-card p-card-pad">
+      <h3 className="m-0 text-card-h3 text-ink">Working with me</h3>
+      <ul className="flex flex-col gap-3 list-none p-0 m-0">
+        {items.map((item, index) => (
+          <WorkingWithMeRow
+            key={item.statement}
+            item={item}
+            pinned={openIndex === index}
+            onTogglePin={() => setOpenIndex((current) => (current === index ? null : index))}
+            hoverCapable={hoverCapable}
+            isLast={index === items.length - 1}
+            buttonId={`${baseId}-wwm-button-${index}`}
+            panelId={`${baseId}-wwm-panel-${index}`}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function AboutMe() {
+  return (
+    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-grid-gap items-stretch">
+      <div className="flex flex-col gap-6 bg-panel rounded-card p-card-pad">
+        <div className="flex items-center gap-4">
+          <Image
+            src="/photo.png"
+            alt="Berit Alasmäki"
+            width={80}
+            height={80}
+            className="w-20 h-20 object-contain shrink-0"
+          />
+          <p className="m-0 text-body-em font-semibold italic text-ink">Hey, happy to have you here! ♥</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <p className="m-0 text-body-lg text-body">
+            Growing up in a small town in Finland, I never expected to end up in tech, let alone design. I studied
+            IT and web development, but my real start in design happened almost by accident: a friend brought me
+            into his startup while I was still in high school, and that&apos;s where I first got hands-on
+            experience with both design tools and code. I&apos;ve been curious about both ever since.
+          </p>
+          <p className="m-0 text-body-lg text-body">
+            Ten years in design, nine of them as a consultant, taught me to move between very different worlds:
+            public sector platforms, industrial tools, environmental data systems, often as the only designer in
+            the room. I&apos;ve worked on more than 25 projects, and each one shaped how I work today. That kind of
+            work forces you to care about your craft, because there might not be anyone else to catch what you
+            miss.
+          </p>
+          <p className="m-0 text-body-lg text-body">
+            I value quality work, clear focus, and strong collaboration. Instead of worrying about how AI is
+            changing design, I take a practical approach: I use the tools that make sense, keep improving my
+            process, and keep building solid product experiences.
+          </p>
+        </div>
+        <a
+          href={site.linkedinUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 bg-ink text-white text-nav font-semibold py-3 px-6 rounded-pill self-start whitespace-nowrap transition-[background-color,transform] duration-150 ease-out hover:bg-ink-alt hover:text-white hover:-translate-y-px focus-visible:bg-ink-alt focus-visible:text-white focus-visible:-translate-y-px focus-visible:outline-white"
+        >
+          <LinkedInIcon />
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <WorkingWithMe />
+    </div>
+  );
+}

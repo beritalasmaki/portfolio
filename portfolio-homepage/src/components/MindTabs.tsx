@@ -125,7 +125,13 @@ export default function MindTabs() {
                     : "bg-panel-alt text-ink border-l-transparent hover:bg-rule-strong hover:border-l-accent focus-visible:bg-rule-strong focus-visible:border-l-accent"
                 }`}
               >
-                <span className="text-[clamp(15px,1.2vw,17px)] font-semibold leading-snug text-pretty">
+                {/* min-h reserves space for 2 lines (em-based, so it scales
+                    with the fluid clamp() font-size) regardless of this
+                    particular question's actual length — every row ends up
+                    the same height instead of hugging its own text, so the
+                    list doesn't reflow as the selection moves between a
+                    one-line and a two-line question. */}
+                <span className="min-h-[2.75em] flex items-center text-[clamp(15px,1.2vw,17px)] font-semibold leading-snug text-pretty">
                   {tab.question}
                 </span>
                 <span
@@ -195,7 +201,9 @@ export default function MindTabs() {
                       : "bg-panel-alt text-ink border-l-transparent focus-visible:bg-rule-strong focus-visible:border-l-accent"
                   }`}
                 >
-                  <span className="text-[15px] font-semibold leading-snug text-pretty">{tab.question}</span>
+                  <span className="min-h-[2.75em] flex items-center text-[15px] font-semibold leading-snug text-pretty">
+                    {tab.question}
+                  </span>
                   <span
                     aria-hidden="true"
                     className={`shrink-0 text-[15px] transition-transform duration-150 ease-out ${
