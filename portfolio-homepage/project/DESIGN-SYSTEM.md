@@ -668,9 +668,11 @@ Single row, one hairline below:
   a pill): a small `success`-green dot plus rotating text, on the right of
   Contact, inside the same tight-gap `LinkedIn/GitHub/Contact` cluster
   rather than the wider page-links group. Cross-fades through "Open to
-  work" / "Open to networking" / "Open to freelance projects" on a 4.5s
+  work" / "Open to networking" / "Open to brainstorming" on a 4.5s
   `setInterval`, `duration-700` opacity crossfade. Tried next to the logo
-  first, then directly to the left of Contact; settled on the right of it.
+  first, then directly to the left of Contact; settled on the right of it,
+  separated by `ml-4` on top of the cluster's `gap-2` (24px total) so it
+  doesn't crowd the Contact button.
   - **No pill chrome.** It began as a rounded `bg-success-bg` pill, but
     the fill is what made the fixed width below *visible*: a short status
     left a wide stretch of empty green, and the whole box read as heavy
@@ -694,31 +696,44 @@ Single row, one hairline below:
     changing size as the text rotated shifted Contact sideways with it,
     which is exactly the "things move around" behavior a header shouldn't
     have. The text box is now a constant `212px` (the longest status,
-    "Open to freelance projects", measures 196px at the mono-label face
-    and tracking, leaving a little slack for font-fallback variance) and
-    never resizes; only its content's opacity crossfades. Height is a
-    fixed `h-4` rather than `1em` so the box doesn't depend on inherited
-    font-size and has room for the uppercase J in "PROJECTS" without
-    `overflow-hidden` clipping it.
+    "Open to brainstorming", measures 165px at the mono-label face and
+    tracking, leaving ~7px of slack for font-fallback variance) and never
+    resizes; only its content's opacity crossfades. Height is a fixed
+    `h-4` rather than `1em` so the box doesn't depend on inherited
+    font-size and has room for uppercase descenders without
+    `overflow-hidden` clipping them. Keep it tight rather than generous —
+    every px is a px of header row, and this width sets the breakpoint
+    below (it has gone 212px -> 204px -> 172px as the chrome and the
+    longest status changed).
   - `prefers-reduced-motion` stops the interval outright (checked in JS,
     not just a CSS transition-duration kill — the requirement is "no
     rotation happens", not "the rotation happens instantly"), leaving it
     on the first message.
   - The rotation is `aria-hidden`; a single static `sr-only` label ("Open
-    to work, networking, and freelance projects") covers all three states
+    to work, networking, and brainstorming") covers all three states
     for screen readers rather than an `aria-live` region re-announcing
     every few seconds.
-  - `hidden min-[1340px]:inline-flex` — the first thing to disappear as
+  - `hidden min-[1300px]:inline-flex` — the first thing to disappear as
     the viewport narrows, before the nav links, icons, or Contact button
-    are ever at risk of wrapping. Not a stock breakpoint on purpose:
-    measuring the real header showed the nav row wrapping to a second
-    line at every width up to 1300px with the badge visible, but fitting
-    cleanly from 1320px up, so the breakpoint tracks the width it
-    actually fits at plus a small cushion. 1340 specifically because it
-    is low enough that a 1366px-wide laptop still shows the badge once a
-    classic scrollbar is subtracted — `min-[1360px]` (the value this had
-    while the pill chrome made it 248px instead of 226px) would not.
-    Verified exactly: visible at 1340, hidden at 1339.
+    are ever at risk of wrapping. Not a stock breakpoint on purpose: it
+    tracks the width the badge actually fits at, measured on the real
+    header rather than guessed. At its current 186px the nav row wraps to
+    a second line at every width up to 1280px but fits cleanly from
+    1290px up, so 1300 is that threshold plus a small cushion (verified
+    exactly: visible at 1300, hidden at 1299, and never wrapping while
+    visible). Re-measure whenever the badge's width or the surrounding
+    nav changes — this has already walked 1360 -> 1340 -> 1300 as the
+    badge shed its pill chrome and then its longest status string.
+  - **The dot breathes rather than pulses.** `animate-status-breathe`
+    (a keyframe in `tailwind.config.ts`) fades it 1 -> 0.3 -> 1 over the
+    same 4.5s as the rotation, replacing Tailwind's stock `animate-pulse`
+    (0.5 dip over 2s), which is barely perceptible on a 6px dot and runs
+    on a rhythm unrelated to anything else on screen. The slower, deeper
+    fade on the rotation's own cadence is what cues that the text beside
+    it changes. The keyframe ends at full opacity so the reduced-motion
+    kill-switch in `globals.css` — which forces `animation-iteration-count: 1`
+    at a 0.01ms duration — settles it to a solid dot rather than a dimmed
+    one (verified: opacity pinned at 1 under `prefers-reduced-motion`).
 - `nav-gap` (the fluid gap between page links) tightened to
   `clamp(10px, 1.8vw, 32px)` — down from `clamp(16px, 2.2vw, 32px)` — once
   a third nav link (My Process) joined "Selected case studies" and "About"

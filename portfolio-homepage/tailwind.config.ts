@@ -107,6 +107,27 @@ const config: Config = {
         "frame-accent": "0 16px 34px rgba(34, 34, 34, 0.16)",
         lightbox: "0 12px 30px rgba(34, 34, 34, 0.22)",
       },
+      keyframes: {
+        // The header status badge's dot. Replaces Tailwind's stock
+        // `animate-pulse`, which dips to 0.5 over 2s — barely readable on
+        // a 6px dot, and on a rhythm unrelated to anything else on screen.
+        // This is slower and dips further so it registers as "this thing
+        // is live and cycling", which is the whole point: it cues that the
+        // text beside it rotates. Ends at full opacity so the
+        // reduced-motion kill-switch in globals.css (which forces
+        // iteration-count 1 at a 0.01ms duration) settles it to a solid
+        // dot rather than a dimmed one.
+        "status-breathe": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.3" },
+        },
+      },
+      animation: {
+        // 4.5s deliberately matches ROTATION_MS in StatusPill.tsx, so the
+        // dot's breath and the text's crossfade stay on one rhythm. Keep
+        // the two in step if either changes.
+        "status-breathe": "status-breathe 4.5s ease-in-out infinite",
+      },
       maxWidth: {
         prose: "36em",
         "prose-lg": "44em",
